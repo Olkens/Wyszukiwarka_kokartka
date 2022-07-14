@@ -63,6 +63,8 @@ export default {};
   font-size: 10px;
   height: 137px;
   margin-bottom: 15px;
+  background: #2c303d;
+  text-transform: uppercase;
 }
 
 .tr-info-box-1 {
@@ -119,7 +121,6 @@ export default {};
 }
 
 .tr-btn-wi {
-  background: #000;
   color: #fff;
 }
 
