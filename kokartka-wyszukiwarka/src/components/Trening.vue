@@ -65,6 +65,7 @@ export default {};
   max-width: 475px;
   justify-content: space-between;
   font-size: 12px;
+  background: #2c303d;
 }
 
 .tr-box-title {
