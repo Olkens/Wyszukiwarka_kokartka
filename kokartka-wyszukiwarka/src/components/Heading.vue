@@ -1,11 +1,11 @@
 <template>
   <div class="box-cont">
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
+    <div class="box"><p>GRUPA</p></div>
+    <div class="box"><p>POZIOM</p></div>
+    <div class="box"><p>WIEK</p></div>
+    <div class="box">SZKOŁA</div>
+    <div class="box">DZIEŃ</div>
+    <div class="box">GODZINA</div>
   </div>
 </template>
 
@@ -17,7 +17,10 @@ export default {};
 .box {
   width: 150px;
   height: 50px;
-  background: red;
+  background: #2e3a59;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .box-cont {
   display: flex;

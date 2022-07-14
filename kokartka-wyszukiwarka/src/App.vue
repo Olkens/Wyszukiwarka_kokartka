@@ -11,6 +11,7 @@ import Heading from "./components/Heading.vue";
     <Trening2 />
     <Trening2 />
     <Trening2 />
+    <Trening2 />
   </div>
 </template>
 

@@ -49,6 +49,17 @@
 
 <script>
 export default {};
+window.onload = function () {
+  const mainCont = document.querySelectorAll(".tr-main-container");
+  console.log(mainCont);
+
+  for (let i = 0; i < mainCont.length; i++) {
+    console.log(mainCont[i]);
+    if (i % 2 != 0) {
+      mainCont[i].classList.add("tr-main-container-second-bgcolor");
+    }
+  }
+};
 </script>
 
 <style>
@@ -63,8 +74,12 @@ export default {};
   font-size: 10px;
   height: 137px;
   margin-bottom: 15px;
-  background: #2c303d;
+  background-color: #1a1d27;
   text-transform: uppercase;
+}
+
+.tr-main-container-second-bgcolor {
+  background-color: #2c303d !important;
 }
 
 .tr-info-box-1 {
