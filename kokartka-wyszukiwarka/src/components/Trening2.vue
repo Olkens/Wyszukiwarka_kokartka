@@ -73,7 +73,6 @@ window.onload = function () {
   border-radius: 5px;
   font-size: 10px;
   height: 137px;
-  margin-bottom: 15px;
   background-color: #1a1d27;
   text-transform: uppercase;
 }

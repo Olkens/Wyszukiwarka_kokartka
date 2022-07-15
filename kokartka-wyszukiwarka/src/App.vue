@@ -1,6 +1,4 @@
 <script setup>
-import HelloWorld from "./components/HelloWorld.vue";
-import Trening from "./components/Trening.vue";
 import Trening2 from "./components/Trening2.vue";
 import Heading from "./components/Heading.vue";
 </script>
@@ -8,10 +6,12 @@ import Heading from "./components/Heading.vue";
 <template>
   <div>
     <Heading class="mar-bot" />
-    <Trening2 />
-    <Trening2 />
-    <Trening2 />
-    <Trening2 />
+    <div class="app-tr-container">
+      <Trening2 />
+      <Trening2 />
+      <Trening2 />
+      <Trening2 />
+    </div>
   </div>
 </template>
 
@@ -24,6 +24,13 @@ import Heading from "./components/Heading.vue";
   padding: 2rem;
 
   font-weight: normal;
+}
+.app-tr-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 1066px;
+  gap: 15px;
 }
 
 header {
@@ -74,10 +81,6 @@ a,
 
   .logo {
     margin: 0 2rem 0 0;
-  }
-
-  .mar-bot {
-    margin-bottom: 25px;
   }
 }
 </style>
