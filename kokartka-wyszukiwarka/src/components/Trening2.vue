@@ -5,11 +5,11 @@
         <div class="tr-info-1-box">
           <div>
             <p class="faded-title">POZIOM</p>
-            <p>PODSTAWOWY</p>
+            <p>{{ poziom }}</p>
           </div>
           <div>
             <p class="faded-title">Szkoła</p>
-            <p>Gdnia</p>
+            <p>{{ szkola }}</p>
           </div>
         </div>
       </div>
@@ -19,7 +19,7 @@
         <div class="tr-info-2-box tr-border-left">
           <div>
             <p class="faded-title">Wiek</p>
-            <p>7-9 LAT</p>
+            <p>{{ wiek }} LAT</p>
           </div>
           <div>
             <p class="faded-title">Dzień</p>
@@ -48,7 +48,12 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["poziom", "wiek", "szkola"],
+  data() {
+    return {};
+  },
+};
 window.onload = function () {
   const mainCont = document.querySelectorAll(".tr-main-container");
   console.log(mainCont);
