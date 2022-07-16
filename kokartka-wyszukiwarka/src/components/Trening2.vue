@@ -1,57 +1,77 @@
 <template>
-  <div class="tr-main-container">
-    <div class="tr-info-box-1">
-      <div class="tr-info-1">
-        <div class="tr-info-1-box">
-          <div>
-            <p class="faded-title">POZIOM</p>
-            <p>{{ poziom }}</p>
-          </div>
-          <div>
-            <p class="faded-title">Szkoła</p>
-            <p>{{ szkola }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="tr-info-box-2 tr-info-box-2-grid">
-      <div class="tr-info-2">
-        <div class="tr-info-2-box tr-border-left">
-          <div>
-            <p class="faded-title">Wiek</p>
-            <p>{{ wiek }} LAT</p>
-          </div>
-          <div>
-            <p class="faded-title">Dzień</p>
-            <p>Wtorek</p>
+  <div class="app-tr-container">
+    <div
+      class="tr-main-container"
+      v-for="trening in trenings"
+      :key="trening.id"
+    >
+      <div class="tr-info-box-1">
+        <div class="tr-info-1">
+          <div class="tr-info-1-box">
+            <div>
+              <p class="faded-title">POZIOM</p>
+              <p>{{ trening.poziom }}</p>
+            </div>
+            <div>
+              <p class="faded-title">Szkoła</p>
+              <p></p>
+            </div>
           </div>
         </div>
       </div>
-      <div class="tr-info-3">
-        <div class="tr-info-3-box tr-border-left">
-          <div>
-            <p class="faded-title">Godzina</p>
-            <p>16:30</p>
+      <div class="tr-info-box-2 tr-info-box-2-grid">
+        <div class="tr-info-2">
+          <div class="tr-info-2-box tr-border-left">
+            <div>
+              <p class="faded-title">Wiek</p>
+              <p>{{ trening.wiek }}</p>
+            </div>
+            <div>
+              <p class="faded-title">Dzień</p>
+              <p>Wtorek</p>
+            </div>
           </div>
-          <div>
-            <p class="faded-title">GRUPA</p>
-            <p>KOKARTKA</p>
+        </div>
+        <div class="tr-info-3">
+          <div class="tr-info-3-box tr-border-left">
+            <div>
+              <p class="faded-title">Godzina</p>
+              <p>16:30</p>
+            </div>
+            <div>
+              <p class="faded-title">GRUPA</p>
+              <p>KOKARTKA</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="tr-btn-container">
-      <a class="tr-btn tr-btn-wi" href="#">Więcej Informacji</a>
-      <a class="tr-btn tr-btn-zs" href="#"> Zapisz się</a>
+      <div class="tr-btn-container">
+        <a class="tr-btn tr-btn-wi" href="#">Więcej Informacji</a>
+        <a class="tr-btn tr-btn-zs" href="#"> Zapisz się</a>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["poziom", "wiek", "szkola"],
   data() {
-    return {};
+    return {
+      trenings: [
+        {
+          id: 1,
+          poziom: "zaawansowany",
+          wiek: 14,
+          szkola: "Gdańsk",
+        },
+        {
+          id: 2,
+          poziom: "podstawowy",
+          wiek: 16,
+          szkola: "Gdynia",
+        },
+      ],
+    };
   },
 };
 window.onload = function () {

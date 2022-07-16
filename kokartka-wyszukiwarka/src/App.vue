@@ -6,10 +6,7 @@ import Heading from "./components/Heading.vue";
 <template>
   <div>
     <Heading class="mar-bot" />
-    <div class="app-tr-container">
-      <Trening2 poziom="podstawowy" wiek="14" szkola="Gdańsk" />
-      <Trening2 poziom="zaawansowany" wiek="15" szkola="gdynia" />
-      <Trening2 />
+    <div>
       <Trening2 />
     </div>
   </div>
