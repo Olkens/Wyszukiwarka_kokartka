@@ -14,7 +14,7 @@
             </div>
             <div>
               <p class="faded-title">Szkoła</p>
-              <p></p>
+              <p>{{ trening.szkola }}</p>
             </div>
           </div>
         </div>
@@ -68,6 +68,18 @@ export default {
           id: 2,
           poziom: "podstawowy",
           wiek: 16,
+          szkola: "Gdynia",
+        },
+        {
+          id: 3,
+          poziom: "podstawowy",
+          wiek: 7,
+          szkola: "Gdynia",
+        },
+        {
+          id: 4,
+          poziom: "podstawowy",
+          wiek: 12,
           szkola: "Gdynia",
         },
       ],
