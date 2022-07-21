@@ -14,7 +14,7 @@
             </div>
             <div>
               <p class="faded-title">Szkoła</p>
-              <p></p>
+              <p>{{ trening.szkola }}</p>
             </div>
           </div>
         </div>
