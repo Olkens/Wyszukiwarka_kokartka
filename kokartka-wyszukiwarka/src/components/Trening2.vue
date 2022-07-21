@@ -70,6 +70,18 @@ export default {
           wiek: 16,
           szkola: "Gdynia",
         },
+        {
+          id: 3,
+          poziom: "podstawowy",
+          wiek: 7,
+          szkola: "Gdynia",
+        },
+        {
+          id: 4,
+          poziom: "podstawowy",
+          wiek: 12,
+          szkola: "Gdynia",
+        },
       ],
     };
   },
