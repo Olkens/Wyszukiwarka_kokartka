@@ -28,11 +28,11 @@
           <div class="tr-info-2-box tr-border-left">
             <div>
               <p class="faded-title">Wiek</p>
-              <p>{{ trening.age.min }}</p>
+              <p>{{ trening.age }}</p>
             </div>
             <div>
               <p class="faded-title">Dzień</p>
-              <p>Wtorek</p>
+              <p>{{ trening.day }}</p>
             </div>
           </div>
         </div>
@@ -40,7 +40,9 @@
           <div class="tr-info-3-box tr-border-left">
             <div>
               <p class="faded-title">Godzina</p>
-              <p>16:30</p>
+              <p>
+                {{ trening.date }}
+              </p>
             </div>
             <div>
               <p class="faded-title">GRUPA</p>
@@ -76,14 +78,25 @@ export default {
         // console.log(data.length);
         const apiResults = [];
         for (let i = 0; i < data.length; i++) {
-          apiResults.push(data[i]);
+          apiResults.push({
+            level: data[i].level,
+            date:
+              new Date(data[i].dates[0]).getHours() +
+              ":" +
+              String(new Date(data[i].dates[0]).getMinutes()).padStart(2, "0"),
+            age: data[i].age.min,
+            day: new Date(data[i].dates[0]).toLocaleDateString("pl-PL", {
+              weekday: "long",
+            }),
+          });
           // console.log(data[i]);
         }
         this.trenings = apiResults;
-        console.log(apiResults);
+        // console.log(apiResults);
       });
   },
 };
+
 window.onload = function () {
   const mainCont = document.querySelectorAll(".tr-main-container");
   console.log(mainCont);
@@ -100,9 +113,10 @@ window.onload = function () {
 <style>
 .tr-main-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 0.8fr 1.2fr;
   grid-template-rows: repeat(2, 0fr);
   max-width: 348px;
+  min-width: 340px;
   padding: 15px;
   border: 1px solid gray;
   border-radius: 5px;
@@ -133,7 +147,8 @@ window.onload = function () {
 
 .tr-border-left {
   border-left: 1px solid gray;
-  padding-left: 25px;
+  padding-left: 15px;
+  padding-right: 5px;
 }
 
 .tr-btn-container {
