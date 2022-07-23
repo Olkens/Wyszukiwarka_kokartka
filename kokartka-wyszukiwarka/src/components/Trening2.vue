@@ -10,7 +10,11 @@
           <div class="tr-info-1-box">
             <div>
               <p class="faded-title">POZIOM</p>
-              <p>{{ trening.poziom }}</p>
+              <p v-if="trening.level === 'beginner'">Podstawowy</p>
+              <p v-else-if="trening.level === 'beginner_older'">
+                początkująca starsza
+              </p>
+              <p v-if="trening.level === 'advanced'">zaawansowany</p>
             </div>
             <div>
               <p class="faded-title">Szkoła</p>
@@ -24,7 +28,7 @@
           <div class="tr-info-2-box tr-border-left">
             <div>
               <p class="faded-title">Wiek</p>
-              <p>{{ trening.wiek }}</p>
+              <p>{{ trening.age.min }}</p>
             </div>
             <div>
               <p class="faded-title">Dzień</p>
@@ -50,6 +54,7 @@
         <a class="tr-btn tr-btn-zs" href="#"> Zapisz się</a>
       </div>
     </div>
+    <li v-for="tr in trenings" :key="tr.id">{{ tr.level }}</li>
   </div>
 </template>
 
@@ -57,33 +62,26 @@
 export default {
   data() {
     return {
-      trenings: [
-        {
-          id: 1,
-          poziom: "zaawansowany",
-          wiek: 14,
-          szkola: "Gdańsk",
-        },
-        {
-          id: 2,
-          poziom: "podstawowy",
-          wiek: 16,
-          szkola: "Gdynia",
-        },
-        {
-          id: 3,
-          poziom: "podstawowy",
-          wiek: 7,
-          szkola: "Gdynia",
-        },
-        {
-          id: 4,
-          poziom: "podstawowy",
-          wiek: 12,
-          szkola: "Gdynia",
-        },
-      ],
+      trenings: [],
     };
+  },
+  created() {
+    fetch("https://kokartka.stronazen.pl/zapisy/api/workouts")
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        // console.log(data.length);
+        const apiResults = [];
+        for (let i = 0; i < data.length; i++) {
+          apiResults.push(data[i]);
+          // console.log(data[i]);
+        }
+        this.trenings = apiResults;
+        console.log(apiResults);
+      });
   },
 };
 window.onload = function () {
