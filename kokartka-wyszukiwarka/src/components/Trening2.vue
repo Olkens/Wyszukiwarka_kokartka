@@ -1,10 +1,7 @@
 <template>
   <div class="app-tr-container">
-    <div
-      class="tr-main-container"
-      v-for="trening in trenings"
-      :key="trening.id"
-    >
+    <div class="tr-main-container" v-for="(trening, index) in trenings" :key="trening.id"
+      :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }">
       <div class="tr-info-box-1">
         <div class="tr-info-1">
           <div class="tr-info-1-box">
@@ -62,6 +59,9 @@
 
 <script>
 export default {
+  props: [
+    'filterLevel'
+  ],
   data() {
     return {
       trenings: [],
@@ -79,6 +79,7 @@ export default {
         const apiResults = [];
         for (let i = 0; i < data.length; i++) {
           apiResults.push({
+            id: i,
             level: data[i].level,
             date:
               new Date(data[i].dates[0]).getHours() +
@@ -94,6 +95,7 @@ export default {
         this.trenings = apiResults;
         // console.log(apiResults);
       });
+    console.log(this.filterLevel)
   },
 };
 
@@ -107,6 +109,7 @@ window.onload = function () {
       mainCont[i].classList.add("tr-main-container-second-bgcolor");
     }
   }
+
 };
 </script>
 
@@ -126,8 +129,12 @@ window.onload = function () {
   text-transform: uppercase;
 }
 
-.tr-main-container-second-bgcolor {
+.trMainContainerSecondBgcolor0 {
   background-color: #2c303d !important;
+}
+
+.trMainContainerSecondBgcolor {
+  background-color: #1a1d27;
 }
 
 .tr-info-box-1 {
@@ -141,6 +148,7 @@ window.onload = function () {
   gap: 5px;
   flex-direction: column;
 }
+
 .tr-info-box-2 {
   grid-area: 1 / 2 / 2 / 3;
 }
@@ -171,6 +179,7 @@ window.onload = function () {
 .tr-info-2 {
   grid-area: 1 / 1 / 2 / 2;
 }
+
 .tr-info-3 {
   grid-area: 1 / 2 / 2 / 3;
 }

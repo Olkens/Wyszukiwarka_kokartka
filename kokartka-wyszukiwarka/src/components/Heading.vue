@@ -2,22 +2,43 @@
   <div class="box-cont">
     <div class="">
       <!-- <label for="group">GRUPA</label> -->
-      <select name="group" id="group">
-        <option value="grupa">Grupa</option>
+      <select name="grupa" id="group" v-model="this.grupa">
+        <option value="grupa" selected disabled hidden>Grupa</option>
         <option value="mucha">mucha</option>
         <option value="kokartka">kokartka</option>
       </select>
     </div>
-    <div class="box"><p>POZIOM</p></div>
+    <div class="box">
+      <select name="level" id="level" v-model="this.level">
+        <option value="podstawowy">Podstawowy</option>
+        <option value="advanced">zaawansowany</option>
+      </select>
+    </div>
     <div class="box"><p>WIEK</p></div>
     <div class="box">SZKOŁA</div>
     <div class="box">DZIEŃ</div>
     <div class="box">GODZINA</div>
+    <button @click="showModel">Filtruj</button>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  emits:["show-model"],
+  props: ["level", "grupa"],
+  data() {
+    return {
+      level: "",
+      age: "",
+      grupa: "",
+    };
+  },
+  methods: {
+    showModel() {
+      this.$emit('show-model', this.level, this.grupa);
+    },
+  },
+};
 </script>
 
 <style>
