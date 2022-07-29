@@ -1,7 +1,11 @@
 <template>
   <div class="app-tr-container">
-    <div class="tr-main-container" v-for="(trening, index) in trenings" :key="trening.id"
-      :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }">
+    <div
+      class="tr-main-container"
+      v-for="(trening, index) in trenings"
+      :key="trening.id"
+      :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }"
+    >
       <div class="tr-info-box-1">
         <div class="tr-info-1">
           <div class="tr-info-1-box">
@@ -59,9 +63,6 @@
 
 <script>
 export default {
-  props: [
-    'filterLevel'
-  ],
   data() {
     return {
       trenings: [],
@@ -75,7 +76,6 @@ export default {
         }
       })
       .then((data) => {
-        // console.log(data.length);
         const apiResults = [];
         for (let i = 0; i < data.length; i++) {
           apiResults.push({
@@ -90,26 +90,12 @@ export default {
               weekday: "long",
             }),
           });
-          // console.log(data[i]);
         }
         this.trenings = apiResults;
-        // console.log(apiResults);
+        console.log(level.value);
       });
-    console.log(this.filterLevel)
   },
-};
-
-window.onload = function () {
-  const mainCont = document.querySelectorAll(".tr-main-container");
-  console.log(mainCont);
-
-  for (let i = 0; i < mainCont.length; i++) {
-    console.log(mainCont[i]);
-    if (i % 2 != 0) {
-      mainCont[i].classList.add("tr-main-container-second-bgcolor");
-    }
-  }
-
+  mounted() {},
 };
 </script>
 

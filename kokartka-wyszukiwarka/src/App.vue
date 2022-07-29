@@ -1,13 +1,17 @@
 <script setup>
 import Trening2 from "./components/Trening2.vue";
 import Heading from "./components/Heading.vue";
-
 </script>
 <template>
   <div>
-    <Heading class="mar-bot" @show-model="showModel" :level="Heading.level" :grupa="Heading.grupa" />
+    <Heading
+      class="mar-bot"
+      @show-model="showModel"
+      :level="level"
+      :grupa="grupa"
+    />
     <div>
-      <Trening2 :filterLevel=level />
+      <Trening2 :level="level" />
     </div>
   </div>
 </template>
@@ -16,21 +20,19 @@ import Heading from "./components/Heading.vue";
 export default {
   data() {
     return {
-      Heading: [
-        {
-          level: '',
-          grupa: '',
-        }
-      ]
-    }
+      props: {
+        level: String,
+        grupa: String,
+      },
+    };
   },
   methods: {
     showModel(level, grupa) {
       console.log(level + " " + grupa);
       // console.log(grupa.value);
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>

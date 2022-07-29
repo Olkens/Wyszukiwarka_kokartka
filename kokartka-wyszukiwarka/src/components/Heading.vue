@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  emits:["show-model"],
+  emits: ["show-model"],
   props: ["level", "grupa"],
   data() {
     return {
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     showModel() {
-      this.$emit('show-model', this.level, this.grupa);
+      this.$emit("show-model", this.level, this.grupa);
     },
   },
 };
