@@ -11,7 +11,7 @@ import Heading from "./components/Heading.vue";
       :grupa="grupa"
     />
     <div>
-      <Trening2 :level="level" />
+      <Trening2 :filterLevel="level" :filterGrupa="grupa" />
     </div>
   </div>
 </template>

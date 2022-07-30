@@ -1,5 +1,6 @@
 <template>
   <div class="app-tr-container">
+    <!-- <Heading></Heading> -->
     <div
       class="tr-main-container"
       v-for="(trening, index) in trenings"
@@ -57,11 +58,12 @@
         <a class="tr-btn tr-btn-zs" href="#"> Zapisz się</a>
       </div>
     </div>
-    <li v-for="tr in trenings" :key="tr.id">{{ tr.level }}</li>
+    <button @click="consoleLog"></button>
   </div>
 </template>
 
 <script>
+// import Heading from "./Heading.vue";
 export default {
   data() {
     return {
@@ -92,10 +94,14 @@ export default {
           });
         }
         this.trenings = apiResults;
-        console.log(level.value);
+        // console.log(level.value);
       });
   },
-  mounted() {},
+  methods: {
+    consoleLog() {
+      console.log(level.value);
+    },
+  },
 };
 </script>
 
