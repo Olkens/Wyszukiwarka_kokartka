@@ -14,7 +14,9 @@
         <option value="advanced">zaawansowany</option>
       </select>
     </div>
-    <div class="box"><p>WIEK</p></div>
+    <div class="box">
+      <p>WIEK</p>
+    </div>
     <div class="box">SZKOŁA</div>
     <div class="box">DZIEŃ</div>
     <div class="box">GODZINA</div>
@@ -35,7 +37,8 @@ export default {
   },
   methods: {
     showModel() {
-      this.$emit("show-model", this.level, this.grupa);
+      this.emitter.emit("filterProps", { level: this.level, grupa: this.grupa });
+      // this.$emit("show-model", this.level, this.grupa);
     },
   },
 };
@@ -52,6 +55,7 @@ export default {
   border-radius: 2px;
   color: #fff;
 }
+
 .box-cont {
   display: flex;
   flex-direction: row;

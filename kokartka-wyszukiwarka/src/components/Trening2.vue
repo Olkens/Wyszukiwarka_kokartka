@@ -1,12 +1,8 @@
 <template>
   <div class="app-tr-container">
     <!-- <Heading></Heading> -->
-    <div
-      class="tr-main-container"
-      v-for="(trening, index) in trenings"
-      :key="trening.id"
-      :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }"
-    >
+    <div class="tr-main-container" v-for="(trening, index) in trenings" :key="trening.id"
+      :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }">
       <div class="tr-info-box-1">
         <div class="tr-info-1">
           <div class="tr-info-1-box">
@@ -58,7 +54,7 @@
         <a class="tr-btn tr-btn-zs" href="#"> Zapisz się</a>
       </div>
     </div>
-    <button @click="consoleLog"></button>
+    <button @click="consoleLog" style="width: 100px; height: 100px;"></button>
   </div>
 </template>
 
@@ -67,6 +63,10 @@
 export default {
   data() {
     return {
+      props: {
+        level: String,
+        grupa: String,
+      },
       trenings: [],
     };
   },
@@ -96,11 +96,15 @@ export default {
         this.trenings = apiResults;
         // console.log(level.value);
       });
+    this.emitter.on("filterProps", (data) => {
+      console.log(data.level + ' ' + data.grupa)
+    });
   },
   methods: {
-    consoleLog() {
-      console.log(level.value);
-    },
+    // consoleLog() {
+    //   console.log(level.value + " " + grupa.value);
+
+    // },
   },
 };
 </script>
