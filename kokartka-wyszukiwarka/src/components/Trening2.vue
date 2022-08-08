@@ -59,13 +59,15 @@
 </template>
 
 <script>
+import { thisTypeAnnotation } from '@babel/types';
+
 // import Heading from "./Heading.vue";
 export default {
   data() {
     return {
       props: {
-        level: String,
-        grupa: String,
+        level: '',
+        grupa: '',
       },
       trenings: [],
     };
@@ -97,14 +99,11 @@ export default {
         // console.log(level.value);
       });
     this.emitter.on("filterProps", (data) => {
-      console.log(data.level + ' ' + data.grupa)
+
     });
   },
   methods: {
-    // consoleLog() {
-    //   console.log(level.value + " " + grupa.value);
 
-    // },
   },
 };
 </script>
