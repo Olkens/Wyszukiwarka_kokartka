@@ -1,7 +1,7 @@
 import { createApp, VueElement } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
-import mitt from 'mitt';
+import mitt from 'mitt'
 
 const emitter = mitt();
 

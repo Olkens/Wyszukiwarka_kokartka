@@ -2,16 +2,22 @@
   <div class="box-cont">
     <div class="">
       <!-- <label for="group">GRUPA</label> -->
-      <select name="grupa" id="group" v-model="this.grupa">
+      <select name="grupa" id="group" v-model="this.fGroup">
         <option value="grupa" selected disabled hidden>Grupa</option>
         <option value="mucha">mucha</option>
         <option value="kokartka">kokartka</option>
       </select>
     </div>
     <div class="box">
-      <select name="level" id="level" v-model="this.level">
+      <select name="level" id="level" v-model="this.fLevel">
         <option value="podstawowy">Podstawowy</option>
         <option value="advanced">zaawansowany</option>
+      </select>
+    </div>
+    <div class="box">
+      <select name="age" id="age" v-model="this.fAge">
+        <option value="14">15</option>
+        <option value="15">15</option>
       </select>
     </div>
     <div class="box">
@@ -27,17 +33,21 @@
 <script>
 export default {
   emits: ["show-model"],
-  props: ["level", "grupa"],
+  props: ["fLevel", "fGrupa"],
   data() {
     return {
-      level: "",
-      age: "",
-      grupa: "",
+      fLevel: "",
+      fAge: "",
+      fGroup: "",
     };
   },
   methods: {
     showModel() {
-      this.emitter.emit("filterProps", { level: this.level, grupa: this.grupa });
+      this.emitter.emit("filterProps", {
+        filterLevel: this.fLevel,
+        filterGroup: this.fGroup,
+        filterAge: this.fAge,
+      });
       // this.$emit("show-model", this.level, this.grupa);
     },
   },

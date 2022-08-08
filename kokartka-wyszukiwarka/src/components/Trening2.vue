@@ -1,8 +1,13 @@
 <template>
   <div class="app-tr-container">
     <!-- <Heading></Heading> -->
-    <div class="tr-main-container" v-for="(trening, index) in trenings" :key="trening.id"
-      :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }">
+    <button @click="filterTable" style="width: 100px; height: 100px"></button>
+    <div
+      class="tr-main-container"
+      v-for="(trening, index) in trenings"
+      :key="trening.id"
+      :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }"
+    >
       <div class="tr-info-box-1">
         <div class="tr-info-1">
           <div class="tr-info-1-box">
@@ -54,24 +59,29 @@
         <a class="tr-btn tr-btn-zs" href="#"> Zapisz się</a>
       </div>
     </div>
-    <button @click="consoleLog" style="width: 100px; height: 100px;"></button>
   </div>
 </template>
 
 <script>
-import { thisTypeAnnotation } from '@babel/types';
+// import { thisTypeAnnotation } from "@babel/types";
 
 // import Heading from "./Heading.vue";
 export default {
   data() {
     return {
       props: {
-        level: '',
-        grupa: '',
+        level: "",
+        grupa: "",
       },
       trenings: [],
+      filteredTrenings: [],
+      filters: {
+        filteredLevel: "",
+        filteredGroup: "",
+      },
     };
   },
+  computed: {},
   created() {
     fetch("https://kokartka.stronazen.pl/zapisy/api/workouts")
       .then((response) => {
@@ -95,15 +105,25 @@ export default {
             }),
           });
         }
-        this.trenings = apiResults;
+
         // console.log(level.value);
+        this.emitter.on("filterProps", (e) => {
+          this.filters.push({ filtereG: filterGroup });
+          console.log(this.filters.filterG);
+        });
+        let filtered = apiResults.filter((result) => {
+          return result.level == "podstawowy";
+        });
+        this.trenings = apiResults;
       });
-    this.emitter.on("filterProps", (data) => {
-
-    });
   },
-  methods: {
-
+  computed: {
+    // filterTable(level) {
+    //   console.log(this.trenigns);
+    //   this.trenigns.filter((trening) => {
+    //     return trening.level == this.filterLevel;
+    //   });
+    // },
   },
 };
 </script>
