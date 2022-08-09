@@ -12,7 +12,7 @@
       <div class="box flex-label">
         <label for="level">LEVEL</label>
         <select name="level" id="level" v-model="this.fLevel">
-          <option value="podstawowy">Podstawowy</option>
+          <option value="beginner">Podstawowy</option>
           <option value="advanced">zaawansowany</option>
         </select>
       </div>
@@ -36,20 +36,11 @@
       <div class="box flex-label">SZKOŁA</div>
 
       <div class="box flex-label">GODZINA</div>
-      <button @click="showModel">Filtruj</button>
-      <button @click="filterButton">Filt</button>
+      <button @click="filterTable()">Filtruj</button>
+      <button @click="reset()">Reset</button>
     </div>
-    <!-- <Heading /> -->
-    <button
-      @click="
-        // setFilters();
-        filterTable()
-      "
-      style="width: 100px; height: 100px"
-    >
-      f
-    </button>
-    <button @click="reset()" style="width: 100px; height: 100px">r</button>
+    <!-- <button @click="log()" style="width: 100px; height: 100px">f</button>
+    <button @click="reset()" style="width: 100px; height: 100px">r</button> -->
     <div
       class="tr-main-container"
       v-for="(trening, index) in trenings"
@@ -117,16 +108,16 @@
 export default {
   data() {
     return {
-      props: {
-        level: "",
-        grupa: "",
-      },
+      fLevel: "",
+      fAge: "",
+      fGroup: "",
+      fDay: "",
       trenings: [],
       filteredTrenings: [],
       proxyTable: [],
-      filteredLevel: "",
-      filteredGroup: "",
-      filteredDay: "",
+      // filteredLevel: "",
+      // filteredGroup: "",
+      // filteredDay: "",
     };
   },
   created() {
@@ -155,23 +146,23 @@ export default {
         this.proxyTable = apiResults;
         this.trenings = this.proxyTable;
 
-        this.emitter.on("filterProps", (e) => {
-          (this.filteredLevel = e.filterLevel),
-            (this.filteredGroup = e.filterGroup),
-            (this.filteredDay = e.filterDay);
-          if (e.filterLevel == "podstawowy") {
-            this.filteredLevel = "beginner";
-          } else if (e.filterLevel == "zaawansowany") {
-            this.filteredLevel = "advanced";
-          }
-          console.log(
-            this.filteredLevel +
-              " " +
-              this.filteredGroup +
-              " " +
-              this.filteredDay
-          );
-        });
+        // this.emitter.on("filterProps", (e) => {
+        //   (this.filteredLevel = e.filterLevel),
+        //     (this.filteredGroup = e.filterGroup),
+        //     (this.filteredDay = e.filterDay);
+        //   if (e.filterLevel == "podstawowy") {
+        //     this.filteredLevel = "beginner";
+        //   } else if (e.filterLevel == "zaawansowany") {
+        //     this.filteredLevel = "advanced";
+        //   }
+        //   console.log(
+        //     this.filteredLevel +
+        //       " " +
+        //       this.filteredGroup +
+        //       " " +
+        //       this.filteredDay
+        //   );
+        // });
       });
   },
   computed: {},
@@ -179,8 +170,8 @@ export default {
     reset() {
       this.filteredTrenings = [];
       this.trenings = this.proxyTable;
-      this.filteredLevel = "";
-      this.filteredGroup = "";
+      this.fLevel = "";
+      this.fGroup = "";
     },
     // setFilters() {
     //   this.emitter.on("filterProps", (e) => {
@@ -199,14 +190,14 @@ export default {
     // },
     filterTable() {
       this.trenings.filter((trening) => {
-        // console.log(trening);
-        // if (this.filteredLevel != "") {
-        if (
-          trening.level == this.filteredLevel &&
-          trening.day == this.filteredDay
-        ) {
+        if (trening.level == this.fLevel && trening.day == this.fDay) {
           this.filteredTrenings.push(trening);
         }
+        // console.log(trening);
+        // if (this.filteredLevel != "") {
+        // if (trening.level == this.fLevel && trening.day == this.fDay) {
+        //   this.filteredTrenings.push(trening);
+        // }
         // }
         // if (this.filteredGroup != "") {
         //   if (trening.group == this.filteredGroup) {
@@ -220,6 +211,10 @@ export default {
         // }
       });
       this.trenings = this.filteredTrenings;
+      console.log(this.filteredTrenings);
+    },
+    log() {
+      console.log(this.fDay + " " + this.fLevel);
     },
   },
 };
