@@ -1,7 +1,8 @@
 <template>
   <div class="app-tr-container">
     <!-- <Heading /> -->
-    <button @click="filterTable" style="width: 100px; height: 100px"></button>
+    <button @click="filterTable" style="width: 100px; height: 100px">f</button>
+    <button @click="reset" style="width: 100px; height: 100px">r</button>
     <div
       class="tr-main-container"
       v-for="(trening, index) in trenings"
@@ -75,6 +76,7 @@ export default {
       },
       trenings: [],
       filteredTrenings: [],
+      proxyTable: [],
       filteredLevel: "",
       filteredGroup: "",
     };
@@ -102,30 +104,36 @@ export default {
             }),
           });
         }
-        this.trenings = apiResults;
+        this.proxyTable = apiResults;
+        this.trenings = this.proxyTable;
 
         this.emitter.on("filterProps", (e) => {
           (this.filteredLevel = e.filterLevel),
             (this.filteredGroup = e.filterGroup);
+          if (e.filterLevel == "podstawowy") {
+            this.filteredLevel = "beginner";
+          } else if (e.filterLevel == "zaawansowany") {
+            this.filteredLevel = "advanced";
+          }
           console.log(this.filteredLevel + " " + this.filteredGroup);
+          // console.log(this.trenings + "###### " + this.proxyTable);
         });
       });
   },
   computed: {
     filterTable() {
-      console.log(this.trenings);
       this.trenings.filter((trening) => {
-        if (trening.level == "beginner") {
-          this.filteredLevel = "beginner";
-        }
-        // console.log(trening);
-        // console.log(this.filteredLevel);
         if (trening.level == this.filteredLevel) {
           this.filteredTrenings.push(trening);
         }
       });
-      console.log(this.filteredTrenings);
       this.trenings = this.filteredTrenings;
+    },
+  },
+  methods: {
+    reset() {
+      this.filteredTrenings = [];
+      this.trenings = this.proxyTable;
     },
   },
 };
