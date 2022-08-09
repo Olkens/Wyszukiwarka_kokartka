@@ -1,44 +1,55 @@
 <template>
   <div class="box-cont">
-    <div class="">
-      <!-- <label for="group">GRUPA</label> -->
+    <div class="box flex-label">
+      <label for="group">GRUPA</label>
       <select name="grupa" id="group" v-model="this.fGroup">
         <option value="grupa" selected disabled hidden>Grupa</option>
         <option value="mucha">mucha</option>
         <option value="kokartka">kokartka</option>
       </select>
     </div>
-    <div class="box">
+    <div class="box flex-label">
+      <label for="level">LEVEL</label>
       <select name="level" id="level" v-model="this.fLevel">
         <option value="podstawowy">Podstawowy</option>
         <option value="advanced">zaawansowany</option>
       </select>
     </div>
-    <div class="box">
+    <div class="box flex-label">
+      <label for="age">WIEK</label>
       <select name="age" id="age" v-model="this.fAge">
-        <option value="14">15</option>
+        <option value="14">14</option>
         <option value="15">15</option>
       </select>
     </div>
-    <div class="box">
+    <div class="box flex-label">
+      <label for="day">DZIEŃ</label>
+      <select name="day" id="day" v-model="this.fDay">
+        <option value="poniedziałek">Poniedziałek</option>
+        <option value="wtorek">Wtorek</option>
+      </select>
+    </div>
+    <div class="box flex-label">
       <p>WIEK</p>
     </div>
-    <div class="box">SZKOŁA</div>
-    <div class="box">DZIEŃ</div>
-    <div class="box">GODZINA</div>
+    <div class="box flex-label">SZKOŁA</div>
+
+    <div class="box flex-label">GODZINA</div>
     <button @click="showModel">Filtruj</button>
+    <button @click="filterButton">Filt</button>
   </div>
 </template>
 
 <script>
 export default {
   emits: ["show-model"],
-  props: ["fLevel", "fGrupa"],
+  // props: ["fLevel", "fGrupa"],
   data() {
     return {
       fLevel: "",
       fAge: "",
       fGroup: "",
+      fDay: "",
     };
   },
   methods: {
@@ -47,8 +58,13 @@ export default {
         filterLevel: this.fLevel,
         filterGroup: this.fGroup,
         filterAge: this.fAge,
+        filterDay: this.fDay,
       });
       // this.$emit("show-model", this.level, this.grupa);
+      // this.$refs.filterTable();
+    },
+    filterButton() {
+      this.emitter.on("filterButton", filterTable());
     },
   },
 };
@@ -71,6 +87,11 @@ export default {
   flex-direction: row;
   gap: 5px;
   margin-bottom: 25px;
+}
+
+.flex-label {
+  display: flex;
+  flex-direction: column;
 }
 
 select {

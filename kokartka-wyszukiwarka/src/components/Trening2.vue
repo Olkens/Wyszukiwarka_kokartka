@@ -1,8 +1,55 @@
 <template>
   <div class="app-tr-container">
+    <div class="box-cont">
+      <div class="box flex-label">
+        <label for="group">GRUPA</label>
+        <select name="grupa" id="group" v-model="this.fGroup">
+          <option value="grupa" selected disabled hidden>Grupa</option>
+          <option value="mucha">mucha</option>
+          <option value="kokartka">kokartka</option>
+        </select>
+      </div>
+      <div class="box flex-label">
+        <label for="level">LEVEL</label>
+        <select name="level" id="level" v-model="this.fLevel">
+          <option value="podstawowy">Podstawowy</option>
+          <option value="advanced">zaawansowany</option>
+        </select>
+      </div>
+      <div class="box flex-label">
+        <label for="age">WIEK</label>
+        <select name="age" id="age" v-model="this.fAge">
+          <option value="14">14</option>
+          <option value="15">15</option>
+        </select>
+      </div>
+      <div class="box flex-label">
+        <label for="day">DZIEŃ</label>
+        <select name="day" id="day" v-model="this.fDay">
+          <option value="poniedziałek">Poniedziałek</option>
+          <option value="wtorek">Wtorek</option>
+        </select>
+      </div>
+      <div class="box flex-label">
+        <p>WIEK</p>
+      </div>
+      <div class="box flex-label">SZKOŁA</div>
+
+      <div class="box flex-label">GODZINA</div>
+      <button @click="showModel">Filtruj</button>
+      <button @click="filterButton">Filt</button>
+    </div>
     <!-- <Heading /> -->
-    <button @click="filterTable" style="width: 100px; height: 100px">f</button>
-    <button @click="reset" style="width: 100px; height: 100px">r</button>
+    <button
+      @click="
+        // setFilters();
+        filterTable()
+      "
+      style="width: 100px; height: 100px"
+    >
+      f
+    </button>
+    <button @click="reset()" style="width: 100px; height: 100px">r</button>
     <div
       class="tr-main-container"
       v-for="(trening, index) in trenings"
@@ -79,6 +126,7 @@ export default {
       proxyTable: [],
       filteredLevel: "",
       filteredGroup: "",
+      filteredDay: "",
     };
   },
   created() {
@@ -109,31 +157,69 @@ export default {
 
         this.emitter.on("filterProps", (e) => {
           (this.filteredLevel = e.filterLevel),
-            (this.filteredGroup = e.filterGroup);
+            (this.filteredGroup = e.filterGroup),
+            (this.filteredDay = e.filterDay);
           if (e.filterLevel == "podstawowy") {
             this.filteredLevel = "beginner";
           } else if (e.filterLevel == "zaawansowany") {
             this.filteredLevel = "advanced";
           }
-          console.log(this.filteredLevel + " " + this.filteredGroup);
-          // console.log(this.trenings + "###### " + this.proxyTable);
+          console.log(
+            this.filteredLevel +
+              " " +
+              this.filteredGroup +
+              " " +
+              this.filteredDay
+          );
         });
       });
   },
-  computed: {
-    filterTable() {
-      this.trenings.filter((trening) => {
-        if (trening.level == this.filteredLevel) {
-          this.filteredTrenings.push(trening);
-        }
-      });
-      this.trenings = this.filteredTrenings;
-    },
-  },
+  computed: {},
   methods: {
     reset() {
       this.filteredTrenings = [];
       this.trenings = this.proxyTable;
+      this.filteredLevel = "";
+      this.filteredGroup = "";
+    },
+    // setFilters() {
+    //   this.emitter.on("filterProps", (e) => {
+    //     (this.filteredLevel = e.filterLevel),
+    //       (this.filteredGroup = e.filterGroup),
+    //       (this.filteredDay = e.filterDay);
+    //     if (e.filterLevel == "podstawowy") {
+    //       this.filteredLevel = "beginner";
+    //     } else if (e.filterLevel == "zaawansowany") {
+    //       this.filteredLevel = "advanced";
+    //     }
+    //     console.log(
+    //       this.filteredLevel + " " + this.filteredGroup + " " + this.filteredDay
+    //     );
+    //   });
+    // },
+    filterTable() {
+      this.trenings.filter((trening) => {
+        // console.log(trening);
+        // if (this.filteredLevel != "") {
+        if (
+          trening.level == this.filteredLevel &&
+          trening.day == this.filteredDay
+        ) {
+          this.filteredTrenings.push(trening);
+        }
+        // }
+        // if (this.filteredGroup != "") {
+        //   if (trening.group == this.filteredGroup) {
+        //     this.filteredTrenings.push(trening);
+        //   }
+        // }
+        // if (this.filteredDay != "") {
+        //   if (trening.day == this.filteredGroup) {
+        //     this.filteredTrenings.push(trening);
+        //   }
+        // }
+      });
+      this.trenings = this.filteredTrenings;
     },
   },
 };
