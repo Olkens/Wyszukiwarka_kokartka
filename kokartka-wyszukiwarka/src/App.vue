@@ -4,12 +4,12 @@ import Heading from "./components/Heading.vue";
 </script>
 <template>
   <div>
-    <Heading
+    <!-- <Heading
       class="mar-bot"
       @show-model="showModel"
       :level="level"
       :grupa="grupa"
-    />
+    /> -->
     <div>
       <Trening2 />
     </div>
