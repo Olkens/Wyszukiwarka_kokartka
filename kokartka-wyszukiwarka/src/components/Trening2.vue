@@ -20,13 +20,14 @@
       <div class="box flex-label">
         <label for="age">WIEK</label>
         <select name="age" id="age" v-model="this.fAge">
-          <option value="14">14</option>
+          <option value="4">4</option>
           <option value="15">15</option>
         </select>
       </div>
       <div class="box flex-label">
-        <label for="day">DZIEŃ</label>
+        <!-- <label for="day">DZIEŃ</label> -->
         <select name="day" id="day" v-model="this.fDay">
+          <option value="Dzień" disabled selected hidden>Dzień</option>
           <option value="poniedziałek">Poniedziałek</option>
           <option value="wtorek">Wtorek</option>
           <option value="środa">Środa</option>
@@ -68,7 +69,7 @@ export default {
       fLevel: "Poziom",
       fAge: "",
       fGroup: "Grupa",
-      fDay: "",
+      fDay: "Dzień",
       trenings: [],
       filteredTrenings: [],
       proxyTable: [],
@@ -101,13 +102,14 @@ export default {
         this.trenings = this.proxyTable;
       });
   },
-  computed: {},
+  computed: {
+  },
   methods: {
     reset() {
       this.filteredTrenings = [];
       this.trenings = this.proxyTable;
-      this.fLevel = "";
-      this.fGroup = "";
+      this.fLevel = "Poziom";
+      this.fGroup = "Grupa";
     },
     // setFilters() {
     //   this.emitter.on("filterProps", (e) => {
@@ -130,9 +132,16 @@ export default {
       this.trenings = this.proxyTable;
 
       this.trenings.filter((trening) => {
-        if (trening.level == this.fLevel && trening.day == this.fDay) {
-          this.filteredTrenings.push(trening);
+        if (this.fLevel != "Poziom") {
+          if (trening.level.includes(this.fLevel)) {
+            this.filteredTrenings.push(trening);
+          }
         }
+
+        // if ((trening.day.includes(this.fDay) && this.fDay != "Dzień") &&
+        //   (trening.day.includes(this.fLevel) && this.fLevel != "Poziom")) {
+        //   this.filteredTrenings.push(trening)
+        // }
         // console.log(trening);
         // if (this.filteredLevel != "") {
         // if (trening.level == this.fLevel && trening.day == this.fDay) {
@@ -150,7 +159,9 @@ export default {
         //   }
         // }
       });
-      this.trenings = this.filteredTrenings;
+      if (this.filteredTrenings.length != 0) {
+        this.trenings = this.filteredTrenings;
+      }
       console.log(this.filteredTrenings);
 
     },
