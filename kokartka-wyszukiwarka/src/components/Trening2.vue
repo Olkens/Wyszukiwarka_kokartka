@@ -2,16 +2,17 @@
   <div class="app-tr-container">
     <div class="box-cont">
       <div class="box flex-label">
-        <label for="group">GRUPA</label>
+        <!-- <label for="group">GRUPA</label> -->
         <select name="grupa" id="group" v-model="this.fGroup">
-          <option value="grupa" selected disabled hidden>Grupa</option>
+          <option value="Grupa" disabled selected hidden>Grupa</option>
           <option value="mucha">mucha</option>
           <option value="kokartka">kokartka</option>
         </select>
       </div>
       <div class="box flex-label">
-        <label for="level">LEVEL</label>
+        <!-- <label for="level">LEVEL</label> -->
         <select name="level" id="level" v-model="this.fLevel">
+          <option value="Poziom" disabled selected hidden>Poziom</option>
           <option value="beginner">Podstawowy</option>
           <option value="advanced">zaawansowany</option>
         </select>
@@ -28,6 +29,11 @@
         <select name="day" id="day" v-model="this.fDay">
           <option value="poniedziałek">Poniedziałek</option>
           <option value="wtorek">Wtorek</option>
+          <option value="środa">Środa</option>
+          <option value="czwartek">Czwartek</option>
+          <option value="piątek">Piątek</option>
+          <option value="sobota">Sobota</option>
+          <option value="niedziela">Niedziela</option>
         </select>
       </div>
       <div class="box flex-label">
@@ -41,63 +47,12 @@
     </div>
     <!-- <button @click="log()" style="width: 100px; height: 100px">f</button>
     <button @click="reset()" style="width: 100px; height: 100px">r</button> -->
-    <div
-      class="tr-main-container"
-      v-for="(trening, index) in trenings"
-      :key="trening.id"
-      :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }"
-    >
-      <div class="tr-info-box-1">
-        <div class="tr-info-1">
-          <div class="tr-info-1-box">
-            <div>
-              <p class="faded-title">POZIOM</p>
-              <p v-if="trening.level === 'beginner'">Podstawowy</p>
-              <p v-else-if="trening.level === 'beginner_older'">
-                początkująca starsza
-              </p>
-              <p v-if="trening.level === 'advanced'">zaawansowany</p>
-            </div>
-            <div>
-              <p class="faded-title">Szkoła</p>
-              <p>{{ trening.szkola }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tr-info-box-2 tr-info-box-2-grid">
-        <div class="tr-info-2">
-          <div class="tr-info-2-box tr-border-left">
-            <div>
-              <p class="faded-title">Wiek</p>
-              <p>{{ trening.age }}</p>
-            </div>
-            <div>
-              <p class="faded-title">Dzień</p>
-              <p>{{ trening.day }}</p>
-            </div>
-          </div>
-        </div>
-        <div class="tr-info-3">
-          <div class="tr-info-3-box tr-border-left">
-            <div>
-              <p class="faded-title">Godzina</p>
-              <p>
-                {{ trening.date }}
-              </p>
-            </div>
-            <div>
-              <p class="faded-title">GRUPA</p>
-              <p>KOKARTKA</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tr-btn-container">
-        <a class="tr-btn tr-btn-wi" href="#">Więcej Informacji</a>
-        <a class="tr-btn tr-btn-zs" href="#"> Zapisz się</a>
-      </div>
+    <div v-for="(trening, index) in trenings" :key="trening.id"
+      :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }">
+      <Workout :trening="trening" />
     </div>
+
+
   </div>
 </template>
 
@@ -105,19 +60,19 @@
 // import { thisTypeAnnotation } from "@babel/types";
 
 // import Heading from "./Heading.vue";
+import Workout from "./Workout.vue";
 export default {
+  props: ['trening'],
   data() {
     return {
-      fLevel: "",
+      fLevel: "Poziom",
       fAge: "",
-      fGroup: "",
+      fGroup: "Grupa",
       fDay: "",
       trenings: [],
       filteredTrenings: [],
       proxyTable: [],
-      // filteredLevel: "",
-      // filteredGroup: "",
-      // filteredDay: "",
+      isFiltered: false,
     };
   },
   created() {
@@ -133,8 +88,7 @@ export default {
           apiResults.push({
             id: i,
             level: data[i].level,
-            date:
-              new Date(data[i].dates[0]).getHours() +
+            date: new Date(data[i].dates[0]).getHours() +
               ":" +
               String(new Date(data[i].dates[0]).getMinutes()).padStart(2, "0"),
             age: data[i].age.min,
@@ -145,24 +99,6 @@ export default {
         }
         this.proxyTable = apiResults;
         this.trenings = this.proxyTable;
-
-        // this.emitter.on("filterProps", (e) => {
-        //   (this.filteredLevel = e.filterLevel),
-        //     (this.filteredGroup = e.filterGroup),
-        //     (this.filteredDay = e.filterDay);
-        //   if (e.filterLevel == "podstawowy") {
-        //     this.filteredLevel = "beginner";
-        //   } else if (e.filterLevel == "zaawansowany") {
-        //     this.filteredLevel = "advanced";
-        //   }
-        //   console.log(
-        //     this.filteredLevel +
-        //       " " +
-        //       this.filteredGroup +
-        //       " " +
-        //       this.filteredDay
-        //   );
-        // });
       });
   },
   computed: {},
@@ -189,6 +125,10 @@ export default {
     //   });
     // },
     filterTable() {
+
+      this.filteredTrenings = [];
+      this.trenings = this.proxyTable;
+
       this.trenings.filter((trening) => {
         if (trening.level == this.fLevel && trening.day == this.fDay) {
           this.filteredTrenings.push(trening);
@@ -212,11 +152,13 @@ export default {
       });
       this.trenings = this.filteredTrenings;
       console.log(this.filteredTrenings);
+
     },
     log() {
       console.log(this.fDay + " " + this.fLevel);
     },
   },
+  components: { Workout }
 };
 </script>
 
@@ -312,4 +254,8 @@ export default {
 .faded-title {
   color: #616a89;
 }
+
+/* select option:first-child {
+  color: red;
+} */
 </style>
