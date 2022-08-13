@@ -18,12 +18,14 @@
         </select>
       </div>
       <div class="box flex-label">
-        <label for="age">WIEK</label>
+        <!-- <label for="age">WIEK</label> -->
         <select name="age" id="age" v-model="this.fAge">
+          <option value="Wiek" disabled selected hidden>Wiek</option>
           <option value="4">4</option>
           <option value="15">15</option>
         </select>
       </div>
+      <div class="box flex-label">SZKOŁA</div>
       <div class="box flex-label">
         <!-- <label for="day">DZIEŃ</label> -->
         <select name="day" id="day" v-model="this.fDay">
@@ -37,10 +39,8 @@
           <option value="niedziela">Niedziela</option>
         </select>
       </div>
-      <div class="box flex-label">
-        <p>WIEK</p>
-      </div>
-      <div class="box flex-label">SZKOŁA</div>
+
+
 
       <div class="box flex-label">GODZINA</div>
       <button @click="filterTable()">Filtruj</button>
@@ -48,9 +48,8 @@
     </div>
     <!-- <button @click="log()" style="width: 100px; height: 100px">f</button>
     <button @click="reset()" style="width: 100px; height: 100px">r</button> -->
-    <div v-for="(trening, index) in trenings" :key="trening.id"
-      :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }">
-      <Workout :trening="trening" />
+    <div v-for="(trening, index) in filterWorkouts" :key="trening.id">
+      <Workout :trening="trening" :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }" />
     </div>
 
 
@@ -67,7 +66,7 @@ export default {
   data() {
     return {
       fLevel: "Poziom",
-      fAge: "",
+      fAge: "Wiek",
       fGroup: "Grupa",
       fDay: "Dzień",
       trenings: [],
@@ -92,7 +91,7 @@ export default {
             date: new Date(data[i].dates[0]).getHours() +
               ":" +
               String(new Date(data[i].dates[0]).getMinutes()).padStart(2, "0"),
-            age: data[i].age.min,
+            age: String(data[i].age.min),
             day: new Date(data[i].dates[0]).toLocaleDateString("pl-PL", {
               weekday: "long",
             }),
@@ -103,6 +102,13 @@ export default {
       });
   },
   computed: {
+    filterWorkouts() {
+      return this.trenings.filter((trening) =>
+        (this.fLevel == "Poziom" || trening.level.includes(this.fLevel)) &&
+        (this.fDay == "Dzień" || trening.day.includes(this.fDay)) &&
+        (this.fAge == "Wiek" || trening.age.includes(this.fAge))
+      )
+    }
   },
   methods: {
     reset() {
@@ -110,22 +116,9 @@ export default {
       this.trenings = this.proxyTable;
       this.fLevel = "Poziom";
       this.fGroup = "Grupa";
+      this.fAge = "Wiek";
+      this.fDay = "Dzień";
     },
-    // setFilters() {
-    //   this.emitter.on("filterProps", (e) => {
-    //     (this.filteredLevel = e.filterLevel),
-    //       (this.filteredGroup = e.filterGroup),
-    //       (this.filteredDay = e.filterDay);
-    //     if (e.filterLevel == "podstawowy") {
-    //       this.filteredLevel = "beginner";
-    //     } else if (e.filterLevel == "zaawansowany") {
-    //       this.filteredLevel = "advanced";
-    //     }
-    //     console.log(
-    //       this.filteredLevel + " " + this.filteredGroup + " " + this.filteredDay
-    //     );
-    //   });
-    // },
     filterTable() {
 
       this.filteredTrenings = [];
@@ -137,36 +130,12 @@ export default {
             this.filteredTrenings.push(trening);
           }
         }
-
-        // if ((trening.day.includes(this.fDay) && this.fDay != "Dzień") &&
-        //   (trening.day.includes(this.fLevel) && this.fLevel != "Poziom")) {
-        //   this.filteredTrenings.push(trening)
-        // }
-        // console.log(trening);
-        // if (this.filteredLevel != "") {
-        // if (trening.level == this.fLevel && trening.day == this.fDay) {
-        //   this.filteredTrenings.push(trening);
-        // }
-        // }
-        // if (this.filteredGroup != "") {
-        //   if (trening.group == this.filteredGroup) {
-        //     this.filteredTrenings.push(trening);
-        //   }
-        // }
-        // if (this.filteredDay != "") {
-        //   if (trening.day == this.filteredGroup) {
-        //     this.filteredTrenings.push(trening);
-        //   }
-        // }
       });
       if (this.filteredTrenings.length != 0) {
         this.trenings = this.filteredTrenings;
       }
       console.log(this.filteredTrenings);
 
-    },
-    log() {
-      console.log(this.fDay + " " + this.fLevel);
     },
   },
   components: { Workout }
