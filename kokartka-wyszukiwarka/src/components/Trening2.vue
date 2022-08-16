@@ -6,7 +6,7 @@
         <select name="grupa" id="group" v-model="this.fGroup">
           <option value="Grupa" disabled selected hidden>Grupa</option>
           <option value="mucha">mucha</option>
-          <option value="kokartka">kokartka</option>
+          MooMoo
         </select>
       </div>
       <div class="box flex-label">
@@ -25,7 +25,14 @@
           <option value="15">15</option>
         </select>
       </div>
-      <div class="box flex-label">SZKOŁA</div>
+      <div class="box flex-label">
+        <select name="szkola" id="szkola" v-model="this.fSzkola">
+          <option value="Szkoła" disabled selected hidden>Szkoła</option>
+          <option value="SP 26 DZIAŁKI LEŚNE">SP 26 DZIAŁKI LEŚNE</option>
+          <option value="SP 8 ORŁOWO">SP 8 ORŁOWO</option>
+          <option value="SP 37 WICZLINO">SP 37 WICZLINO</option>
+        </select>
+      </div>
       <div class="box flex-label">
         <!-- <label for="day">DZIEŃ</label> -->
         <select name="day" id="day" v-model="this.fDay">
@@ -40,19 +47,18 @@
         </select>
       </div>
 
-
-
       <div class="box flex-label">GODZINA</div>
-      <button @click="filterTable()">Filtruj</button>
+      <button @click="log()">Filtruj</button>
       <button @click="reset()">Reset</button>
     </div>
     <!-- <button @click="log()" style="width: 100px; height: 100px">f</button>
     <button @click="reset()" style="width: 100px; height: 100px">r</button> -->
     <div v-for="(trening, index) in filterWorkouts" :key="trening.id">
-      <Workout :trening="trening" :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }" />
+      <Workout
+        :trening="trening"
+        :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }"
+      />
     </div>
-
-
   </div>
 </template>
 
@@ -62,13 +68,14 @@
 // import Heading from "./Heading.vue";
 import Workout from "./Workout.vue";
 export default {
-  props: ['trening'],
+  props: ["trening"],
   data() {
     return {
       fLevel: "Poziom",
       fAge: "Wiek",
       fGroup: "Grupa",
       fDay: "Dzień",
+      fSzkola: "Szkoła",
       trenings: [],
       filteredTrenings: [],
       proxyTable: [],
@@ -88,13 +95,16 @@ export default {
           apiResults.push({
             id: i,
             level: data[i].level,
-            date: new Date(data[i].dates[0]).getHours() +
+            date:
+              new Date(data[i].dates[0]).getHours() +
               ":" +
               String(new Date(data[i].dates[0]).getMinutes()).padStart(2, "0"),
-            age: String(data[i].age.min),
+            age: String(data[i].age.min) + "-" + String(data[i].age.max),
             day: new Date(data[i].dates[0]).toLocaleDateString("pl-PL", {
               weekday: "long",
             }),
+            location: data[i].location,
+            group: data[i].group,
           });
         }
         this.proxyTable = apiResults;
@@ -103,14 +113,24 @@ export default {
   },
   computed: {
     filterWorkouts() {
-      return this.trenings.filter((trening) =>
-        (this.fLevel == "Poziom" || trening.level.includes(this.fLevel)) &&
-        (this.fDay == "Dzień" || trening.day.includes(this.fDay)) &&
-        (this.fAge == "Wiek" || trening.age.includes(this.fAge))
-      )
-    }
+      return this.trenings.filter(
+        (trening) =>
+          (this.fLevel == "Poziom" || trening.level.includes(this.fLevel)) &&
+          (this.fDay == "Dzień" || trening.day.includes(this.fDay)) &&
+          (this.fAge == "Wiek" || trening.age.includes(this.fAge)) &&
+          (this.fSzkola == "Szkoła" ||
+            trening.location
+              .toLowerCase()
+              .includes(this.fSzkola.toLowerCase())) &&
+          (this.fGroup == "Grupa" || trening.group.includes(this.fGroup))
+      );
+    },
   },
   methods: {
+    log() {
+      console.log(this.fSzkola);
+      console.log(this.trenings);
+    },
     reset() {
       this.filteredTrenings = [];
       this.trenings = this.proxyTable;
@@ -118,9 +138,9 @@ export default {
       this.fGroup = "Grupa";
       this.fAge = "Wiek";
       this.fDay = "Dzień";
+      this.fSzkola = "Szkoła";
     },
     filterTable() {
-
       this.filteredTrenings = [];
       this.trenings = this.proxyTable;
 
@@ -135,10 +155,9 @@ export default {
         this.trenings = this.filteredTrenings;
       }
       console.log(this.filteredTrenings);
-
     },
   },
-  components: { Workout }
+  components: { Workout },
 };
 </script>
 
