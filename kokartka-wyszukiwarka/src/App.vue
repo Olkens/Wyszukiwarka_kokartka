@@ -4,12 +4,7 @@ import Heading from "./components/Heading.vue";
 </script>
 <template>
   <div>
-    <!-- <Heading
-      class="mar-bot"
-      @show-model="showModel"
-      :level="level"
-      :grupa="grupa"
-    /> -->
+    <Heading />
     <div>
       <Trening2 />
     </div>
@@ -39,11 +34,14 @@ export default {
 @import "./assets/base.css";
 
 #app {
-  max-width: 1280px;
+  max-width: 1260px;
   margin: 0 auto;
   padding: 2rem;
-
+  margin-top: 5rem;
   font-weight: normal;
+  font-family: brandon-grotesque, sans-serif;
+  font-style: normal;
+  font-weight: 100;
 }
 
 .app-tr-container {

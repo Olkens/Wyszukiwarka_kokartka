@@ -5,8 +5,9 @@
         <!-- <label for="group">GRUPA</label> -->
         <select name="grupa" id="group" v-model="this.fGroup">
           <option value="Grupa" disabled selected hidden>Grupa</option>
-          <option value="mucha">mucha</option>
-          MooMoo
+          <option value="kokartka">Kokartka</option>
+          <option value="mucha">Mucha</option>
+
         </select>
       </div>
       <div class="box flex-label">
@@ -47,17 +48,22 @@
         </select>
       </div>
 
-      <div class="box flex-label">GODZINA</div>
-      <button @click="log()">Filtruj</button>
-      <button @click="reset()">Reset</button>
+      <div class="box flex-label">
+        <!-- <label for="day">DZIEŃ</label> -->
+        <select name="hour" id="hour" v-model="this.fHour">
+          <option value="Godzina" disabled selected hidden>GODZINA</option>
+          <option value="18:00">18:00</option>
+        </select>
+      </div>
+      <!-- <button @click="log()">Filtruj</button> -->
+      <button class="reset-btn" @click="reset()">Reset</button>
     </div>
     <!-- <button @click="log()" style="width: 100px; height: 100px">f</button>
     <button @click="reset()" style="width: 100px; height: 100px">r</button> -->
-    <div v-for="(trening, index) in filterWorkouts" :key="trening.id">
-      <Workout
-        :trening="trening"
-        :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }"
-      />
+    <div class="trenings-collapse">
+      <div v-for="(trening, index) in filterWorkouts" :key="trening.id">
+        <Workout :trening="trening" :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }" />
+      </div>
     </div>
   </div>
 </template>
@@ -68,7 +74,7 @@
 // import Heading from "./Heading.vue";
 import Workout from "./Workout.vue";
 export default {
-  props: ["trening"],
+  props: ["trening", "treningsDesc"],
   data() {
     return {
       fLevel: "Poziom",
@@ -76,14 +82,18 @@ export default {
       fGroup: "Grupa",
       fDay: "Dzień",
       fSzkola: "Szkoła",
+      fHour: "Godzina",
       trenings: [],
       filteredTrenings: [],
+      treningsDesc: [],
       proxyTable: [],
       isFiltered: false,
+      url: "https://kokartka.stronazen.pl/zapisy/api/workouts",
+      descUrl: "https://kokartka.stronazen.pl`${trenings.descObj}`",
     };
   },
   created() {
-    fetch("https://kokartka.stronazen.pl/zapisy/api/workouts")
+    fetch(this.url)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -91,9 +101,11 @@ export default {
       })
       .then((data) => {
         const apiResults = [];
+        const apiDesc = [];
         for (let i = 0; i < data.length; i++) {
           apiResults.push({
             id: i,
+            apiId: data[i].id,
             level: data[i].level,
             date:
               new Date(data[i].dates[0]).getHours() +
@@ -105,8 +117,23 @@ export default {
             }),
             location: data[i].location,
             group: data[i].group,
+            signUp: data[i].links.registration,
+            desc: data[i].links.self,
+            // "https://kokartka.stronazen.pl" + data[i].links.self,
+            descObj: fetch("https://kokartka.stronazen.pl" + data[i].links.self).then((response) => {
+              if (response.ok) {
+                return response.json();
+              }
+            }).then((data) => {
+              apiDesc.push({
+                id: i,
+                desc: data.description,
+              })
+            })
+
           });
         }
+        this.treningsDesc = apiDesc;
         this.proxyTable = apiResults;
         this.trenings = this.proxyTable;
       });
@@ -130,6 +157,8 @@ export default {
     log() {
       console.log(this.fSzkola);
       console.log(this.trenings);
+      console.log(this.descObj);
+      console.log(this.treningsDesc)
     },
     reset() {
       this.filteredTrenings = [];
@@ -143,7 +172,7 @@ export default {
     filterTable() {
       this.filteredTrenings = [];
       this.trenings = this.proxyTable;
-
+      S
       this.trenings.filter((trening) => {
         if (this.fLevel != "Poziom") {
           if (trening.level.includes(this.fLevel)) {
@@ -162,99 +191,66 @@ export default {
 </script>
 
 <style>
-.tr-main-container {
-  display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
-  grid-template-rows: repeat(2, 0fr);
-  max-width: 348px;
-  min-width: 340px;
-  padding: 15px;
-  border: 1px solid gray;
-  border-radius: 5px;
-  font-size: 10px;
-  height: 137px;
-  background-color: #1a1d27;
-  text-transform: uppercase;
-}
-
-.trMainContainerSecondBgcolor0 {
-  background-color: #2c303d !important;
-}
-
-.trMainContainerSecondBgcolor {
-  background-color: #1a1d27;
-}
-
-.tr-info-box-1 {
-  grid-area: 1 / 1 / 2 / 2;
-}
-
-.tr-info-1-box,
-.tr-info-2-box,
-.tr-info-3-box {
-  display: flex;
-  gap: 5px;
-  flex-direction: column;
-}
-
-.tr-info-box-2 {
-  grid-area: 1 / 2 / 2 / 3;
-}
-
-.tr-border-left {
-  border-left: 1px solid gray;
-  padding-left: 15px;
-  padding-right: 5px;
-}
-
-.tr-btn-container {
-  grid-area: 2 / 1 / 3 / 3;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-between;
-  margin-top: 15px;
-}
-
-.tr-info-box-2-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-}
-
-.tr-info-2 {
-  grid-area: 1 / 1 / 2 / 2;
-}
-
-.tr-info-3 {
-  grid-area: 1 / 2 / 2 / 3;
-}
-
-.tr-btn {
-  width: 146px;
-  text-align: center;
-  border: 1px solid #fff;
-  border-radius: 5px;
-  font-weight: bold;
-  padding: 2px;
-}
-
-.tr-btn-wi {
-  color: #fff;
-}
-
-.tr-btn-zs {
-  background: #fff;
-  color: #000;
-}
-
-.faded-title {
-  color: #616a89;
-}
-
 /* select option:first-child {
   color: red;
 } */
+
+/* .box {
+  width: 150px;
+  height: 50px;
+  background: #2e3a59;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  color: #fff;
+} */
+
+.box-cont {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin-bottom: 25px;
+}
+
+.flex-label {
+  display: flex;
+  flex-direction: column;
+}
+
+select {
+  width: 140px;
+  height: 37px;
+  background: #2e3a59;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  color: #fff;
+  text-transform: uppercase;
+  border: none;
+  text-align: center;
+}
+
+option {
+  padding: 5px;
+}
+
+.reset-btn {
+  max-width: 169px;
+  width: 169px;
+  max-height: 37px;
+  height: 37px;
+}
+
+.trenings-collapse {
+  height: 728px;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 9px;
+  align-content: flex-start;
+}
 </style>
