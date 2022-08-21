@@ -4,10 +4,8 @@ import Heading from "./components/Heading.vue";
 </script>
 <template>
   <div>
-    <Heading />
-    <div>
-      <Trening2 />
-    </div>
+    <Heading class="main-head"></Heading>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -21,12 +19,6 @@ export default {
       },
     };
   },
-  methods: {
-    showModel(level, grupa) {
-      console.log(level + " " + grupa);
-      // console.log(grupa.value);
-    },
-  },
 };
 </script>
 
@@ -34,21 +26,45 @@ export default {
 @import "./assets/base.css";
 
 #app {
-  max-width: 1260px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  margin-top: 5rem;
-  font-weight: normal;
-  font-family: brandon-grotesque, sans-serif;
+  margin-top: 4rem;
+  /* font-weight: normal; */
+  font-family: brandon-grotesque-black, sans-serif;
   font-style: normal;
-  font-weight: 100;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+#app > div {
+  width: 1100px;
+}
+
+::-webkit-scrollbar {
+  background: #1f2432;
+  width: 10px;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3f4a6a;
+  border-radius: 10px;
+  width: 5px;
 }
 
 .app-tr-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 1066px;
+  max-width: 1100px;
   gap: 15px;
 }
 
@@ -74,6 +90,10 @@ a,
   }
 }
 
+.main-head {
+  margin: 0 auto;
+}
+
 @media (min-width: 1024px) {
   body {
     display: flex;
@@ -84,6 +104,7 @@ a,
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
+    flex-direction: column;
   }
 
   header {

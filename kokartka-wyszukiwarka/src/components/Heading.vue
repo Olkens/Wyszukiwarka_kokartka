@@ -1,23 +1,23 @@
 <template>
-  <div class="main-heading">
-    WYSZUKIWARKA ZAJĘĆ
+  <div>
+    <img src="../../imgs/logo.png" alt="logo" />
+    <h1 class="main-heading">WYSZUKAJ ZAJĘCIA</h1>
   </div>
 </template>
 
 <script>
-export default {
-};
+export default {};
 </script>
 
 <style>
 .main-heading {
-  font-family: brandon-grotesque, sans-serif;
+  font-family: brandon-grotesqu-black, sans-serif;
   font-style: normal;
-  font-weight: 100;
+  font-weight: 600;
   /* height: 70; */
-  font-weight: bold;
-  font-size: 36px;
+  /* font-weight: bolder; */
+  font-size: 24px;
   color: #fff;
-  padding: 25px 0;
+  padding-bottom: 25px;
 }
 </style>

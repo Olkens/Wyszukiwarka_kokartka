@@ -7,7 +7,6 @@
           <option value="Grupa" disabled selected hidden>Grupa</option>
           <option value="kokartka">Kokartka</option>
           <option value="mucha">Mucha</option>
-
         </select>
       </div>
       <div class="box flex-label">
@@ -32,6 +31,19 @@
           <option value="SP 26 DZIAŁKI LEŚNE">SP 26 DZIAŁKI LEŚNE</option>
           <option value="SP 8 ORŁOWO">SP 8 ORŁOWO</option>
           <option value="SP 37 WICZLINO">SP 37 WICZLINO</option>
+          <option value="SP 42 KARWINY">SP 42 KARWINY</option>
+          <option value="SP 34 REDŁOWO">SP 34 REDŁOWO</option>
+          <option value="SP 20 WIELKI KACK">SP 20 WIELKI KACK</option>
+          <option value="SP 45 DĄBROWA">SP 45 DĄBROWA</option>
+          <option value="SP 18 CENTRUM">SP 18 CENTRUM</option>
+          <option value="BOJANO">BOJANO</option>
+          <option value="CHWASZCZYNO">CHWASZCZYNO</option>
+          <option value="SP 23 WZGÓRZE">SP 23 WZGÓRZE</option>
+          <option value="SP 11 ORŁOWO">SP 11 ORŁOWO</option>
+          <option value="SP 48 CHWARZNO">SP 48 CHWARZNO</option>
+          <option value="SP 12 WITOMINO">SP 12 WITOMINO</option>
+          <option value="SP 47 DĄBROWA">SP 47 DĄBROWA</option>
+          <option value="SP 46 KARWINY">SP 46 KARWINY</option>
         </select>
       </div>
       <div class="box flex-label">
@@ -56,13 +68,22 @@
         </select>
       </div>
       <!-- <button @click="log()">Filtruj</button> -->
-      <button class="reset-btn" @click="reset()">Reset</button>
+      <button class="reset-btn" @click="reset()">Wyczyść filtr</button>
     </div>
     <!-- <button @click="log()" style="width: 100px; height: 100px">f</button>
     <button @click="reset()" style="width: 100px; height: 100px">r</button> -->
-    <div class="trenings-collapse">
+    <div class="trenings-collapse" v-if="filterWorkouts.length > 0">
       <div v-for="(trening, index) in filterWorkouts" :key="trening.id">
-        <Workout :trening="trening" :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }" />
+        <Workout
+          :trening="trening"
+          :treningsDesc="treningsDesc"
+          :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }"
+        />
+      </div>
+    </div>
+    <div v-else-if="filterWorkouts.length == 0">
+      <div class="no-results-card">
+        <p>Niestety, nie prowadzimy aktualnie takich zajęć</p>
       </div>
     </div>
   </div>
@@ -73,6 +94,7 @@
 
 // import Heading from "./Heading.vue";
 import Workout from "./Workout.vue";
+import WorkoutDesc from "../views/WorkoutDesc.vue";
 export default {
   props: ["trening", "treningsDesc"],
   data() {
@@ -120,17 +142,18 @@ export default {
             signUp: data[i].links.registration,
             desc: data[i].links.self,
             // "https://kokartka.stronazen.pl" + data[i].links.self,
-            descObj: fetch("https://kokartka.stronazen.pl" + data[i].links.self).then((response) => {
-              if (response.ok) {
-                return response.json();
-              }
-            }).then((data) => {
-              apiDesc.push({
-                id: i,
-                desc: data.description,
+            descObj: fetch("https://kokartka.stronazen.pl" + data[i].links.self)
+              .then((response) => {
+                if (response.ok) {
+                  return response.json();
+                }
               })
-            })
-
+              .then((data) => {
+                apiDesc.push({
+                  id: i,
+                  desc: data.description,
+                });
+              }),
           });
         }
         this.treningsDesc = apiDesc;
@@ -155,10 +178,11 @@ export default {
   },
   methods: {
     log() {
-      console.log(this.fSzkola);
+      // for (let i = 0; i < this.trenings.length; i++) {
+      //   console.log(this.trenings[i].location);
+      // }
+      console.log(this.treningsDesc);
       console.log(this.trenings);
-      console.log(this.descObj);
-      console.log(this.treningsDesc)
     },
     reset() {
       this.filteredTrenings = [];
@@ -172,7 +196,7 @@ export default {
     filterTable() {
       this.filteredTrenings = [];
       this.trenings = this.proxyTable;
-      S
+      S;
       this.trenings.filter((trening) => {
         if (this.fLevel != "Poziom") {
           if (trening.level.includes(this.fLevel)) {
@@ -186,31 +210,16 @@ export default {
       console.log(this.filteredTrenings);
     },
   },
-  components: { Workout },
+  components: { Workout, WorkoutDesc },
 };
 </script>
 
 <style>
-/* select option:first-child {
-  color: red;
-} */
-
-/* .box {
-  width: 150px;
-  height: 50px;
-  background: #2e3a59;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-  color: #fff;
-} */
-
 .box-cont {
   display: flex;
   flex-direction: row;
   gap: 5px;
-  margin-bottom: 25px;
+  margin-bottom: 5px;
 }
 
 .flex-label {
@@ -219,21 +228,20 @@ export default {
 }
 
 select {
-  width: 140px;
+  font-family: brandon-grotesque-black, sans-serif;
+  width: 145px;
   height: 37px;
   background: #2e3a59;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border-radius: 5px;
   color: #fff;
   text-transform: uppercase;
   border: none;
   text-align: center;
-}
-
-option {
-  padding: 5px;
+  border: 1px solid #3f4a6a;
+  line-height: 10px;
+  padding: 5px 0;
+  font-weight: bold;
+  text-align: center;
 }
 
 .reset-btn {
@@ -241,6 +249,13 @@ option {
   width: 169px;
   max-height: 37px;
   height: 37px;
+  color: #000;
+  font-size: 13px;
+  background: #fff;
+  border: none;
+  border-radius: 3px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .trenings-collapse {
@@ -248,9 +263,33 @@ option {
   overflow-y: auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
   gap: 9px;
   align-content: flex-start;
+}
+
+.no-results-card {
+  width: 1130px;
+  height: 230px;
+  border-radius: 25px;
+  background: #2c303d;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-results-card p {
+  font-size: 26px;
+  color: #fff;
+}
+
+@media screen and (max-width: 1024px) {
+  .trenings-collapse {
+    justify-content: center;
+  }
+  .box-cont {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 </style>
