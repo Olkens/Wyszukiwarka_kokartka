@@ -17,7 +17,8 @@ const routes = [
 
 const router = createRouter({
     history: createWebHistory(),
-    routes: [{ path: '/opis', component: WorkoutDesc }, { path: '/', component: Home }]
+    routes: [{ path: '/opis/:id', component: WorkoutDesc, props: true },
+    { path: '/', component: Home }]
 })
 
 export default router

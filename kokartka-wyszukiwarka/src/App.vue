@@ -31,7 +31,7 @@ export default {
   padding: 2rem;
   margin-top: 4rem;
   /* font-weight: normal; */
-  font-family: brandon-grotesque-black, sans-serif;
+  font-family: 'Lato', sans-serif;
   font-style: normal;
   font-weight: 600;
   display: flex;
@@ -39,7 +39,7 @@ export default {
   align-content: center;
 }
 
-#app > div {
+#app>div {
   width: 1100px;
 }
 

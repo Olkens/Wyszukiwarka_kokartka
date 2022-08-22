@@ -74,11 +74,8 @@
     <button @click="reset()" style="width: 100px; height: 100px">r</button> -->
     <div class="trenings-collapse" v-if="filterWorkouts.length > 0">
       <div v-for="(trening, index) in filterWorkouts" :key="trening.id">
-        <Workout
-          :trening="trening"
-          :treningsDesc="treningsDesc"
-          :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }"
-        />
+        <Workout :trening="trening" :treningsDesc="treningsDesc"
+          :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }" />
       </div>
     </div>
     <div v-else-if="filterWorkouts.length == 0">
@@ -160,6 +157,11 @@ export default {
         this.proxyTable = apiResults;
         this.trenings = this.proxyTable;
       });
+  },
+  provide() {
+    return {
+      trenings: this.trenings
+    }
   },
   computed: {
     filterWorkouts() {
@@ -254,7 +256,7 @@ select {
   background: #fff;
   border: none;
   border-radius: 3px;
-  font-weight: bold;
+  font-weight: 600;
   text-transform: uppercase;
 }
 
@@ -272,7 +274,7 @@ select {
   height: 230px;
   border-radius: 25px;
   background: #2c303d;
-  font-size: 12px;
+  font-size: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -287,6 +289,7 @@ select {
   .trenings-collapse {
     justify-content: center;
   }
+
   .box-cont {
     flex-wrap: wrap;
     justify-content: center;
