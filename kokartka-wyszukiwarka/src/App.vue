@@ -6,10 +6,12 @@ import Heading from "./components/Heading.vue";
   <div>
     <Heading class="main-head"></Heading>
     <router-view></router-view>
+    <button @click="log()">asda</button>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -17,8 +19,32 @@ export default {
         level: String,
         grupa: String,
       },
+      // tab: [],
     };
   },
+  // created() {
+  //   const apitab = [];
+  //   axios
+  //     .get("https://kokartka.stronazen.pl/zapisy/api/workouts")
+  //     .then(function (response) {
+  //       for (let i = 0; i < response.data.length; i++) {
+  //         apitab.push(response.data[i]);
+  //       }
+  //       // console.log(response.data);
+  //       // console.log(apitab);
+  //     })
+  //     .catch(function (error) {
+  //       // handle error
+  //       console.log(error);
+  //     });
+  //   this.tab = apitab;
+  //   // console.log(this.tab);
+  // },
+  // methods: {
+  //   log() {
+  //     console.log(this.tab[8].id);
+  //   },
+  // },
 };
 </script>
 
@@ -31,7 +57,7 @@ export default {
   padding: 2rem;
   margin-top: 4rem;
   /* font-weight: normal; */
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   font-style: normal;
   font-weight: 600;
   display: flex;
@@ -39,7 +65,7 @@ export default {
   align-content: center;
 }
 
-#app>div {
+#app > div {
   width: 1100px;
 }
 

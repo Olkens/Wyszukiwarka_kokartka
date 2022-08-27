@@ -1,37 +1,64 @@
 <template>
   <div>
-    {{ workoutDesc }}
-    <button @click="fetchDesc"></button>
+    <p v-html="showDesc"></p>
+
+    <button @click="fetchDesc()"></button>
   </div>
 </template>
 
 <script>
-
 export default {
-  props: ['workoutDesc'],
   data() {
     return {
+      treningDesc: [],
+      url: "https://kokartka.stronazen.pl/zapisy/api/workouts",
+      descId: "",
       apiDesc: [],
-      descURL: "https://kokartka.stronazen.pl" + this.url,
-      url: "",
+      showDesc: "",
     };
   },
   methods: {
+    log() {
+      console.log(this.treningDesc);
+      console.log(this.descId);
+      console.log(
+        "https://kokartka.stronazen.pl" + this.treningDesc[this.descId].desc
+      );
+    },
     fetchDesc() {
-      fetch(this.descURL)
+      fetch(
+        "https://kokartka.stronazen.pl" + this.treningDesc[this.descId].desc
+      )
         .then((response) => {
           if (response.ok) {
             return response.json();
           }
         })
         .then((data) => {
-          this.apiDesc.push({
-            description: data.description,
-          });
+          this.showDesc = data.description;
         });
-      console.log("https://kokartka.stronazen.pl" + this.url);
-      console.log(this.apiDesc);
-    }
+      console.log(this.showDesc);
+    },
+  },
+  created() {
+    fetch(this.url)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        const apiResults = [];
+        const apiDesc = [];
+        for (let i = 0; i < data.length; i++) {
+          apiResults.push({
+            id: i,
+            desc: data[i].links.self,
+          });
+        }
+        this.treningDesc = apiResults;
+      });
+    this.descId = this.$route.params.id;
   },
 };
 </script>

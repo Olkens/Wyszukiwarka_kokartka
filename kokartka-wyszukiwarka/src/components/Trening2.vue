@@ -70,19 +70,23 @@
       <!-- <button @click="log()">Filtruj</button> -->
       <button class="reset-btn" @click="reset()">Wyczyść filtr</button>
     </div>
-    <!-- <button @click="log()" style="width: 100px; height: 100px">f</button>
-    <button @click="reset()" style="width: 100px; height: 100px">r</button> -->
-    <div class="trenings-collapse" v-if="filterWorkouts.length > 0">
+    <button @click="log()" style="width: 100px; height: 100px">f</button>
+    <!-- <button @click="reset()" style="width: 100px; height: 100px">r</button> -->
+    <div class="trenings-collapse">
+      <!-- <div>{{ trening2 }}</div> -->
       <div v-for="(trening, index) in filterWorkouts" :key="trening.id">
-        <Workout :trening="trening" :treningsDesc="treningsDesc"
-          :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }" />
+        <Workout
+          :trening="trening"
+          :treningsDesc="treningsDesc"
+          :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }"
+        />
       </div>
     </div>
-    <div v-else-if="filterWorkouts.length == 0">
+    <!-- <div v-else-if="filterWorkouts.length == 0">
       <div class="no-results-card">
         <p>Niestety, nie prowadzimy aktualnie takich zajęć</p>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -92,8 +96,9 @@
 // import Heading from "./Heading.vue";
 import Workout from "./Workout.vue";
 import WorkoutDesc from "../views/WorkoutDesc.vue";
+import axios from "axios";
 export default {
-  props: ["trening", "treningsDesc"],
+  props: ["trening", "trening2"],
   data() {
     return {
       fLevel: "Poziom",
@@ -112,19 +117,14 @@ export default {
     };
   },
   created() {
-    fetch(this.url)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        const apiResults = [];
-        const apiDesc = [];
-        for (let i = 0; i < data.length; i++) {
-          apiResults.push({
-            id: i,
-            apiId: data[i].id,
+    const apitab = [];
+    axios
+      .get("https://kokartka.stronazen.pl/zapisy/api/workouts")
+      .then(function (response) {
+        const data = response.data;
+        for (let i = 0; i < response.data.length; i++) {
+          apitab.push({
+            id: data[i].id,
             level: data[i].level,
             date:
               new Date(data[i].dates[0]).getHours() +
@@ -137,31 +137,66 @@ export default {
             location: data[i].location,
             group: data[i].group,
             signUp: data[i].links.registration,
-            desc: data[i].links.self,
-            // "https://kokartka.stronazen.pl" + data[i].links.self,
-            descObj: fetch("https://kokartka.stronazen.pl" + data[i].links.self)
-              .then((response) => {
-                if (response.ok) {
-                  return response.json();
-                }
-              })
-              .then((data) => {
-                apiDesc.push({
-                  id: i,
-                  desc: data.description,
-                });
-              }),
           });
         }
-        this.treningsDesc = apiDesc;
-        this.proxyTable = apiResults;
-        this.trenings = this.proxyTable;
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(() => {
+        this.trenings = apitab;
+        this.proxyTable = apitab;
       });
-  },
-  provide() {
-    return {
-      trenings: this.trenings
-    }
+
+    // this.trenings = this.trening2;
+    // this.proxyTable = this.trening2;
+    // this.trenings = this.proxyTable;
+    // fetch(this.url)
+    //   .then((response) => {
+    //     if (response.ok) {
+    //       return response.json();
+    //     }
+    //   })
+    //   .then((data) => {
+    //     const apiResults = [];
+    //     const apiDesc = [];
+    //     for (let i = 0; i < data.length; i++) {
+    //       apiResults.push({
+    //         id: i,
+    //         apiId: data[i].id,
+    //         level: data[i].level,
+    //         date:
+    //           new Date(data[i].dates[0]).getHours() +
+    //           ":" +
+    //           String(new Date(data[i].dates[0]).getMinutes()).padStart(2, "0"),
+    //         age: String(data[i].age.min) + "-" + String(data[i].age.max),
+    //         day: new Date(data[i].dates[0]).toLocaleDateString("pl-PL", {
+    //           weekday: "long",
+    //         }),
+    //         location: data[i].location,
+    //         group: data[i].group,
+    //         signUp: data[i].links.registration,
+    //         desc: data[i].links.self,
+    //         // "https://kokartka.stronazen.pl" + data[i].links.self,
+    //         descObj: fetch("https://kokartka.stronazen.pl" + data[i].links.self)
+    //           .then((response) => {
+    //             if (response.ok) {
+    //               return response.json();
+    //             }
+    //           })
+    //           .then((data) => {
+    //             apiDesc.push({
+    //               id: i,
+    //               desc: data.description,
+    //             });
+    //           }),
+    //       });
+    //     }
+    // this.treningsDesc = apiDesc;
+    // this.proxyTable = apiResults;
+    //   });
+    console.log(this.trening2);
   },
   computed: {
     filterWorkouts() {
@@ -183,33 +218,18 @@ export default {
       // for (let i = 0; i < this.trenings.length; i++) {
       //   console.log(this.trenings[i].location);
       // }
-      console.log(this.treningsDesc);
+      console.log(this.proxyTable);
       console.log(this.trenings);
+      console.log(this.trening2);
     },
     reset() {
-      this.filteredTrenings = [];
+      // this.filteredTrenings = [];
       this.trenings = this.proxyTable;
       this.fLevel = "Poziom";
       this.fGroup = "Grupa";
       this.fAge = "Wiek";
       this.fDay = "Dzień";
       this.fSzkola = "Szkoła";
-    },
-    filterTable() {
-      this.filteredTrenings = [];
-      this.trenings = this.proxyTable;
-      S;
-      this.trenings.filter((trening) => {
-        if (this.fLevel != "Poziom") {
-          if (trening.level.includes(this.fLevel)) {
-            this.filteredTrenings.push(trening);
-          }
-        }
-      });
-      if (this.filteredTrenings.length != 0) {
-        this.trenings = this.filteredTrenings;
-      }
-      console.log(this.filteredTrenings);
     },
   },
   components: { Workout, WorkoutDesc },
