@@ -75,11 +75,8 @@
     <div class="trenings-collapse">
       <!-- <div>{{ trening2 }}</div> -->
       <div v-for="(trening, index) in filterWorkouts" :key="trening.id">
-        <Workout
-          :trening="trening"
-          :treningsDesc="treningsDesc"
-          :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }"
-        />
+        <Workout :trening="trening" :treningsDesc="treningsDesc"
+          :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }" />
       </div>
     </div>
     <!-- <div v-else-if="filterWorkouts.length == 0">
@@ -113,7 +110,6 @@ export default {
       proxyTable: [],
       isFiltered: false,
       url: "https://kokartka.stronazen.pl/zapisy/api/workouts",
-      descUrl: "https://kokartka.stronazen.pl`${trenings.descObj}`",
     };
   },
   created() {
@@ -123,6 +119,9 @@ export default {
       .then(function (response) {
         const data = response.data;
         for (let i = 0; i < response.data.length; i++) {
+          axios.get("https://kokartka.stronazen.pl/zapisy/api/workouts/" + data[i].id).then(res => {
+            console.log(res.data)
+          })
           apitab.push({
             id: data[i].id,
             level: data[i].level,
