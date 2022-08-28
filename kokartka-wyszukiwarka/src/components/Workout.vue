@@ -52,24 +52,16 @@
       </div>
     </div>
     <div class="tr-btn-container">
-      <p class="tr-btn tr-btn-wi">
-        Więcej informacji
-        <router-link
-          :workout-desc="this.apiWorkDesc"
-          :to="{ path: '/opis/' + trening.id }"
-          >click me
-        </router-link>
-      </p>
+      <router-link class="tr-btn tr-btn-wi" :to="{ path: '/opis/' + trening.id }"> Więcej informacji
+      </router-link>
       <a class="tr-btn tr-btn-zs" :href="trening.signUp" target="_blank">
-        Zapisz się</a
-      >
+        Zapisz się</a>
       <button @click="zlapDesc"></button>
     </div>
   </div>
 </template>
 
 <script>
-import WorkoutDesc from "../views/WorkoutDesc.vue";
 export default {
   props: {
     trening: Object,
@@ -77,36 +69,17 @@ export default {
   },
   data() {
     return {
-      apiWorkoutDesc: [],
-      apiWorkDesc: this.trening.desc,
     };
-  },
-  computed() {
-    console.log(apiD);
   },
   methods: {
     logD() {
       console.log(this.apiWorkoutDesc);
       console.log(this.apiWorkDesc);
     },
-    zlapDesc() {
-      fetch("https://kokartka.stronazen.pl" + this.trening.desc)
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-        })
-        .then((data) => {
-          this.apiWorkoutDesc.push({
-            workoutDesc: data.description,
-          });
-        });
-      console.log("https://kokartka.stronazen.pl" + this.trening.desc);
-      console.log(this.apiWorkoutDesc);
-    },
   },
-  components: { WorkoutDesc },
-};
+}
+
+
 </script>
 <style>
 .tr-main-container {
