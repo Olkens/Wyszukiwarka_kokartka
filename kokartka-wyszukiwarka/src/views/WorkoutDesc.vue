@@ -1,9 +1,15 @@
 <template>
   <div>
-    <div class="header">
-      <p>MUCHA</p>
-    </div>
     <router-link to="/">&#171; powrót do wyszukiwarki</router-link>
+    <div class="header">
+      <p v-if="group.includes('kokartka')">
+        Kokartka
+      </p>
+      <p v-else-if="group.includes('mucha')">
+        Mucha
+      </p>
+    </div>
+
     <div class="desc-main-container">
       <div class="workout-desc">
         <div class="box desc-html">
@@ -24,7 +30,7 @@
           <h2>Cena</h2>
         </div>
         <div class="box">
-          <h2>zapisy</h2>
+          <h2>Zapisy</h2>
           <p>Zapisy rozpoczniemy na początku września 2022. Osoby zainteresowane prosimy o wiadomość mailową z podaniem
             szkoły, grupy oraz nr telefonu na biuro@kokartka.info. Jak tylko rozpoczniemy zapisy, zostaną Państwo
             poinformowani mailowo i sms-owo.</p>
@@ -39,13 +45,20 @@
           <p>{{ payments.address }}</p>
           <p>w tytule: {{ payments.title }}</p>
           <div>
-            <a :href="links.registration" class="zapis-btn">
+            <a :href="links.registration" target="_blank" class="zapis-btn">
               <p>Zapisz się na zajęcia</p>
             </a>
           </div>
         </div>
-
       </div>
+    </div>
+    <div class="btn-container">
+      <a href="tel:794294259">
+        <p>Zadzwoń już teraz +48 794 294 259</p>
+      </a>
+      <a href="mailto:biuro@kokartka.info">
+        <p>Napisz od nas: biuro@kokartka.info</p>
+      </a>
     </div>
   </div>
 </template>
@@ -66,6 +79,7 @@ export default {
       days: ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"],
       hour: "",
       duration: "",
+      group: "",
     };
   },
   methods: {
@@ -86,7 +100,16 @@ export default {
     })
       .finally(() => {
       });
+    axios.get("https://kokartka.stronazen.pl/zapisy/api/workouts").then(res => {
+      const data = res.data
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].id == this.$route.params.id) {
+          this.group = data[i].group;
+        }
+      }
+    })
   },
+
 };
 </script>
 
@@ -106,11 +129,11 @@ export default {
   background-color: #5D9DFC;
   padding-left: 10%;
   font-size: 60px;
-  font-weight: bold;
+  font-weight: 900;
   color: #fff;
   display: flex;
   align-items: center;
-
+  text-transform: uppercase;
 }
 
 .desc-html:deep(h2),
@@ -172,5 +195,23 @@ h2 {
   border-radius: 3px;
   font-size: 12px;
   margin-top: 15px;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-container a {
+  display: flex;
+  width: 523px;
+  background-color: #5D9DFC;
+  margin-top: 20px;
+  height: 82px;
+  color: #fff;
+  font-size: 16px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
 }
 </style>

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <button @click="log()">asd</button>
     <Trening2></Trening2>
   </div>
 </template>

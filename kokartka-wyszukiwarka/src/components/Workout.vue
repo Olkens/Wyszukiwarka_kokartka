@@ -56,7 +56,6 @@
       </router-link>
       <a class="tr-btn tr-btn-zs" :href="trening.signUp" target="_blank">
         Zapisz się</a>
-      <button @click="zlapDesc"></button>
     </div>
   </div>
 </template>

@@ -6,7 +6,6 @@ import Heading from "./components/Heading.vue";
   <div>
     <Heading class="main-head"></Heading>
     <router-view></router-view>
-    <button @click="log()">asda</button>
   </div>
 </template>
 
@@ -65,7 +64,7 @@ export default {
   align-content: center;
 }
 
-#app > div {
+#app>div {
   width: 1100px;
 }
 

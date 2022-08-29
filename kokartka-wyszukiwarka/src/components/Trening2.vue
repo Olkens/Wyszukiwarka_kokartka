@@ -70,7 +70,7 @@
       <!-- <button @click="log()">Filtruj</button> -->
       <button class="reset-btn" @click="reset()">Wyczyść filtr</button>
     </div>
-    <button @click="log()" style="width: 100px; height: 100px">f</button>
+    <!-- <button @click="log()" style="width: 100px; height: 100px">f</button> -->
     <!-- <button @click="reset()" style="width: 100px; height: 100px">r</button> -->
     <div class="trenings-collapse">
       <!-- <div>{{ trening2 }}</div> -->
