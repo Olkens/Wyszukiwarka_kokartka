@@ -1,53 +1,45 @@
 <template>
   <div>
-    <router-link to="/">&#171; powrót do wyszukiwarki</router-link>
+
     <div class="header">
-      <p v-if="group.includes('kokartka')">
+      <p v-if="brand.includes('kokartka')">
         Kokartka
       </p>
-      <p v-else-if="group.includes('mucha')">
+      <p v-else-if="brand.includes('mucha')">
         Mucha
       </p>
     </div>
-
+    <router-link class="btn-back" to="/">
+      <p>&#171; powrót do wyszukiwarki</p>
+    </router-link>
     <div class="desc-main-container">
       <div class="workout-desc">
         <div class="box desc-html">
           <h2 class="title">Opis Zajęć:</h2>
           <div v-html="desc.description"></div>
         </div>
-
       </div>
       <div class="wokrout-schedule">
         <div class="box">
           <h2 class="title">Plan zajęć 2021/2022</h2>
           <div class="group"></div>
-          <div class="day">{{ day }} - {{ hour }}</div>
-          <div class="duration">Czas trwania: {{ duration }} Godzina </div>
+          <div class="day">{{  day  }} - {{  hour  }}</div>
+          <div class="duration">Czas trwania: {{  duration  }} Godzina </div>
           <div class="age"></div>
         </div>
         <div class="box">
           <h2>Cena</h2>
         </div>
         <div class="box">
-          <h2>Zapisy</h2>
-          <p>Zapisy rozpoczniemy na początku września 2022. Osoby zainteresowane prosimy o wiadomość mailową z podaniem
-            szkoły, grupy oraz nr telefonu na biuro@kokartka.info. Jak tylko rozpoczniemy zapisy, zostaną Państwo
-            poinformowani mailowo i sms-owo.</p>
+          <h2>Lokalizacja</h2>
+          {{  address  }}
         </div>
-      </div>
-      <div class="workout-payments">
-        <div class="box">
-          <h3>Dane do Płatności</h3>
-          <p>mBank</p>
-          <p>{{ payments.bankAccount }}</p>
-          <p>{{ payments.name }}</p>
-          <p>{{ payments.address }}</p>
-          <p>w tytule: {{ payments.title }}</p>
-          <div>
-            <a :href="links.registration" target="_blank" class="zapis-btn">
-              <p>Zapisz się na zajęcia</p>
-            </a>
+        <div class="participants box">
+          <h2>Ilość wolnych miejsc:</h2>
+          <div class="participants-cont">
+            <div class="progress-bar" :style="{ width: width + '%', height: height }">
+            </div>
+            <p class="participants-ratio">{{  participantsCurrent  }} / {{  participantsMax  }}</p>
           </div>
         </div>
       </div>
@@ -78,8 +70,15 @@ export default {
       day: "",
       days: ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"],
       hour: "",
+      address: "",
       duration: "",
       group: "",
+      brand: "",
+      participants: 0,
+      participantsMax: 0,
+      participantsCurrent: 0,
+      height: '24px',
+      width: 0,
     };
   },
   methods: {
@@ -95,8 +94,13 @@ export default {
       this.links = res.data.links;
       this.date = res.data.dates[0];
       this.day = this.days[res.data.dates[0].day];
-      this.hour = this.date.hour
+      this.hour = this.date.hour;
+      this.address = this.payments.address
       this.duration = this.date.duration / 60 / 60;
+      this.participants = res.data.participants;
+      this.participantsMax = this.participants.max;
+      this.participantsCurrent = this.participants.current;
+      this.width = (this.participantsCurrent / this.participantsMax) * 100;
     })
       .finally(() => {
       });
@@ -105,6 +109,7 @@ export default {
       for (let i = 0; i < data.length; i++) {
         if (data[i].id == this.$route.params.id) {
           this.group = data[i].group;
+          this.brand = data[i].brand;
         }
       }
     })
@@ -120,20 +125,24 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   gap: 10px;
+
 }
 
 .header {
   font-family: 'Poppins', sans-serif;
-  width: 100%;
+  width: 100vw;
   height: 132px;
-  background-color: #5D9DFC;
-  padding-left: 10%;
+  background-color: var(--mucha-color);
+  padding-left: 37%;
   font-size: 60px;
   font-weight: 900;
   color: #fff;
   display: flex;
   align-items: center;
   text-transform: uppercase;
+  margin-left: calc(-50vw + 49% + 10px);
+  margin-top: -17.9%;
+  margin-bottom: 1rem;
 }
 
 .desc-html:deep(h2),
@@ -143,7 +152,7 @@ h2 {
   background-size: 15% 3px;
   background-position: bottom left;
   background-repeat: no-repeat;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   font-size: 16px;
   font-weight: bold;
   color: #fff;
@@ -160,7 +169,7 @@ h2 {
 .workout-desc,
 .wokrout-schedule,
 .workout-payments {
-  width: 33%;
+  width: 50%;
 }
 
 .box {
@@ -213,5 +222,32 @@ h2 {
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+}
+
+.btn-back {
+  background-color: #5D9DFC;
+  color: #fff;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.progress-bar {
+  background-color: #5D9DFC;
+  display: block;
+}
+
+.participants-ratio {
+  position: absolute;
+  top: 0;
+  text-align: center;
+  display: block;
+  width: 100%;
+  z-index: 10;
 }
 </style>

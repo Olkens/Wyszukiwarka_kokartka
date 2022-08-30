@@ -1,10 +1,8 @@
 <script setup>
-import Trening2 from "./components/Trening2.vue";
-import Heading from "./components/Heading.vue";
+
 </script>
 <template>
   <div>
-    <Heading class="main-head"></Heading>
     <router-view></router-view>
   </div>
 </template>
@@ -49,6 +47,11 @@ export default {
 
 <style>
 @import "./assets/base.css";
+
+:root {
+  --mucha-color: #5D9DFC;
+  --kokartka-color: #ff3375;
+}
 
 #app {
   max-width: 1280px;
@@ -123,13 +126,6 @@ a,
   body {
     display: flex;
     place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-    flex-direction: column;
   }
 
   header {

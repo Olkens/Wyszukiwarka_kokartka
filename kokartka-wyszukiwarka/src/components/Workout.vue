@@ -13,7 +13,7 @@
           </div>
           <div>
             <p class="faded-title">Szkoła</p>
-            <p>{{ trening.location }}</p>
+            <p>{{  trening.location  }}</p>
           </div>
         </div>
       </div>
@@ -23,11 +23,11 @@
         <div class="tr-info-2-box tr-border-left">
           <div>
             <p class="faded-title">Wiek</p>
-            <p>{{ trening.age }} LAT</p>
+            <p>{{  trening.age  }} LAT</p>
           </div>
           <div>
             <p class="faded-title">Dzień</p>
-            <p>{{ trening.day }}</p>
+            <p>{{  trening.day  }}</p>
           </div>
         </div>
       </div>
@@ -36,16 +36,19 @@
           <div>
             <p class="faded-title">Godzina</p>
             <p>
-              {{ trening.date }}
+              {{  trening.date  }}
             </p>
           </div>
           <div>
             <p class="faded-title">GRUPA</p>
-            <p v-if="trening.group.includes('kokartka')" class="Kokartka-color">
+            <!-- <p v-if="trening.group.includes('kokartka')" class="Kokartka-color">
               Kokartka
             </p>
             <p v-else-if="trening.group.includes('mucha')" class="Mucha-color">
               Mucha
+            </p> -->
+            <p>
+              {{  trening.group.toUpperCase()  }}
             </p>
           </div>
         </div>
