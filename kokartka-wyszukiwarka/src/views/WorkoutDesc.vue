@@ -1,11 +1,9 @@
 <template>
+
   <div>
     <div>
-    <div class="header" v-if="brand.includes('kokartka')" :style="{background: kokartaKolor}">
-        Kokartka
-      </div>
-      <div class="header" v-else-if="brand.includes('mucha')">
-        Mucha
+      <div class="header">
+        {{ brand }}
       </div>
     </div>
     <router-link class="btn-back" to="/">
@@ -27,7 +25,8 @@
           <div class="age"></div>
         </div>
         <div class="box">
-          <h2>Cena</h2>
+          <h2>Poziom</h2>
+          <p>{{ level }}</p>
         </div>
         <div class="box">
           <h2>Lokalizacja</h2>
@@ -45,10 +44,13 @@
           </div>
         </div>
       </div>
-      <div cless="workout-payments">
-        <div class="signup">
+      <div class="workout-payments">
+        <div class="signup" v-if="participantsCurrent < participantsMax">
           <h2>Zapisz się</h2>
-          <button class="zapis-btn-desc">Zapisz się na zajęcia</button>
+          <a :href="links.registration" class="zapis-btn-desc" target="_blank">Zapisz się na zajęcia</a>
+        </div>
+        <div v-if="participantsCurrent >= participantsMax">
+          <div class="workoutFull">Brak wolnych miejsc</div>
         </div>
       </div>
     </div>
@@ -65,6 +67,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   data() {
     return {
@@ -75,6 +78,7 @@ export default {
       payments: {},
       links: {},
       dates: {},
+      level: '',
       day: "",
       days: ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"],
       hour: "",
@@ -88,7 +92,12 @@ export default {
       height: '24px',
       width: 0,
       kokartaKolor: '#ff3375',
-      muchaKolor: '#5D9DFC'
+      muchaKolor: '#5D9DFC',
+      kadraKolor: '#C800D6',
+      juniorKolor: '#4AB925',
+      chosenColor: "",
+      moneyArr: [],
+      moneyAmount: 0,
     };
   },
   methods: {
@@ -96,6 +105,10 @@ export default {
       console.log(this.url);
       console.log(this.desc.id);
     },
+    formatPrice(value) {
+      let val = (value / 1).toFixed(2).replace('.', ',')
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    }
   },
   mounted() {
     axios.get(this.url).then((res) => {
@@ -111,6 +124,8 @@ export default {
       this.participantsMax = this.participants.max;
       this.participantsCurrent = this.participants.current;
       this.width = (this.participantsCurrent / this.participantsMax) * 100;
+      this.moneyArr = res.data.payments.amount;
+      this.moneyAmount = res.data.payments.amount.amount;
     })
       .finally(() => {
       });
@@ -120,9 +135,28 @@ export default {
         if (data[i].id == this.$route.params.id) {
           this.group = data[i].group;
           this.brand = data[i].brand;
+          if (data[i].level == 'beginner') {
+            this.level = 'Podstawowy'
+          }
+          if (data[i].level == 'advanced') {
+            this.level = 'Zaawansowany'
+          }
+          if (data[i].level == 'beginner_older') {
+            this.level = 'Starszy podstawowy'
+          }
+          if (data[i].brand.includes('kokartka')) {
+            this.chosenColor = this.kokartaKolor;
+          } else if (data[i].brand.includes('mucha')) {
+            this.chosenColor = this.muchaKolor;
+          } else if (data[i].brand.includes('kadra')) {
+            this.chosenColor = this.kadraKolor;
+          } else if (data[i].brand.includes('junior')) {
+            this.chosenColor = this.juniorKolor;
+          }
         }
       }
     })
+
   },
 
 };
@@ -137,6 +171,49 @@ export default {
   gap: 10px;
 }
 
+@media screen and (max-width: 1024px) {
+  .desc-main-container {
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 0;
+    align-items: center;
+  }
+
+  .btn-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .workout-desc {
+    min-height: 500px !important;
+  }
+
+  .workout-payments {
+    min-height: 200px !important;
+  }
+
+  .workout-desc,
+  .wokrout-schedule,
+  .workout-payments {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .signup {
+    min-width: 100%;
+  }
+
+  .btn-back {
+    width: 200px !important;
+  }
+}
+
 .desc-main-container>* {
   flex: 1 1 0;
 }
@@ -145,7 +222,7 @@ export default {
   font-family: 'Poppins', sans-serif;
   /* width: 100vw; */
   height: 132px;
-  background-color: var(--mucha-color);
+  background-color: v-bind(chosenColor);
   padding-left: 6rem;
   font-size: 60px;
   font-weight: 900;
@@ -161,7 +238,7 @@ export default {
 .desc-html:deep(h2),
 h2 {
   padding-bottom: 6px;
-  background-image: linear-gradient(#5D9DFC, #5D9DFC);
+  background-image: linear-gradient(v-bind(chosenColor), v-bind(chosenColor));
   background-size: 15% 3px;
   background-position: bottom left;
   background-repeat: no-repeat;
@@ -195,6 +272,17 @@ h2 {
   margin-top: 10px;
   padding: 25px;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.workoutFull {
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 25px;
+  background-color: #aaa;
+  color: #fff;
+  text-align: center;
 }
 
 .signup>h2 {
@@ -224,7 +312,7 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #5D9DFC;
+  background-color: v-bind(chosenColor);
   color: #fff;
   width: 96%;
   margin: 0 auto;
@@ -244,7 +332,7 @@ h2 {
 .btn-container a {
   display: flex;
   width: 523px;
-  background-color: #5D9DFC;
+  background-color: v-bind(chosenColor);
   margin-top: 20px;
   height: 82px;
   color: #fff;
@@ -255,13 +343,14 @@ h2 {
 }
 
 .btn-back {
+  font-family: 'Poppins', sans-serif;
   background-color: #FFF;
   color: #000;
-  height: 35px;
+  height: 41px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 20%;
+  width: 17%;
   border-radius: 2px;
   text-transform: uppercase;
   font-size: 12px;
@@ -269,9 +358,10 @@ h2 {
 }
 
 .progress-bar {
-  background-color: #5D9DFC;
+  background-color: v-bind(chosenColor);
   display: block;
   z-index: 4;
+  border-radius: 3px;
 }
 
 .participants-ratio {
@@ -294,8 +384,9 @@ h2 {
   height: 24px;
   position: absolute;
   top: 0;
-  border-radius: 2px;
+  border-radius: 3px;
   z-index: 1;
+  border: none;
 }
 
 .participants-ratio-label {

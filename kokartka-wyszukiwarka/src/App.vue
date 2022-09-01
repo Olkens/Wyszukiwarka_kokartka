@@ -92,7 +92,7 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  max-width: 1100px;
+  max-width: 1200px;
   gap: 15px;
 }
 
@@ -112,11 +112,7 @@ a,
   transition: 0.4s;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
+
 
 .main-head {
   margin: 0 auto;

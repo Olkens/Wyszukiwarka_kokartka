@@ -13,7 +13,7 @@
           </div>
           <div>
             <p class="faded-title">Szkoła</p>
-            <p>{{  trening.location  }}</p>
+            <p>{{ trening.location }}</p>
           </div>
         </div>
       </div>
@@ -23,11 +23,11 @@
         <div class="tr-info-2-box tr-border-left">
           <div>
             <p class="faded-title">Wiek</p>
-            <p>{{  trening.age  }} LAT</p>
+            <p>{{ trening.age }} LAT</p>
           </div>
           <div>
             <p class="faded-title">Dzień</p>
-            <p>{{  trening.day  }}</p>
+            <p>{{ trening.day }}</p>
           </div>
         </div>
       </div>
@@ -36,7 +36,7 @@
           <div>
             <p class="faded-title">Godzina</p>
             <p>
-              {{  trening.date  }}
+              {{ trening.date }}
             </p>
           </div>
           <div>
@@ -48,7 +48,7 @@
               Mucha
             </p> -->
             <p>
-              {{  trening.group.toUpperCase()  }}
+              {{ trening.group.toUpperCase() }}
             </p>
           </div>
         </div>
@@ -86,18 +86,19 @@ export default {
 <style>
 .tr-main-container {
   display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
-  grid-template-rows: repeat(2, 0fr);
+  grid-template-columns: 0.6fr 1.4fr;
+  grid-template-rows: repeat(2, 1fr);
   max-width: 348px;
   min-width: 348px;
   padding: 15px;
   border: 1px solid gray;
   border-radius: 5px;
   font-size: 10px;
-  height: 137px;
+  height: 157px;
   background-color: #1a1d27;
   text-transform: uppercase;
   color: #fff;
+  row-gap: 10px;
 }
 
 .trMainContainerSecondBgcolor0 {
@@ -136,12 +137,14 @@ export default {
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
-  margin-top: 15px;
+  /* margin-top: 15px; */
+  align-items: flex-end;
+  height: 100%;
 }
 
 .tr-info-box-2-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 0.9fr 1.1fr;
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
@@ -168,9 +171,19 @@ export default {
   color: #fff;
 }
 
+.tr-btn-wi:hover {
+  background-color: #fff;
+  color: #2c303d;
+}
+
 .tr-btn-zs {
   background: #fff;
   color: #000;
+}
+
+.tr-btn-zs:hover {
+  background-color: #2c303d;
+  color: #fff;
 }
 
 .faded-title {
