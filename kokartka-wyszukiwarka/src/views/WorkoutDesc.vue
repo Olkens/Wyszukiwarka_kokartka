@@ -23,8 +23,8 @@
         <div class="box">
           <h2 class="title">Plan zajęć 2021/2022</h2>
           <div class="group"></div>
-          <div class="day">{{  day  }} - {{  hour  }}</div>
-          <div class="duration">Czas trwania: {{  duration  }} Godzina </div>
+          <div class="day">{{ day }} - {{ hour }}</div>
+          <div class="duration">Czas trwania: {{ duration }} Godzina </div>
           <div class="age"></div>
         </div>
         <div class="box">
@@ -32,7 +32,7 @@
         </div>
         <div class="box">
           <h2>Lokalizacja</h2>
-          {{  address  }}
+          {{ address }}
         </div>
         <div class="participants box">
           <h2>Ilość wolnych miejsc:</h2>
@@ -41,7 +41,7 @@
             </div>
             <div class="participants-cont-bg"></div>
             <p class="participants-ratio">
-            <p class="participants-ratio-label">{{  participantsCurrent  }} / {{  participantsMax  }}</p>
+            <p class="participants-ratio-label">{{ participantsCurrent }} / {{ participantsMax }}</p>
             </p>
           </div>
         </div>
@@ -70,7 +70,7 @@ export default {
   data() {
     return {
       url:
-        "https://kokartka.stronazen.pl/zapisy/api/workouts/" +
+        "https://kokartka.info/zapisy/api/workouts" +
         this.$route.params.id,
       desc: {},
       payments: {},
@@ -115,7 +115,7 @@ export default {
     })
       .finally(() => {
       });
-    axios.get("https://kokartka.stronazen.pl/zapisy/api/workouts").then(res => {
+    axios.get("https://kokartka.info/zapisy/api/workouts").then(res => {
       const data = res.data
       for (let i = 0; i < data.length; i++) {
         if (data[i].id == this.$route.params.id) {
