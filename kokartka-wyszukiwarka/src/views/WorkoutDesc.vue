@@ -39,8 +39,17 @@
           <div class="participants-cont">
             <div class="progress-bar" :style="{ width: width + '%', height: height }">
             </div>
-            <p class="participants-ratio">{{  participantsCurrent  }} / {{  participantsMax  }}</p>
+            <div class="participants-cont-bg"></div>
+            <p class="participants-ratio">
+            <p class="participants-ratio-label">{{  participantsCurrent  }} / {{  participantsMax  }}</p>
+            </p>
           </div>
+        </div>
+      </div>
+      <div cless="workout-payments">
+        <div class="signup">
+          <h2>Zapisz się</h2>
+          <button class="zapis-btn-desc">Zapisz się na zajęcia</button>
         </div>
       </div>
     </div>
@@ -79,6 +88,8 @@ export default {
       participantsCurrent: 0,
       height: '24px',
       width: 0,
+      kokartaKolor: '#ff3375',
+      muchaKolor: '#5D9DFC'
     };
   },
   methods: {
@@ -125,23 +136,26 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   gap: 10px;
+}
 
+.desc-main-container>* {
+  flex: 1 1 0;
 }
 
 .header {
   font-family: 'Poppins', sans-serif;
-  width: 100vw;
+  /* width: 100vw; */
   height: 132px;
   background-color: var(--mucha-color);
-  padding-left: 37%;
+  padding-left: 6rem;
   font-size: 60px;
   font-weight: 900;
   color: #fff;
   display: flex;
   align-items: center;
   text-transform: uppercase;
-  margin-left: calc(-50vw + 49% + 10px);
-  margin-top: -17.9%;
+  /* margin-left: calc(-50vw + 49% + 10px); */
+  /* margin-top: -17.9%; */
   margin-bottom: 1rem;
 }
 
@@ -169,7 +183,23 @@ h2 {
 .workout-desc,
 .wokrout-schedule,
 .workout-payments {
-  width: 50%;
+  width: calc(100% / 3);
+  min-height: 553px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* align-items: center; */
+}
+
+.signup {
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 25px;
+  background-color: #fff;
+}
+
+.signup>h2 {
+  color: #000;
 }
 
 .box {
@@ -177,7 +207,7 @@ h2 {
   background-color: #2C303D;
   border-radius: 5px;
   margin-top: 10px;
-  color: #E9E9E9
+  color: #E9E9E9;
 }
 
 .workout-payments .box {
@@ -191,7 +221,7 @@ h2 {
   font-size: 16px;
 }
 
-.zapis-btn {
+.zapis-btn-desc {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -204,6 +234,7 @@ h2 {
   border-radius: 3px;
   font-size: 12px;
   margin-top: 15px;
+  border: none;
 }
 
 .btn-container {
@@ -244,10 +275,27 @@ h2 {
 
 .participants-ratio {
   position: absolute;
+  color: #000;
   top: 0;
   text-align: center;
-  display: block;
   width: 100%;
   z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.participants-cont-bg {
+  background-color: #fff;
+  width: 100%;
+  height: 24px;
+  position: absolute;
+  top: 0;
+  border-radius: 2px;
+}
+
+.participants-ratio-label {
+  font-size: 12px;
+  font-weight: bold;
 }
 </style>

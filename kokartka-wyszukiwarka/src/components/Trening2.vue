@@ -116,11 +116,11 @@ export default {
   created() {
     const apitab = [];
     axios
-      .get("https://kokartka.stronazen.pl/zapisy/api/workouts")
+      .get("https://kokartka.info/zapisy/api/workouts")
       .then(function (response) {
         const data = response.data;
         for (let i = 0; i < response.data.length; i++) {
-          axios.get("https://kokartka.stronazen.pl/zapisy/api/workouts/" + data[i].id).then(res => {
+          axios.get("https://kokartka.info/zapisy/api/workouts" + data[i].id).then(res => {
             console.log(res.data)
           })
           apitab.push({
