@@ -1,16 +1,15 @@
 <template>
   <div>
-
-    <div class="header">
-      <p v-if="brand.includes('kokartka')">
+    <div>
+    <div class="header" v-if="brand.includes('kokartka')" :style="{background: kokartaKolor}">
         Kokartka
-      </p>
-      <p v-else-if="brand.includes('mucha')">
+      </div>
+      <div class="header" v-else-if="brand.includes('mucha')">
         Mucha
-      </p>
+      </div>
     </div>
     <router-link class="btn-back" to="/">
-      <p>&#171; powrót do wyszukiwarki</p>
+      <p>Wróc do wyszukiwarki</p>
     </router-link>
     <div class="desc-main-container">
       <div class="workout-desc">
@@ -39,7 +38,7 @@
           <div class="participants-cont">
             <div class="progress-bar" :style="{ width: width + '%', height: height }">
             </div>
-            <div class="participants-cont-bg"></div>
+            <p class="participants-cont-bg"></p>
             <p class="participants-ratio">
             <p class="participants-ratio-label">{{ participantsCurrent }} / {{ participantsMax }}</p>
             </p>
@@ -70,7 +69,7 @@ export default {
   data() {
     return {
       url:
-        "https://kokartka.info/zapisy/api/workouts" +
+        "https://kokartka.info/zapisy/api/workouts/" +
         this.$route.params.id,
       desc: {},
       payments: {},
@@ -187,7 +186,7 @@ h2 {
   min-height: 553px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   /* align-items: center; */
 }
 
@@ -256,8 +255,8 @@ h2 {
 }
 
 .btn-back {
-  background-color: #5D9DFC;
-  color: #fff;
+  background-color: #FFF;
+  color: #000;
   height: 35px;
   display: flex;
   justify-content: center;
@@ -266,15 +265,18 @@ h2 {
   border-radius: 2px;
   text-transform: uppercase;
   font-size: 12px;
+  font-weight: bold;
 }
 
 .progress-bar {
   background-color: #5D9DFC;
   display: block;
+  z-index: 4;
 }
 
 .participants-ratio {
   position: absolute;
+  height: 24px;
   color: #000;
   top: 0;
   text-align: center;
@@ -283,6 +285,7 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9;
 }
 
 .participants-cont-bg {
@@ -292,6 +295,7 @@ h2 {
   position: absolute;
   top: 0;
   border-radius: 2px;
+  z-index: 1;
 }
 
 .participants-ratio-label {
