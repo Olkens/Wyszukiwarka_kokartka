@@ -19,29 +19,7 @@ export default {
       // tab: [],
     };
   },
-  // created() {
-  //   const apitab = [];
-  //   axios
-  //     .get("https://kokartka.stronazen.pl/zapisy/api/workouts")
-  //     .then(function (response) {
-  //       for (let i = 0; i < response.data.length; i++) {
-  //         apitab.push(response.data[i]);
-  //       }
-  //       // console.log(response.data);
-  //       // console.log(apitab);
-  //     })
-  //     .catch(function (error) {
-  //       // handle error
-  //       console.log(error);
-  //     });
-  //   this.tab = apitab;
-  //   // console.log(this.tab);
-  // },
-  // methods: {
-  //   log() {
-  //     console.log(this.tab[8].id);
-  //   },
-  // },
+
 };
 </script>
 

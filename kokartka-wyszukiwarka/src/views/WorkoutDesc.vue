@@ -1,6 +1,6 @@
 <template>
 
-  <div>
+  <div class="main-cont-workdesc">
     <div>
       <div class="header">
         {{ brand }}
@@ -100,16 +100,6 @@ export default {
       moneyAmount: 0,
     };
   },
-  methods: {
-    log() {
-      console.log(this.url);
-      console.log(this.desc.id);
-    },
-    formatPrice(value) {
-      let val = (value / 1).toFixed(2).replace('.', ',')
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-    }
-  },
   mounted() {
     axios.get(this.url).then((res) => {
       this.desc = res.data;
@@ -167,16 +157,39 @@ export default {
   font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  align-items: flex-start;
+  justify-content: space-around;
   gap: 10px;
+  /* min-height: 2000px; */
 }
 
 @media screen and (max-width: 1024px) {
+
+  .main-cont-workdesc{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .btn-back {
+    margin-bottom: 1rem;
+  }
+
+  .header {
+    padding-left: 0 !important;
+    width: 500px;
+    justify-content: center;
+  }
   .desc-main-container {
     flex-direction: column;
     justify-content: space-around;
     gap: 0;
     align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .desc-main-container>*{
+    flex: 0 !important;
   }
 
   .btn-container {
@@ -187,17 +200,19 @@ export default {
 
   .workout-desc {
     min-height: 500px !important;
+    overflow: visible;
   }
 
   .workout-payments {
     min-height: 200px !important;
+    margin-top: 1em;
   }
 
   .workout-desc,
   .wokrout-schedule,
   .workout-payments {
-    width: 100% !important;
-    justify-content: center !important;
+    width: 60% !important;
+    /* justify-content: center !important; */
   }
 
   .box {
