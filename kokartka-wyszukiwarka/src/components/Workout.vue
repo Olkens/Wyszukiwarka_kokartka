@@ -41,12 +41,6 @@
           </div>
           <div>
             <p class="faded-title">GRUPA</p>
-            <!-- <p v-if="trening.group.includes('kokartka')" class="Kokartka-color">
-              Kokartka
-            </p>
-            <p v-else-if="trening.group.includes('mucha')" class="Mucha-color">
-              Mucha
-            </p> -->
             <p>
               {{ trening.group.toUpperCase() }}
             </p>
