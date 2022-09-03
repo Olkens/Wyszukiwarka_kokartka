@@ -67,18 +67,13 @@
 
         </select>
       </div>
-      <!-- <button @click="log()">Filtruj</button> -->
       <button class="reset-btn" @click="reset()">Wyczyść filtr</button>
     </div>
-    <!-- <button @click="log()" style="width: 100px; height: 100px">f</button> -->
-    <!-- <button @click="reset()" style="width: 100px; height: 100px">r</button> -->
     <div class="trenings-collapse">
-      <!-- <div>{{ trening2 }}</div> -->
       <div v-for="(trening, index) in filterWorkouts" :key="trening.id" v-if="filterWorkouts.length > 0">
         <Workout :trening="trening" :treningsDesc="treningsDesc"
           :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }" />
       </div>
-
       <div v-else-if="filterWorkouts.length == 0">
         <div class="no-results-card">
           <p>Niestety, nie prowadzimy aktualnie takich zajęć</p>
@@ -89,9 +84,6 @@
 </template>
 
 <script>
-// import { thisTypeAnnotation } from "@babel/types";
-
-// import Heading from "./Heading.vue";
 import Workout from "./Workout.vue";
 import WorkoutDesc from "../views/WorkoutDesc.vue";
 import axios from "axios";
@@ -121,9 +113,6 @@ export default {
       .then(function (response) {
         const data = response.data;
         for (let i = 0; i < response.data.length; i++) {
-          // axios.get("https://kokartka.info/zapisy/api/workouts" + data[i].id).then(res => {
-          //   console.log(res.data)
-          // })
           apitab.push({
             id: data[i].id,
             level: data[i].level,
@@ -143,7 +132,6 @@ export default {
         }
       })
       .catch(function (error) {
-        // handle error
         console.log(error);
       })
       .finally(() => {
@@ -201,29 +189,8 @@ export default {
         });
       }, {});
     },
-    sortedArray() {
-      let sortedDates = uniqueDates;
-
-      sortedDates = uniqueDates.sort((a, b) => {
-        let fa = a.date, fb = b.date;
-        if (fa < fb) {
-          return -1
-        }
-        if (fa > fb) {
-          return 1
-        }
-        return 0
-      })
-    }
   },
   methods: {
-    log() {
-      // for (let i = 0; i < this.trenings.length; i++) {
-      //   console.log(this.trenings[i].location);
-      // }
-      console.log(this.uniqueLocation)
-      console.log(this.uniqueDates)
-    },
     reset() {
       // this.filteredTrenings = [];
       this.trenings = this.proxyTable;
