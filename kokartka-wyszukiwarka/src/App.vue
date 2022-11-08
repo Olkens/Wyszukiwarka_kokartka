@@ -1,5 +1,4 @@
 <script setup>
-
 </script>
 <template>
   <div>
@@ -19,7 +18,6 @@ export default {
       // tab: [],
     };
   },
-
 };
 </script>
 
@@ -27,14 +25,14 @@ export default {
 @import "./assets/base.css";
 
 :root {
-  --mucha-color: #5D9DFC;
+  --mucha-color: #5d9dfc;
   --kokartka-color: #ff3375;
 }
 
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+padding: 0 20px;
   margin-top: 4rem;
   /* font-weight: normal; */
   font-family: "Lato", sans-serif;
@@ -45,8 +43,9 @@ export default {
   align-content: center;
 }
 
-#app>div {
+#app > div {
   width: 1100px;
+
 }
 
 ::-webkit-scrollbar {
@@ -90,10 +89,9 @@ a,
   transition: 0.4s;
 }
 
-
-
 .main-head {
-  margin: 0 auto;
+    padding-left: 20px;
+  padding-right: 20px;
 }
 
 @media (min-width: 1024px) {

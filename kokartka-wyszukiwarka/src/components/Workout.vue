@@ -1,5 +1,27 @@
 <template>
   <div class="tr-main-container">
+    <div class="tr-heading">
+      <div v-if="trening.brand == 'kokartka'" class="Kokartka-color">
+        <p>
+          {{ trening.brand.toUpperCase() }}
+        </p>
+      </div>
+      <div v-else-if="trening.brand == 'mucha'" class="Mucha-color">
+        <p>
+          {{ trening.brand.toUpperCase() }}
+        </p>
+      </div>
+      <div v-if="trening.brand == 'junior'" class="Junior-color">
+        <p>
+          {{ trening.brand.toUpperCase() }}
+        </p>
+      </div>
+      <div v-if="trening.brand == 'pro'" class="pro-color">
+        <p>
+          {{ trening.brand.toUpperCase() }}
+        </p>
+      </div>
+    </div>
     <div class="tr-info-box-1">
       <div class="tr-info-1">
         <div class="tr-info-1-box">
@@ -41,18 +63,21 @@
           </div>
           <div>
             <p class="faded-title">GRUPA</p>
-            <p>
-              {{ trening.group.toUpperCase() }}
-            </p>
+            <p>{{ trening.group }}</p>
           </div>
         </div>
       </div>
     </div>
     <div class="tr-btn-container">
-      <router-link class="tr-btn tr-btn-wi" :to="{ path: '/opis/' + trening.id }"> Więcej informacji
+      <router-link
+        class="tr-btn tr-btn-wi"
+        :to="{ path: '/opis/' + trening.id }"
+      >
+        Więcej informacji
       </router-link>
       <a class="tr-btn tr-btn-zs" :href="trening.signUp" target="_blank">
-        Zapisz się</a>
+        Zapisz się</a
+      >
     </div>
   </div>
 </template>
@@ -64,8 +89,7 @@ export default {
     treningsDesc: Object,
   },
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     logD() {
@@ -73,26 +97,34 @@ export default {
       console.log(this.apiWorkDesc);
     },
   },
-}
-
-
+};
 </script>
 <style>
 .tr-main-container {
   display: grid;
   grid-template-columns: 0.6fr 1.4fr;
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: 1fr 1fr 1fr;
   max-width: 348px;
   min-width: 348px;
   padding: 15px;
   border: 1px solid gray;
   border-radius: 5px;
   font-size: 10px;
-  height: 157px;
+  height: 187px;
   background-color: #1a1d27;
   text-transform: uppercase;
   color: #fff;
   row-gap: 10px;
+  grid-template-areas:
+    "tr-heading tr-heading"
+    "tr-info-box-1 tr-info-box-2"
+    "tr-btn-container tr-btn-container";
+}
+
+.tr-heading {
+  grid-area: tr-heading;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .trMainContainerSecondBgcolor0 {
@@ -105,6 +137,7 @@ export default {
 
 .tr-info-box-1 {
   grid-area: 1 / 1 / 2 / 2;
+  grid-area: tr-info-box-1;
 }
 
 .tr-info-1-box,
@@ -117,6 +150,7 @@ export default {
 
 .tr-info-box-2 {
   grid-area: 1 / 2 / 2 / 3;
+  grid-area: tr-info-box-2;
 }
 
 .tr-border-left {
@@ -134,6 +168,7 @@ export default {
   /* margin-top: 15px; */
   align-items: flex-end;
   height: 100%;
+  grid-area: tr-btn-container;
 }
 
 .tr-info-box-2-grid {
@@ -190,5 +225,13 @@ export default {
 
 .Mucha-color {
   color: #5d9dfc;
+}
+
+.Junior-color {
+  color: #4ab925;
+}
+
+.pro-color {
+  color: #c800d6;
 }
 </style>

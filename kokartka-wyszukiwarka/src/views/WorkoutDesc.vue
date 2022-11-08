@@ -1,5 +1,4 @@
 <template>
-
   <div class="main-cont-workdesc">
     <div>
       <div class="header">
@@ -21,7 +20,7 @@
           <h2 class="title">Plan zajęć 2021/2022</h2>
           <div class="group"></div>
           <div class="day">{{ day }} - {{ hour }}</div>
-          <div class="duration">Czas trwania: {{ duration }} Godzina </div>
+          <div class="duration">Czas trwania: {{ duration }} Godzina</div>
           <div class="age"></div>
         </div>
         <div class="box">
@@ -30,24 +29,31 @@
         </div>
         <div class="box">
           <h2>Lokalizacja</h2>
-          {{ address }}
+          {{ address }},
+          {{ city }}
         </div>
         <div class="participants box">
           <h2>Ilość wolnych miejsc:</h2>
           <div class="participants-cont">
-            <div class="progress-bar" :style="{ width: width + '%', height: height }">
-            </div>
+            <div
+              class="progress-bar"
+              :style="{ width: width + '%', height: height }"
+            ></div>
             <p class="participants-cont-bg"></p>
-            <p class="participants-ratio">
-            <p class="participants-ratio-label">{{ participantsCurrent }} / {{ participantsMax }}</p>
-            </p>
+            <div class="participants-ratio">
+              <p class="participants-ratio-label">
+                {{ participantsCurrent }} / {{ participantsMax }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
       <div class="workout-payments">
         <div class="signup" v-if="participantsCurrent < participantsMax">
           <h2>Zapisz się</h2>
-          <a :href="links.registration" class="zapis-btn-desc" target="_blank">Zapisz się na zajęcia</a>
+          <a :href="links.registration" class="zapis-btn-desc" target="_blank"
+            >Zapisz się na zajęcia</a
+          >
         </div>
         <div v-if="participantsCurrent >= participantsMax">
           <div class="workoutFull">Brak wolnych miejsc</div>
@@ -71,16 +77,22 @@ import axios from "axios";
 export default {
   data() {
     return {
-      url:
-        "https://kokartka.info/zapisy/api/workouts/" +
-        this.$route.params.id,
+      url: "https://kokartka.stronazen.pl/zapisy/api/workouts/" + this.$route.params.id,
       desc: {},
       payments: {},
       links: {},
       dates: {},
-      level: '',
+      level: "",
       day: "",
-      days: ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"],
+      days: [
+        "Niedziela",
+        "Poniedziałek",
+        "Wtorek",
+        "Środa",
+        "Czwartek",
+        "Piątek",
+        "Sobota",
+      ],
       hour: "",
       address: "",
       duration: "",
@@ -89,72 +101,72 @@ export default {
       participants: 0,
       participantsMax: 0,
       participantsCurrent: 0,
-      height: '24px',
+      height: "24px",
       width: 0,
-      kokartaKolor: '#ff3375',
-      muchaKolor: '#5D9DFC',
-      kadraKolor: '#C800D6',
-      juniorKolor: '#4AB925',
+      kokartaKolor: "#ff3375",
+      muchaKolor: "#5D9DFC",
+      kadraKolor: "#C800D6",
+      juniorKolor: "#4AB925",
       chosenColor: "",
       moneyArr: [],
       moneyAmount: 0,
     };
   },
   mounted() {
-    axios.get(this.url).then((res) => {
-      this.desc = res.data;
-      this.payments = res.data.payments;
-      this.links = res.data.links;
-      this.date = res.data.dates[0];
-      this.day = this.days[res.data.dates[0].day];
-      this.hour = this.date.hour;
-      this.address = this.payments.address
-      this.duration = this.date.duration / 60 / 60;
-      this.participants = res.data.participants;
-      this.participantsMax = this.participants.max;
-      this.participantsCurrent = this.participants.current;
-      this.width = (this.participantsCurrent / this.participantsMax) * 100;
-      this.moneyArr = res.data.payments.amount;
-      this.moneyAmount = res.data.payments.amount.amount;
-    })
-      .finally(() => {
-      });
-    axios.get("https://kokartka.info/zapisy/api/workouts").then(res => {
-      const data = res.data
+    axios
+      .get(this.url)
+      .then((res) => {
+        this.desc = res.data;
+        this.payments = res.data.payments;
+        this.links = res.data.links;
+        this.date = res.data.dates[0];
+        this.day = this.days[res.data.dates[0].day];
+        this.hour = this.date.hour;
+        this.duration = this.date.duration / 60 / 60;
+        this.participants = res.data.participants;
+        this.participantsMax = this.participants.max;
+        this.participantsCurrent = this.participants.current;
+        this.width = (this.participantsCurrent / this.participantsMax) * 100;
+        this.moneyArr = res.data.payments.amount;
+        this.moneyAmount = res.data.payments.amount.amount;
+      })
+      .finally(() => {});
+    axios.get("https://kokartka.stronazen.pl/zapisy/api/workouts").then((res) => {
+      const data = res.data;
       for (let i = 0; i < data.length; i++) {
         if (data[i].id == this.$route.params.id) {
           this.group = data[i].group;
           this.brand = data[i].brand;
-          if (data[i].level == 'beginner') {
-            this.level = 'Podstawowy'
+          this.address = data[i].location_address.street;
+          this.city = data[i].location_address.city;
+          if (data[i].level == "beginner") {
+            this.level = "Podstawowy";
           }
-          if (data[i].level == 'advanced') {
-            this.level = 'Zaawansowany'
+          if (data[i].level == "advanced") {
+            this.level = "Zaawansowany";
           }
-          if (data[i].level == 'beginner_older') {
-            this.level = 'Starszy podstawowy'
+          if (data[i].level == "beginner_older") {
+            this.level = "Starszy podstawowy";
           }
-          if (data[i].brand.includes('kokartka')) {
+          if (data[i].brand.includes("kokartka")) {
             this.chosenColor = this.kokartaKolor;
-          } else if (data[i].brand.includes('mucha')) {
+          } else if (data[i].brand.includes("mucha")) {
             this.chosenColor = this.muchaKolor;
-          } else if (data[i].brand.includes('kadra')) {
+          } else if (data[i].brand.includes("pro")) {
             this.chosenColor = this.kadraKolor;
-          } else if (data[i].brand.includes('junior')) {
+          } else if (data[i].brand.includes("junior")) {
             this.chosenColor = this.juniorKolor;
           }
         }
       }
-    })
-
+    });
   },
-
 };
 </script>
 
 <style scoped>
 .desc-main-container {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -164,9 +176,8 @@ export default {
 }
 
 @media screen and (max-width: 1024px) {
-
-  .main-cont-workdesc{
-    display:flex;
+  .main-cont-workdesc {
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -188,7 +199,7 @@ export default {
     flex-wrap: nowrap;
   }
 
-  .desc-main-container>*{
+  .desc-main-container > * {
     flex: 0 !important;
   }
 
@@ -229,12 +240,12 @@ export default {
   }
 }
 
-.desc-main-container>* {
+.desc-main-container > * {
   flex: 1 1 0;
 }
 
 .header {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   /* width: 100vw; */
   height: 132px;
   background-color: v-bind(chosenColor);
@@ -261,12 +272,11 @@ h2 {
   font-size: 16px;
   font-weight: bold;
   color: #fff;
-  font-family: 'Poppins', sans-serif;
-
+  font-family: "Poppins", sans-serif;
 }
 
 .desc-html:deep(p) {
-  color: #E9E9E9;
+  color: #e9e9e9;
   font-size: 12px;
   margin-bottom: 30px;
 }
@@ -300,16 +310,16 @@ h2 {
   text-align: center;
 }
 
-.signup>h2 {
+.signup > h2 {
   color: #000;
 }
 
 .box {
   padding: 25px;
-  background-color: #2C303D;
+  background-color: #2c303d;
   border-radius: 5px;
   margin-top: 10px;
-  color: #E9E9E9;
+  color: #e9e9e9;
 }
 
 .workout-payments .box {
@@ -358,8 +368,8 @@ h2 {
 }
 
 .btn-back {
-  font-family: 'Poppins', sans-serif;
-  background-color: #FFF;
+  font-family: "Poppins", sans-serif;
+  background-color: #fff;
   color: #000;
   height: 41px;
   display: flex;
