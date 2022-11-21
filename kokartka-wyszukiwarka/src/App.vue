@@ -30,7 +30,7 @@ export default {
 }
 
 #app {
-  max-width: 1280px;
+  max-width: 1380px;
   margin: 0 auto;
 padding: 0 20px;
   margin-top: 4rem;
@@ -44,7 +44,7 @@ padding: 0 20px;
 }
 
 #app > div {
-  width: 1100px;
+  width: 1150px;
 
 }
 

@@ -26,16 +26,16 @@
       <div class="tr-info-1">
         <div class="tr-info-1-box">
           <div>
+            <p class="faded-title">GRUPA</p>
+            <p>{{ trening.group }}</p>
+          </div>
+          <div>
             <p class="faded-title">POZIOM</p>
             <p v-if="trening.level === 'beginner'">Podstawowy</p>
             <p v-else-if="trening.level === 'beginner_older'">
               początkująca starsza
             </p>
             <p v-if="trening.level === 'advanced'">zaawansowany</p>
-          </div>
-          <div>
-            <p class="faded-title">Szkoła</p>
-            <p>{{ trening.location }}</p>
           </div>
         </div>
       </div>
@@ -44,27 +44,46 @@
       <div class="tr-info-2">
         <div class="tr-info-2-box tr-border-left">
           <div>
+            <p class="faded-title">Szkoła</p>
+            <p>{{ trening.location }}</p>
+          </div>
+          <div>
             <p class="faded-title">Wiek</p>
             <p>{{ trening.age }} LAT</p>
           </div>
-          <div>
-            <p class="faded-title">Dzień</p>
-            <p>{{ trening.day }}</p>
-          </div>
         </div>
       </div>
-      <div class="tr-info-3">
-        <div class="tr-info-3-box tr-border-left">
+      <div class="tr-info-3 tr-border-left">
+        <div class="tr-info-3-box ">
           <div>
+            <p class="faded-title">Dzień</p>
+            <div
+              v-if="
+                trening.thirdDay != 'Invalid Date' &&
+                trening.secondDay != 'Invalid Date'
+              "
+            >
+              <p>{{ trening.firstDay }}: {{ trening.firstDate }}</p>
+              <p>{{ trening.secondDay }}: {{ trening.secondDate }}</p>
+              <p>{{ trening.thirdDay }}</p>
+            </div>
+            <div v-if="trening.secondDay != 'Invalid Date'">
+              <p>{{ trening.firstDay }} {{ trening.firstDate }}</p>
+              <p>{{ trening.secondDay }} {{ trening.secondDate }}</p>
+            </div>
+            <div v-else>
+              <p>{{ trening.firstDay }} {{ trening.firstDate }}</p>
+            </div>
+          </div>
+          <!-- <div>
             <p class="faded-title">Godzina</p>
-            <p>
-              {{ trening.date }}
-            </p>
-          </div>
-          <div>
-            <p class="faded-title">GRUPA</p>
-            <p>{{ trening.group }}</p>
-          </div>
+            <div v-if="trening.secondDate == 'NaN:NaN'">
+              <p>{{ trening.firstDate }}</p>
+            </div>
+            <div v-else>
+              <p>{{ trening.firstDate }}, {{ trening.secondDate }}</p>
+            </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -104,8 +123,8 @@ export default {
   display: grid;
   grid-template-columns: 0.6fr 1.4fr;
   grid-template-rows: 1fr 1fr 1fr;
-  max-width: 348px;
-  min-width: 348px;
+  max-width: 368px;
+  min-width: 368px;
   padding: 15px;
   border: 1px solid gray;
   border-radius: 5px;

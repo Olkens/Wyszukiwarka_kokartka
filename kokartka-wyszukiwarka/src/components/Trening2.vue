@@ -6,7 +6,11 @@
         <select name="grupa" id="group" v-model="this.fGroup">
           <option value="">Grupa</option>
           <option value="Grupa" disabled selected hidden>Grupa</option>
-          <option v-for="grupa in avalibleGroups" :value="grupa" :key="grupa.id">
+          <option
+            v-for="grupa in avalibleGroups"
+            :value="grupa"
+            :key="grupa.id"
+          >
             {{ grupa }}
           </option>
           <option value="DORO">DOROŚLI</option>
@@ -110,23 +114,33 @@
       <button class="reset-btn" @click="reset()">
         <font-awesome-icon icon="fa-solid fa-x" />
       </button>
-      <!-- <button class="reset-btn" @click="log()">log</button> -->
+      <button class="reset-btn" @click="log()">log</button>
     </div>
     <div class="trenings-section">
-      <div v-if="filterWorkouts.length > 0">
-        <div class="trenings-collapse">
-          <div v-for="(trening, index) in filterWorkouts" :key="trening.id">
-            <Workout
-              :trening="trening"
-              :treningsDesc="treningsDesc"
-              :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }"
-            />
-          </div>
+      <div v-if="!isLoaded">
+        <div class="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
         </div>
       </div>
-      <div v-else class="no-results-card">
-        <div class="no-results-card-container">
-          <p>Niestety, nie prowadzimy aktualnie takich zajęć</p>
+      <div v-else>
+        <div v-if="filterWorkouts.length > 0">
+          <div class="trenings-collapse">
+            <div v-for="(trening, index) in filterWorkouts" :key="trening.id">
+              <Workout
+                :trening="trening"
+                :treningsDesc="treningsDesc"
+                :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }"
+              />
+            </div>
+          </div>
+        </div>
+        <div v-else class="no-results-card">
+          <div class="no-results-card-container">
+            <p>Niestety, nie prowadzimy aktualnie takich zajęć</p>
+          </div>
         </div>
       </div>
     </div>
@@ -141,6 +155,7 @@ export default {
   props: ["trening", "trening2"],
   data() {
     return {
+      isLoaded: false,
       fLevel: "Poziom",
       fAge: "Wiek",
       fGroup: "Grupa",
@@ -163,6 +178,7 @@ export default {
         "KADRA",
         "BOBASY",
       ],
+      treningDays: [],
       isFiltered: false,
       url: "https://kokartka.stronazen.pl/zapisy/api/workouts",
     };
@@ -178,15 +194,26 @@ export default {
           apitab.push({
             id: data[i].id,
             level: data[i].level,
-            hour: new Date(data[i].dates[0]).getHours(),
-            date:
+            firstHour: new Date(data[i].dates[0]).getHours(),
+            secondHour: new Date(data[i].dates[1]).getHours(),
+            firstDate:
               new Date(data[i].dates[0]).getHours() +
               ":" +
               String(new Date(data[i].dates[0]).getMinutes()).padStart(2, "0"),
+            secondDate:
+              new Date(data[i].dates[1]).getHours() +
+              ":" +
+              String(new Date(data[i].dates[1]).getMinutes()).padStart(2, "0"),
             age: String(data[i].age.min) + "-" + String(data[i].age.max),
             filterAgeMin: data[i].age.min,
             filterAgeMax: data[i].age.max,
-            day: new Date(data[i].dates[0]).toLocaleDateString("pl-PL", {
+            firstDay: new Date(data[i].dates[0]).toLocaleDateString("pl-PL", {
+              weekday: "long",
+            }),
+            secondDay: new Date(data[i].dates[1]).toLocaleDateString("pl-PL", {
+              weekday: "long",
+            }),
+            thirdDay: new Date(data[i].dates[2]).toLocaleDateString("pl-PL", {
               weekday: "long",
             }),
             location: data[i].location,
@@ -203,6 +230,8 @@ export default {
       .finally(() => {
         this.trenings = apitab;
         this.proxyTable = apitab;
+        this.isLoaded = true;
+        console.log(this.isLoaded);
       });
   },
   computed: {
@@ -210,26 +239,24 @@ export default {
       return this.trenings.filter(
         (trening) =>
           (this.fLevel == "Poziom" || trening.level.includes(this.fLevel)) &&
-          (this.fDay == "Dzień" || trening.day.includes(this.fDay)) &&
+          (this.fDay == "Dzień" ||
+            trening.firstDay.includes(this.fDay) ||
+            trening.secondDay.includes(this.fDay)) &&
           (this.fAge == "Wiek" ||
-            (trening.filterAgeMin < parseInt(this.fAge) &&
-              trening.filterAgeMax > parseInt(this.fAge))) &&
+            (trening.filterAgeMin <= parseInt(this.fAge) &&
+              trening.filterAgeMax >= parseInt(this.fAge))) &&
           (this.fSzkola == "Szkoła" ||
             trening.location
               .toLowerCase()
               .includes(this.fSzkola.toLowerCase())) &&
           (this.fCity == "Miasto" ||
             trening.city.toLowerCase().includes(this.fCity.toLowerCase())) &&
-          (this.fGroup == "Grupa" || trening.group.toLowerCase().includes(this.fGroup.toLowerCase())) &&
-          (this.fHour == "Godzina" || trening.hour == this.fHour)
+          (this.fGroup == "Grupa" ||
+            trening.group.toLowerCase().includes(this.fGroup.toLowerCase())) &&
+          (this.fHour == "Godzina" ||
+            trening.firstHour == this.fHour ||
+            trening.secondHour == this.fHour)
       );
-    },
-    uniqueDates() {
-      this.uniqueDates = this.trenings.reduce((seed, current) => {
-        return Object.assign(seed, {
-          [current.date]: current,
-        });
-      }, {});
     },
 
     uniqueLocation() {
@@ -276,7 +303,7 @@ export default {
       this.fHour = "Godzina";
     },
     log() {
-      console.log(parseInt(this.fAge) + 1);
+      console.log(this.trenings.date);
     },
   },
 
@@ -381,5 +408,41 @@ select {
 
 .fa-x {
   color: red;
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
