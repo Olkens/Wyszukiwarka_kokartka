@@ -1,8 +1,17 @@
 import { createApp, VueElement } from 'vue'
-import { createPinia } from 'pinia'
 import App from './App.vue'
-import mitt from 'mitt'
 import router from './router'
+// import vuetify from './plugins/vuetify'
+import { loadFonts } from './plugins/webfontloader'
+import { createVuetify } from 'vuetify'
+import 'vuetify/styles'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+
+const vuetify = createVuetify({
+  components,
+  directives,
+})
 
 
 /* import the fontawesome core */
@@ -17,11 +26,7 @@ import { faUserSecret, faX  } from '@fortawesome/free-solid-svg-icons'
 /* add icons to the library */
 library.add(faUserSecret, faX)
 
-const emitter = mitt();
 
-
-const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon).use(router)
-app.config.globalProperties.emitter = emitter;
-app.use(createPinia())
+const app = createApp(App).use(vuetify).component('font-awesome-icon', FontAwesomeIcon).use(router)
 
 app.mount('#app')

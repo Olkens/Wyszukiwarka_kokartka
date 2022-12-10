@@ -6,11 +6,7 @@
         <select name="grupa" id="group" v-model="this.fGroup">
           <option value="">Grupa</option>
           <option value="Grupa" disabled selected hidden>Grupa</option>
-          <option
-            v-for="grupa in avalibleGroups"
-            :value="grupa"
-            :key="grupa.id"
-          >
+          <option v-for="grupa in avalibleGroups" :value="grupa" :key="grupa.id">
             {{ grupa }}
           </option>
           <option value="DORO">DOROŚLI</option>
@@ -66,11 +62,7 @@
         <select name="szkola" id="szkola" v-model="this.fSzkola">
           <option value="">Szkoła</option>
           <option value="Szkoła" disabled selected hidden>Szkoła</option>
-          <option
-            v-for="szkola in uniqueLocation"
-            :value="szkola"
-            :key="szkola.id"
-          >
+          <option v-for="szkola in uniqueLocation" :value="szkola" :key="szkola.id">
             {{ szkola }}
           </option>
         </select>
@@ -112,9 +104,8 @@
         </select>
       </div>
       <button class="reset-btn" @click="reset()">
-        <font-awesome-icon icon="fa-solid fa-x" />
+        Wyczyść
       </button>
-      <button class="reset-btn" @click="log()">log</button>
     </div>
     <div class="trenings-section">
       <div v-if="!isLoaded">
@@ -129,11 +120,8 @@
         <div v-if="filterWorkouts.length > 0">
           <div class="trenings-collapse">
             <div v-for="(trening, index) in filterWorkouts" :key="trening.id">
-              <Workout
-                :trening="trening"
-                :treningsDesc="treningsDesc"
-                :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }"
-              />
+              <Workout :trening="trening" :treningsDesc="treningsDesc"
+                :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }" />
             </div>
           </div>
         </div>
@@ -150,8 +138,11 @@
 <script>
 import Workout from "./Workout.vue";
 import WorkoutDesc from "../views/WorkoutDesc.vue";
-import axios from "axios";
+import fetchData from "../mixins/fatchData"
+
+
 export default {
+  mixins: [fetchData],
   props: ["trening", "trening2"],
   data() {
     return {
@@ -163,76 +154,22 @@ export default {
       fSzkola: "Szkoła",
       fHour: "Godzina",
       fCity: "Miasto",
-      trenings: [],
-      filteredTrenings: [],
-      treningsDesc: [],
-      proxyTable: [],
       avalibleGroups: [
-        "PRZEDSZKOLAKI",
-        "ZERÓWKA",
+        "ZÓŁTA",
+        "POMARAŃCZOWA",
+        "CZERWONA",
         "LAWENDOWA",
         "RÓŻOWA",
         "FIOLETOWA",
         "NIEBIESKA",
         "GRANATOWA",
+        "ZIELONA",
         "KADRA",
-        "BOBASY",
       ],
       treningDays: [],
       isFiltered: false,
       url: "https://kokartka.stronazen.pl/zapisy/api/workouts",
     };
-  },
-
-  created() {
-    const apitab = [];
-    axios
-      .get("https://kokartka.stronazen.pl/zapisy/api/workouts")
-      .then(function (response) {
-        const data = response.data;
-        for (let i = 0; i < response.data.length; i++) {
-          apitab.push({
-            id: data[i].id,
-            level: data[i].level,
-            firstHour: new Date(data[i].dates[0]).getHours(),
-            secondHour: new Date(data[i].dates[1]).getHours(),
-            firstDate:
-              new Date(data[i].dates[0]).getHours() +
-              ":" +
-              String(new Date(data[i].dates[0]).getMinutes()).padStart(2, "0"),
-            secondDate:
-              new Date(data[i].dates[1]).getHours() +
-              ":" +
-              String(new Date(data[i].dates[1]).getMinutes()).padStart(2, "0"),
-            age: String(data[i].age.min) + "-" + String(data[i].age.max),
-            filterAgeMin: data[i].age.min,
-            filterAgeMax: data[i].age.max,
-            firstDay: new Date(data[i].dates[0]).toLocaleDateString("pl-PL", {
-              weekday: "long",
-            }),
-            secondDay: new Date(data[i].dates[1]).toLocaleDateString("pl-PL", {
-              weekday: "long",
-            }),
-            thirdDay: new Date(data[i].dates[2]).toLocaleDateString("pl-PL", {
-              weekday: "long",
-            }),
-            location: data[i].location,
-            city: data[i].location_address.city,
-            brand: data[i].brand,
-            group: data[i].group,
-            signUp: data[i].links.registration,
-          });
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .finally(() => {
-        this.trenings = apitab;
-        this.proxyTable = apitab;
-        this.isLoaded = true;
-        console.log(this.isLoaded);
-      });
   },
   computed: {
     filterWorkouts() {
@@ -241,7 +178,9 @@ export default {
           (this.fLevel == "Poziom" || trening.level.includes(this.fLevel)) &&
           (this.fDay == "Dzień" ||
             trening.firstDay.includes(this.fDay) ||
-            trening.secondDay.includes(this.fDay)) &&
+            trening.secondDay.includes(this.fDay) ||
+            trening.thirdDay.includes(this.fDay)
+          ) &&
           (this.fAge == "Wiek" ||
             (trening.filterAgeMin <= parseInt(this.fAge) &&
               trening.filterAgeMax >= parseInt(this.fAge))) &&
@@ -292,7 +231,6 @@ export default {
 
   methods: {
     reset() {
-      // this.filteredTrenings = [];
       this.trenings = this.proxyTable;
       this.fLevel = "Poziom";
       this.fGroup = "Grupa";
@@ -328,13 +266,13 @@ select {
   font-family: brandon-grotesque-black, sans-serif;
   width: 145px;
   height: 37px;
-  background: #2e3a59;
+  background: #2e3a59 !important;
   border-radius: 5px;
   color: #fff;
   text-transform: uppercase;
   border: none;
   text-align: center;
-  border: 1px solid #3f4a6a;
+  border: 1px solid #3f4a6a !important;
   line-height: 10px;
   padding: 5px 0;
   font-weight: bold;
@@ -345,7 +283,7 @@ select {
   max-width: 169px;
   /* width: 169px; */
   max-height: 37px;
-  height: 37px;
+  height: 36px;
   color: #000;
   font-size: 13px;
   background: #fff;
@@ -353,7 +291,7 @@ select {
   border-radius: 3px;
   font-weight: 600;
   text-transform: uppercase;
-  padding: 0 15px;
+  padding: 0 13px;
 }
 
 .trenings-collapse {
@@ -364,6 +302,7 @@ select {
   gap: 9px;
   align-content: flex-start;
 }
+
 .trenings-section {
   width: 100vw;
   display: flex;
@@ -416,6 +355,7 @@ select {
   width: 80px;
   height: 80px;
 }
+
 .lds-ring div {
   box-sizing: border-box;
   display: block;
@@ -428,19 +368,24 @@ select {
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   border-color: #fff transparent transparent transparent;
 }
+
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;
 }
+
 .lds-ring div:nth-child(2) {
   animation-delay: -0.3s;
 }
+
 .lds-ring div:nth-child(3) {
   animation-delay: -0.15s;
 }
+
 @keyframes lds-ring {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

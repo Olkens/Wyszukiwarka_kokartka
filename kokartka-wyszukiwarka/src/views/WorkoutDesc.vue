@@ -19,7 +19,9 @@
         <div class="box">
           <h2 class="title">Plan zajęć 2021/2022</h2>
           <div class="group"></div>
-          <div class="day">{{ day }} - {{ hour }}</div>
+          <div v-for="date in daysArr" :key="date.hour">
+            <div>{{ days[date.day] }}: {{ date.hour }}</div>
+          </div>
           <div class="duration">Czas trwania: {{ duration }} Godzina</div>
           <div class="age"></div>
         </div>
@@ -82,6 +84,7 @@ export default {
       payments: {},
       links: {},
       dates: {},
+      daysArr: [],
       level: "",
       day: "",
       days: [
@@ -104,9 +107,9 @@ export default {
       height: "24px",
       width: 0,
       kokartaKolor: "#ff3375",
-      muchaKolor: "#5D9DFC",
+      muchaKolor: "#2CA9E0",
       kadraKolor: "#C800D6",
-      juniorKolor: "#4AB925",
+      juniorKolor: "#F97C16",
       chosenColor: "",
       moneyArr: [],
       moneyAmount: 0,
@@ -120,7 +123,8 @@ export default {
         this.payments = res.data.payments;
         this.links = res.data.links;
         this.date = res.data.dates[0];
-        this.day = this.days[res.data.dates[0].day];
+        this.daysArr = res.data.dates;
+        this.day = this.days[this.date.day];
         this.hour = this.date.hour;
         this.duration = this.date.duration / 60 / 60;
         this.participants = res.data.participants;

@@ -61,13 +61,12 @@
               v-if="
                 trening.thirdDay != 'Invalid Date' &&
                 trening.secondDay != 'Invalid Date'
-              "
-            >
+              ">
               <p>{{ trening.firstDay }}: {{ trening.firstDate }}</p>
               <p>{{ trening.secondDay }}: {{ trening.secondDate }}</p>
-              <p>{{ trening.thirdDay }}</p>
+              <p>{{ trening.thirdDay }}: {{ trening.thirdDate }}</p>
             </div>
-            <div v-if="trening.secondDay != 'Invalid Date'">
+            <div v-else-if="trening.secondDay != 'Invalid Date'">
               <p>{{ trening.firstDay }} {{ trening.firstDate }}</p>
               <p>{{ trening.secondDay }} {{ trening.secondDate }}</p>
             </div>
@@ -75,15 +74,6 @@
               <p>{{ trening.firstDay }} {{ trening.firstDate }}</p>
             </div>
           </div>
-          <!-- <div>
-            <p class="faded-title">Godzina</p>
-            <div v-if="trening.secondDate == 'NaN:NaN'">
-              <p>{{ trening.firstDate }}</p>
-            </div>
-            <div v-else>
-              <p>{{ trening.firstDate }}, {{ trening.secondDate }}</p>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
@@ -94,7 +84,7 @@
       >
         Więcej informacji
       </router-link>
-      <a class="tr-btn tr-btn-zs" :href="trening.signUp" target="_blank">
+      <a class="tr-btn tr-btn-zs" :style="{background: kokartka}" :href="trening.signUp" target="_blank">
         Zapisz się</a
       >
     </div>
@@ -108,14 +98,13 @@ export default {
     treningsDesc: Object,
   },
   data() {
-    return {};
+    return {
+      kokartka: this.trening.brand == 'kokartka' ? '#ff3375' : this.trening.brand == 'junior' ? "#F97C16" : this.trening.brand == 'kadra' ? "#C800D6" : this.trening.brand == 'mucha' ? "#2CA9E0" : '#fff',
+    };
   },
-  methods: {
-    logD() {
-      console.log(this.apiWorkoutDesc);
-      console.log(this.apiWorkDesc);
-    },
-  },
+  mounted(){
+    console.log(this.trening.brand)
+  }
 };
 </script>
 <style>
@@ -143,6 +132,9 @@ export default {
 .tr-heading {
   grid-area: tr-heading;
   font-size: 16px;
+}
+
+.tr-heading p {
   font-weight: bold;
 }
 
@@ -209,7 +201,6 @@ export default {
 .tr-btn {
   width: 146px;
   text-align: center;
-  border: 1px solid #fff;
   border-radius: 5px;
   font-weight: bold;
   padding: 2px;
@@ -217,6 +208,7 @@ export default {
 
 .tr-btn-wi {
   color: #fff;
+  border: 1px solid #fff;
 }
 
 .tr-btn-wi:hover {
@@ -226,7 +218,7 @@ export default {
 
 .tr-btn-zs {
   background: #fff;
-  color: #000;
+  color: #fff;
 }
 
 .tr-btn-zs:hover {
@@ -243,11 +235,11 @@ export default {
 }
 
 .Mucha-color {
-  color: #5d9dfc;
+  color: #2CA9E0;
 }
 
 .Junior-color {
-  color: #4ab925;
+  color: #F97C16;
 }
 
 .pro-color {
