@@ -6,7 +6,11 @@
         <select name="grupa" id="group" v-model="this.fGroup">
           <option value="">Grupa</option>
           <option value="Grupa" disabled selected hidden>Grupa</option>
-          <option v-for="grupa in avalibleGroups" :value="grupa" :key="grupa.id">
+          <option
+            v-for="grupa in avalibleGroups"
+            :value="grupa"
+            :key="grupa.id"
+          >
             {{ grupa }}
           </option>
           <option value="DORO">DOROŚLI</option>
@@ -62,7 +66,11 @@
         <select name="szkola" id="szkola" v-model="this.fSzkola">
           <option value="">Szkoła</option>
           <option value="Szkoła" disabled selected hidden>Szkoła</option>
-          <option v-for="szkola in uniqueLocation" :value="szkola" :key="szkola.id">
+          <option
+            v-for="szkola in uniqueLocation"
+            :value="szkola"
+            :key="szkola.id"
+          >
             {{ szkola }}
           </option>
         </select>
@@ -90,7 +98,7 @@
           <option value="Godzina" disabled selected hidden>GODZINA</option>
           <!-- <option :value={ trening.date } v-for="trening in this.uniqueDates">{{ trening.date }}</option> -->
           <option value="9">9:00 - 10:00</option>
-          <option value="10">10:0 - 11:00</option>
+          <option value="10">10:00 - 11:00</option>
           <option value="11">11:00 - 12:00</option>
           <option value="12">12:00 - 13:00</option>
           <option value="13">13:00 - 14:00</option>
@@ -103,9 +111,7 @@
           <option value="20">20:00 - 21:00</option>
         </select>
       </div>
-      <button class="reset-btn" @click="reset()">
-        Wyczyść
-      </button>
+      <button class="reset-btn" @click="reset()">Wyczyść</button>
     </div>
     <div class="trenings-section">
       <div v-if="!isLoaded">
@@ -120,8 +126,11 @@
         <div v-if="filterWorkouts.length > 0">
           <div class="trenings-collapse">
             <div v-for="(trening, index) in filterWorkouts" :key="trening.id">
-              <Workout :trening="trening" :treningsDesc="treningsDesc"
-                :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }" />
+              <Workout
+                :trening="trening"
+                :treningsDesc="treningsDesc"
+                :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }"
+              />
             </div>
           </div>
         </div>
@@ -137,9 +146,7 @@
 
 <script>
 import Workout from "./Workout.vue";
-import WorkoutDesc from "../views/WorkoutDesc.vue";
-import fetchData from "../mixins/fatchData"
-
+import fetchData from "../mixins/fatchData";
 
 export default {
   mixins: [fetchData],
@@ -179,8 +186,7 @@ export default {
           (this.fDay == "Dzień" ||
             trening.firstDay.includes(this.fDay) ||
             trening.secondDay.includes(this.fDay) ||
-            trening.thirdDay.includes(this.fDay)
-          ) &&
+            trening.thirdDay.includes(this.fDay)) &&
           (this.fAge == "Wiek" ||
             (trening.filterAgeMin <= parseInt(this.fAge) &&
               trening.filterAgeMax >= parseInt(this.fAge))) &&
@@ -245,7 +251,7 @@ export default {
     },
   },
 
-  components: { Workout, WorkoutDesc },
+  components: { Workout },
 };
 </script>
 
