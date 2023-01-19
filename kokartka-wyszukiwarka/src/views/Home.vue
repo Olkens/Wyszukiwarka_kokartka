@@ -1,8 +1,12 @@
 <template>
   <div>
+    <div>
+        <MainHeader></MainHeader>
+    </div>
     <v-expansion-panels class="panels-wrapper" expand-icon="$expand" theme="dark">
       <v-expansion-panel>
-        <v-expansion-panel-title class="panel-title">Informacje o grupach</v-expansion-panel-title>
+        <v-expansion-panel-title class="panel-title"> <i class="fa-solid fa-question-circle"></i><font-awesome-icon icon="fa-solid fa-arrow-down" />Informacje o
+          grupach <font-awesome-icon icon="fa-solid fa-arrow-down" /> </v-expansion-panel-title>
         <v-expansion-panel-text>
           <div class="panel-content__container">
             <div>
@@ -23,13 +27,12 @@
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
-    <Heading class="main-head"></Heading>
     <Trening2></Trening2>
   </div>
 </template>
 <script>
 import Trening2 from "../components/Trening2.vue";
-import Heading from "../components/Heading.vue";
+import MainHeader from "../components/MainHeader.vue"
 
 export default {
   data() {
@@ -37,7 +40,7 @@ export default {
     };
   },
 
-  components: { Trening2, Heading },
+  components: { Trening2, MainHeader },
 };
 </script>
 <style scoped>
@@ -52,9 +55,11 @@ export default {
   flex-direction: row;
   padding: 1.5rem 1rem;
 }
-.v-expansion-panel{
-  background-color: #610cab;
+
+.v-expansion-panel {
+background-color: #2C303D;
 }
+
 .panel-title {
   font-weight: bold;
   font-size: 1.2rem;
