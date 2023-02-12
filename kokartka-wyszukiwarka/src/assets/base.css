@@ -71,3 +71,19 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+li {
+  list-style: none;
+}
+
+.v-expansion-panel-title__icon {
+  display: none !important;
+}
+
+.icon-left{
+  padding-left: 15px;
+}
+
+.icon-right{
+  padding-right: 15px;
+}

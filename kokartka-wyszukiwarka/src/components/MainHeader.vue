@@ -14,7 +14,7 @@ export default {
     padding: 37px 34px;
     justify-content: flex-start;
     align-items: center;
-    background: url(../assets/panel-bg.png) no-repeat center;
+    background: url(/wyszukiwarka/assets/panel-bg.png) no-repeat center;
     background-size: cover;
     border-radius: 6px;
     width: 100%;
@@ -24,6 +24,9 @@ export default {
      p{
         color: white;
         font-size: 24px;
+     }
+     @media(max-width:786px){
+        background-image: linear-gradient(#1A1D27, #2E3A59);
      }
 }
 </style>

@@ -1,13 +1,14 @@
 <template>
   <div class="main-cont-workdesc">
     <div>
-      <div class="header">
+      <router-link class="btn-back" to="/">
+        <font-awesome-icon icon="fa-solid fa-angle-left" style="padding-right: 5px;" /> <p> Wróc do wyszukiwarki</p>
+      </router-link>
+      <div class="header" v-bind:style="{ backgroundImage: 'url(' + pathToBgPhoto + ')' }">
         {{ brand }}
       </div>
     </div>
-    <router-link class="btn-back" to="/">
-      <p>Wróc do wyszukiwarki</p>
-    </router-link>
+
     <div class="desc-main-container">
       <div class="workout-desc">
         <div class="box desc-html">
@@ -17,30 +18,21 @@
       </div>
       <div class="wokrout-schedule">
         <div class="box">
-          <h2 class="title">Plan zajęć 2021/2022</h2>
+          <h2 class="title">Termin zajęć</h2>
           <div class="group"></div>
           <div v-for="date in daysArr" :key="date.hour">
             <div>{{ days[date.day] }}: {{ date.hour }}</div>
           </div>
           <div class="duration">Czas trwania: {{ duration }} Godzina</div>
-          <div class="age"></div>
         </div>
         <div class="box">
           <h2>Poziom</h2>
           <p>{{ level }}</p>
         </div>
-        <div class="box">
-          <h2>Lokalizacja</h2>
-          {{ address }},
-          {{ city }}
-        </div>
         <div class="participants box">
           <h2>Ilość wolnych miejsc:</h2>
           <div class="participants-cont">
-            <div
-              class="progress-bar"
-              :style="{ width: width + '%', height: height }"
-            ></div>
+            <div class="progress-bar" :style="{ width: width + '%', height: height }"></div>
             <p class="participants-cont-bg"></p>
             <div class="participants-ratio">
               <p class="participants-ratio-label">
@@ -51,11 +43,12 @@
         </div>
       </div>
       <div class="workout-payments">
+        <div class="img-box">
+          <img :src="imgSrc">
+        </div>
         <div class="signup" v-if="participantsCurrent < participantsMax">
-          <h2>Zapisz się</h2>
-          <a :href="links.registration" class="zapis-btn-desc" target="_blank"
-            >Zapisz się na zajęcia</a
-          >
+          <a :href="links.registration" class="zapis-btn-desc" target="_blank"> Zapisz się na zajęcia <font-awesome-icon
+              :icon="['fas', 'check']" class="fa-icon" /></a>
         </div>
         <div v-if="participantsCurrent >= participantsMax">
           <div class="workoutFull">Brak wolnych miejsc</div>
@@ -64,10 +57,10 @@
     </div>
     <div class="btn-container">
       <a href="tel:794294259">
-        <p>Zadzwoń już teraz +48 794 294 259</p>
+        <font-awesome-icon icon="fa-solid fa-phone" class="icon-right" /> <p>Zadzwoń już teraz: <b>+48 794 294 259</b></p>
       </a>
       <a href="mailto:biuro@kokartka.info">
-        <p>Napisz od nas: biuro@kokartka.info</p>
+        <font-awesome-icon icon="fa-solid fa-envelope" class="icon-right" /><p>Napisz od nas: <b>biuro@kokartka.info</b></p>
       </a>
     </div>
   </div>
@@ -106,13 +99,15 @@ export default {
       participantsCurrent: 0,
       height: "24px",
       width: 0,
-      kokartaKolor: "#ff3375",
+      kokartaKolor: "#D1519D",
       muchaKolor: "#2CA9E0",
       kadraKolor: "#C800D6",
       juniorKolor: "#F97C16",
       chosenColor: "",
       moneyArr: [],
       moneyAmount: 0,
+      pathToBgPhoto: '',
+      imgSrc: '',
     };
   },
   mounted() {
@@ -134,7 +129,6 @@ export default {
         this.moneyArr = res.data.payments.amount;
         this.moneyAmount = res.data.payments.amount.amount;
       })
-      .finally(() => {});
     axios.get("https://kokartka.stronazen.pl/zapisy/api/workouts").then((res) => {
       const data = res.data;
       for (let i = 0; i < data.length; i++) {
@@ -143,6 +137,9 @@ export default {
           this.brand = data[i].brand;
           this.address = data[i].location_address.street;
           this.city = data[i].location_address.city;
+          this.pathToBgPhoto = `/wyszukiwarka/assets/${data[i].brand}.png`
+          this.imgSrc = `/wyszukiwarka/assets/${data[i].brand}-img.png`
+
           if (data[i].level == "beginner") {
             this.level = "Podstawowy";
           }
@@ -168,15 +165,20 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .desc-main-container {
   font-family: "Poppins", sans-serif;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  justify-content: space-around;
+  justify-content: space-between;
   gap: 10px;
   /* min-height: 2000px; */
+}
+
+.main-cont-workdesc {
+  margin: 0 auto;
+  width: 1035px;
 }
 
 @media screen and (max-width: 1024px) {
@@ -185,16 +187,21 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 90vw;
   }
+
   .btn-back {
     margin-bottom: 1rem;
+    width: 100% !important;
+
   }
 
   .header {
     padding-left: 0 !important;
-    width: 500px;
     justify-content: center;
+    width: 100vw;
   }
+
   .desc-main-container {
     flex-direction: column;
     justify-content: space-around;
@@ -203,7 +210,7 @@ export default {
     flex-wrap: nowrap;
   }
 
-  .desc-main-container > * {
+  .desc-main-container>* {
     flex: 0 !important;
   }
 
@@ -227,6 +234,10 @@ export default {
   .wokrout-schedule,
   .workout-payments {
     width: 60% !important;
+
+    @media (max-width:768px){
+      width: 100% !important;
+    }
     /* justify-content: center !important; */
   }
 
@@ -237,14 +248,11 @@ export default {
 
   .signup {
     min-width: 100%;
-  }
-
-  .btn-back {
-    width: 200px !important;
+ 
   }
 }
 
-.desc-main-container > * {
+.desc-main-container>* {
   flex: 1 1 0;
 }
 
@@ -252,7 +260,7 @@ export default {
   font-family: "Poppins", sans-serif;
   /* width: 100vw; */
   height: 132px;
-  background-color: v-bind(chosenColor);
+  background: no-repeat center;
   padding-left: 6rem;
   font-size: 60px;
   font-weight: 900;
@@ -260,9 +268,8 @@ export default {
   display: flex;
   align-items: center;
   text-transform: uppercase;
-  /* margin-left: calc(-50vw + 49% + 10px); */
-  /* margin-top: -17.9%; */
   margin-bottom: 1rem;
+  border-radius: 15px;
 }
 
 .desc-html:deep(h2),
@@ -288,19 +295,18 @@ h2 {
 .workout-desc,
 .wokrout-schedule,
 .workout-payments {
-  width: calc(100% / 3);
-  min-height: 553px;
+  // width: calc(100% / 3);
+  /* min-height: 553px; */
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   /* align-items: center; */
 }
 
 .signup {
   border-radius: 5px;
-  margin-top: 10px;
   padding: 25px;
-  background-color: #fff;
+  background-color: v-bind(chosenColor);
   display: flex;
   flex-direction: column;
 }
@@ -314,7 +320,7 @@ h2 {
   text-align: center;
 }
 
-.signup > h2 {
+.signup>h2 {
   color: #000;
 }
 
@@ -324,6 +330,13 @@ h2 {
   border-radius: 5px;
   margin-top: 10px;
   color: #e9e9e9;
+}
+
+.img-box {
+  padding: 0px;
+  margin-top: 10px;
+  height: 100%;
+  width: 100%;
 }
 
 .workout-payments .box {
@@ -341,16 +354,19 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: v-bind(chosenColor);
-  color: #fff;
+  background-color: #fff;
+  color: #000;
   width: 96%;
   margin: 0 auto;
   height: 35px;
   font-weight: bold;
   border-radius: 3px;
   font-size: 12px;
-  margin-top: 15px;
   border: none;
+}
+
+.fa-icon {
+  padding-left: 5px;
 }
 
 .btn-container {
@@ -360,7 +376,7 @@ h2 {
 
 .btn-container a {
   display: flex;
-  width: 523px;
+  width: 475px;
   background-color: v-bind(chosenColor);
   margin-top: 20px;
   height: 82px;
@@ -379,11 +395,13 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 17%;
-  border-radius: 2px;
+  width: 20%;
+  border-radius: 5px;
   text-transform: uppercase;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: semi-bold;
+  padding: 0 12px;
+  margin-bottom: 20px;
 }
 
 .progress-bar {
@@ -422,4 +440,5 @@ h2 {
   font-size: 12px;
   font-weight: bold;
 }
+
 </style>

@@ -1,27 +1,6 @@
 <template>
   <div class="tr-main-container">
-    <div class="tr-heading">
-      <div v-if="trening.brand == 'kokartka'" class="Kokartka-color">
-        <p>
-          {{ trening.brand.toUpperCase() }}
-        </p>
-      </div>
-      <div v-else-if="trening.brand == 'mucha'" class="Mucha-color">
-        <p>
-          {{ trening.brand.toUpperCase() }}
-        </p>
-      </div>
-      <div v-if="trening.brand == 'junior'" class="Junior-color">
-        <p>
-          {{ trening.brand.toUpperCase() }}
-        </p>
-      </div>
-      <div v-if="trening.brand == 'pro'" class="pro-color">
-        <p>
-          {{ trening.brand.toUpperCase() }}
-        </p>
-      </div>
-    </div>
+    <WorkoutHeader :trening="trening"></WorkoutHeader>
     <div class="tr-info-box-1">
       <div class="tr-info-1">
         <div class="tr-info-1-box">
@@ -92,19 +71,20 @@
 </template>
 
 <script>
+import WorkoutHeader from "./WorkoutHeader.vue"
 export default {
   props: {
     trening: Object,
     treningsDesc: Object,
+  },
+  components:{
+    WorkoutHeader,
   },
   data() {
     return {
       kokartka: this.trening.brand == 'kokartka' ? '#ff3375' : this.trening.brand == 'junior' ? "#F97C16" : this.trening.brand == 'kadra' ? "#C800D6" : this.trening.brand == 'mucha' ? "#2CA9E0" : '#fff',
     };
   },
-  mounted(){
-    console.log(this.trening.brand)
-  }
 };
 </script>
 <style>
