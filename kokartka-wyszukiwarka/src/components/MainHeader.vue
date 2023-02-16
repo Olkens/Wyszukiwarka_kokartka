@@ -21,12 +21,14 @@ export default {
     height: 100%;
     max-height: 86px;
     margin-bottom: 2rem;
-     p{
+
+    p {
         color: white;
         font-size: 24px;
-     }
-     @media(max-width:786px){
-        background-image: linear-gradient(#1A1D27, #2E3A59);
-     }
+    }
+
+    @media(max-width:786px) {
+        background-position: 12% 0px ;
+    }
 }
 </style>

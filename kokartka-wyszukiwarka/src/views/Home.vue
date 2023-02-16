@@ -1,5 +1,6 @@
 <template>
   <div>
+    <a href="#" class="btn-back">Strona główna</a>
     <div>
       <MainHeader></MainHeader>
     </div>
@@ -17,9 +18,9 @@
                 <img src="../assets/Rectangle69.png" alt="" srcset="">
               </div>
               <div class="expansion-content">
-                <p><b>ZÓŁTA</b> - JUNIOR - 2-3 LAT - 1 RAZ W TYG</p>
-                <p><b>POMARAŃCZOWA</b> - JUNIOR - 4-5 LAT - 1 RAZ W TYG</p>
-                <p><b>CZERWONA</b> - JUNIOR - 5-6 LAT - 1 RAZ W TYG</p>
+                <p><b>ZÓŁTA</b> - JUNIOR - 2-3 LAT - 1x TYG</p>
+                <p><b>POMARAŃCZOWA</b> - JUNIOR - 4-5 LAT - 1x TYG</p>
+                <p><b>CZERWONA</b> - JUNIOR - 5-6 LAT - 1x TYG</p>
               </div>
             </div>
             <div class="expansion-groups">
@@ -27,9 +28,9 @@
                 <img src="../assets/Rectangle71.png" alt="" srcset="">
               </div>
               <div class="expansion-content">
-                <p><b>LAWENDOWA</b> - KOKARTKA - 7-10 LAT - 1 RAZ W TYG</p>
-                <p><b>RÓŻOWA</b> - KOKARTKA - 7-10 LAT - 2 RAZY W TYG</p>
-                <p><b>FIOLETOWA</b> - KOKARTKA - 10-14 LAT - 2 RAZY W TYG</p>
+                <p><b>LAWENDOWA</b> - KOKARTKA - 7-10 LAT - 1x TYG</p>
+                <p><b>RÓŻOWA</b> - KOKARTKA - 7-10 LAT - 2x TYG</p>
+                <p><b>FIOLETOWA</b> - KOKARTKA - 10-14 LAT - 2x TYG</p>
               </div>
             </div>
             <div class="expansion-groups">
@@ -37,17 +38,17 @@
                 <img src="../assets/Rectangle70.png" alt="" srcset="">
               </div>
               <div class="expansion-content">
-                <p><b>NIEBIESKA</b> - MUCHA - 7-14 LAT - 1 RAZ W TYG</p>
-                <p><b>GRANATOWA</b> - MUCHA - 7-14 LAT - 2 RAZY W TYG</p>
+                <p><b>NIEBIESKA</b> - MUCHA - 7-14 LAT - 1x TYG</p>
+                <p><b>GRANATOWA</b> - MUCHA - 7-14 LAT - 2x TYG</p>
               </div>
             </div>
             <div class="expansion-groups">
               <div>
-                <img src="../assets/Rectangle71.png" alt="" srcset="">
+                <img src="../assets/Rectangle72.png" alt="" srcset="">
               </div>
               <div class="expansion-content">
                 <p><b>ZIELONA</b> - DOROŚLI</p>
-                <p><b>KADRA</b> - FUNDACJA KOKARTKI I MUCHY - GRUPY ZAWODNICZE - 5-16 LAT - 3 RAZY W TYG</p>
+                <p><b>KADRA</b> - KADRA - GRUPY ZAWODNICZE - 5-16 LAT - 3x TYG</p>
               </div>
             </div>
           </div>
@@ -117,6 +118,31 @@ export default {
   text-transform: uppercase;
   @media (max-width: 786px){
     font-size: 0.8rem !important;
+  }
+}
+
+.btn-back {
+  font-family: "Poppins", sans-serif;
+  background-color: #fff;
+  color: #000;
+  height: 41px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: semi-bold;
+  padding: 0 12px;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 1024px){
+  .btn-back {
+    margin-bottom: 1rem;
+    width: 100% !important;
+
   }
 }
 </style>

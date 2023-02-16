@@ -167,7 +167,7 @@ export default {
 
 <style scoped lang="scss">
 .desc-main-container {
-  font-family: "Poppins", sans-serif;
+  font-family: brandon-grotesque-black, sans-serif;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -257,7 +257,7 @@ export default {
 }
 
 .header {
-  font-family: "Poppins", sans-serif;
+  font-family: brandon-grotesque-black, sans-serif;
   /* width: 100vw; */
   height: 132px;
   background: no-repeat center;
@@ -283,7 +283,7 @@ h2 {
   font-size: 16px;
   font-weight: bold;
   color: #fff;
-  font-family: "Poppins", sans-serif;
+  font-family: brandon-grotesque-black, sans-serif;
 }
 
 .desc-html:deep(p) {
@@ -388,7 +388,7 @@ h2 {
 }
 
 .btn-back {
-  font-family: "Poppins", sans-serif;
+  font-family: brandon-grotesque-black, sans-serif;
   background-color: #fff;
   color: #000;
   height: 41px;

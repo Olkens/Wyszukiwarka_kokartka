@@ -82,7 +82,7 @@ export default {
   },
   data() {
     return {
-      kokartka: this.trening.brand == 'kokartka' ? '#ff3375' : this.trening.brand == 'junior' ? "#F97C16" : this.trening.brand == 'kadra' ? "#C800D6" : this.trening.brand == 'mucha' ? "#2CA9E0" : '#fff',
+      kokartka: this.trening.brand == 'kokartka' ? '#D1519D' : this.trening.brand == 'junior' ? "#F97C16" : this.trening.brand == 'kadra' ? "#C800D6" : this.trening.brand == 'mucha' ? "#2CA9E0" : '#fff',
     };
   },
 };
@@ -211,7 +211,7 @@ export default {
 }
 
 .Kokartka-color {
-  color: #ff3375;
+  color: #D1519D;
 }
 
 .Mucha-color {
