@@ -1,117 +1,127 @@
 <template>
-  <div class="app-tr-container">
-    <div class="box-cont">
-      <div class="box flex-label">
-        <!-- <label for="group">GRUPA</label> -->
-        <select name="grupa" id="group" v-model="this.fGroup">
-          <option value="">Grupa</option>
-          <option value="Grupa" disabled selected hidden>Grupa</option>
-          <option
-            v-for="grupa in avalibleGroups"
-            :value="grupa"
-            :key="grupa.id"
-          >
-            {{ grupa }}
-          </option>
-          <option value="DORO">DOROŚLI</option>
-        </select>
+  <div>
+    <div>
+      <div>
+        <v-expansion-panels class="panels-wrapper" expand-icon="$expand" theme="dark">
+          <v-expansion-panel>
+            <v-expansion-panel-title class="panel-title">
+              <div></div>
+              <div>FILTRY<font-awesome-icon icon="fa-solid fa-filter" class="icon-left" /></div>
+            </v-expansion-panel-title>
+            <v-expansion-panel-text>
+              <div class="app-tr-container">
+                <div class="box-cont">
+
+                  <div>
+                    <!-- <label for="group">GRUPA</label> -->
+                    <select name="grupa" id="group" v-model="this.fGroup">
+                      <option value="">Grupa</option>
+                      <option value="Grupa" disabled selected hidden>Grupa</option>
+                      <option v-for="grupa in avalibleGroups" :value="grupa" :key="grupa.id">
+                        {{ grupa }}
+                      </option>
+                      <option value="DORO">DOROŚLI</option>
+                    </select>
+                  </div>
+
+                  <div class="box flex-label">
+                    <!-- <label for="level">LEVEL</label> -->
+                    <select name="level" id="level" v-model="this.fLevel">
+                      <option value="">Poziom</option>
+                      <option value="Poziom" disabled selected hidden>Poziom</option>
+                      <option value="beginner">Podstawowy</option>
+                      <option value="advanced">Zaawansowany</option>
+                      <option value="beginner_older">Starsza podstawowa</option>
+                    </select>
+                  </div>
+
+                  <div class="box flex-label">
+                    <!-- <label for="age">WIEK</label> -->
+                    <select name="age" id="age" v-model="this.fAge">
+                      <option value="Wiek">Wiek</option>
+                      <option value="Wiek" disabled selected hidden>Wiek</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                      <option value="13">13</option>
+                      <option value="14">14</option>
+                      <option value="15">15</option>
+                      <option value="16">16</option>
+                      <option value="17">17+</option>
+                    </select>
+                  </div>
+
+                  <div class="box flex-label">
+                    <select name="city" id="city" v-model="this.fCity">
+                      <option value="Miasto">Miasto</option>
+                      <option value="Miasto" disabled selected hidden>Miasto</option>
+                      <option v-for="city in uniqueCity" :value="city" :key="city.id">
+                        {{ city }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="box flex-label">
+                    <select name="szkola" id="szkola" v-model="this.fSzkola">
+                      <option value="">Szkoła</option>
+                      <option value="Szkoła" disabled selected hidden>Szkoła</option>
+                      <option v-for="szkola in uniqueLocation" :value="szkola" :key="szkola.id">
+                        {{ szkola }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="box flex-label">
+                    <!-- <label for="day">DZIEŃ</label> -->
+                    <select name="day" id="day" v-model="this.fDay">
+                      <option value="">Dzień</option>
+                      <option value="Dzień" disabled selected hidden>Dzień</option>
+                      <option value="poniedziałek">Poniedziałek</option>
+                      <option value="wtorek">Wtorek</option>
+                      <option value="środa">Środa</option>
+                      <option value="czwartek">Czwartek</option>
+                      <option value="piątek">Piątek</option>
+                      <option value="sobota">Sobota</option>
+                      <option value="niedziela">Niedziela</option>
+                    </select>
+                  </div>
+
+                  <div class="box flex-label">
+                    <!-- <label for="day">DZIEŃ</label> -->
+                    <select name="hour" id="hour" v-model="this.fHour">
+                      <option value="Godzina">Godzina</option>
+                      <option value="Godzina" disabled selected hidden>GODZINA</option>
+                      <!-- <option :value={ trening.date } v-for="trening in this.uniqueDates">{{ trening.date }}</option> -->
+                      <option value="9">9:00 - 10:00</option>
+                      <option value="10">10:00 - 11:00</option>
+                      <option value="11">11:00 - 12:00</option>
+                      <option value="12">12:00 - 13:00</option>
+                      <option value="13">13:00 - 14:00</option>
+                      <option value="14">14:00 - 15:00</option>
+                      <option value="15">15:00 - 16:00</option>
+                      <option value="16">16:00 - 17:00</option>
+                      <option value="17">17:00 - 18:00</option>
+                      <option value="18">18:00 - 19:00</option>
+                      <option value="19">19:00 - 20:00</option>
+                      <option value="20">20:00 - 21:00</option>
+                    </select>
+                  </div>
+                  <button class="reset-btn" @click="reset()">Wyczyść</button>
+                </div>
+              </div>
+            </v-expansion-panel-text>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </div>
 
-      <div class="box flex-label">
-        <!-- <label for="level">LEVEL</label> -->
-        <select name="level" id="level" v-model="this.fLevel">
-          <option value="">Poziom</option>
-          <option value="Poziom" disabled selected hidden>Poziom</option>
-          <option value="beginner">Podstawowy</option>
-          <option value="advanced">Zaawansowany</option>
-          <option value="beginner_older">Starsza podstawowa</option>
-        </select>
-      </div>
-
-      <div class="box flex-label">
-        <!-- <label for="age">WIEK</label> -->
-        <select name="age" id="age" v-model="this.fAge">
-          <option value="Wiek">Wiek</option>
-          <option value="Wiek" disabled selected hidden>Wiek</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
-          <option value="13">13</option>
-          <option value="14">14</option>
-          <option value="15">15</option>
-          <option value="16">16</option>
-          <option value="17">17+</option>
-        </select>
-      </div>
-
-      <div class="box flex-label">
-        <select name="city" id="city" v-model="this.fCity">
-          <option value="Miasto">Miasto</option>
-          <option value="Miasto" disabled selected hidden>Miasto</option>
-          <option v-for="city in uniqueCity" :value="city" :key="city.id">
-            {{ city }}
-          </option>
-        </select>
-      </div>
-
-      <div class="box flex-label">
-        <select name="szkola" id="szkola" v-model="this.fSzkola">
-          <option value="">Szkoła</option>
-          <option value="Szkoła" disabled selected hidden>Szkoła</option>
-          <option
-            v-for="szkola in uniqueLocation"
-            :value="szkola"
-            :key="szkola.id"
-          >
-            {{ szkola }}
-          </option>
-        </select>
-      </div>
-
-      <div class="box flex-label">
-        <!-- <label for="day">DZIEŃ</label> -->
-        <select name="day" id="day" v-model="this.fDay">
-          <option value="">Dzień</option>
-          <option value="Dzień" disabled selected hidden>Dzień</option>
-          <option value="poniedziałek">Poniedziałek</option>
-          <option value="wtorek">Wtorek</option>
-          <option value="środa">Środa</option>
-          <option value="czwartek">Czwartek</option>
-          <option value="piątek">Piątek</option>
-          <option value="sobota">Sobota</option>
-          <option value="niedziela">Niedziela</option>
-        </select>
-      </div>
-
-      <div class="box flex-label">
-        <!-- <label for="day">DZIEŃ</label> -->
-        <select name="hour" id="hour" v-model="this.fHour">
-          <option value="Godzina">Godzina</option>
-          <option value="Godzina" disabled selected hidden>GODZINA</option>
-          <!-- <option :value={ trening.date } v-for="trening in this.uniqueDates">{{ trening.date }}</option> -->
-          <option value="9">9:00 - 10:00</option>
-          <option value="10">10:00 - 11:00</option>
-          <option value="11">11:00 - 12:00</option>
-          <option value="12">12:00 - 13:00</option>
-          <option value="13">13:00 - 14:00</option>
-          <option value="14">14:00 - 15:00</option>
-          <option value="15">15:00 - 16:00</option>
-          <option value="16">16:00 - 17:00</option>
-          <option value="17">17:00 - 18:00</option>
-          <option value="18">18:00 - 19:00</option>
-          <option value="19">19:00 - 20:00</option>
-          <option value="20">20:00 - 21:00</option>
-        </select>
-      </div>
-      <button class="reset-btn" @click="reset()">Wyczyść</button>
     </div>
     <div class="trenings-section">
       <div v-if="!isLoaded">
@@ -126,11 +136,8 @@
         <div v-if="filterWorkouts.length > 0">
           <div class="trenings-collapse">
             <div v-for="(trening, index) in filterWorkouts" :key="trening.id">
-              <Workout
-                :trening="trening"
-                :treningsDesc="treningsDesc"
-                :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }"
-              />
+              <Workout :trening="trening" :treningsDesc="treningsDesc"
+                :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }" />
             </div>
           </div>
         </div>
@@ -175,7 +182,7 @@ export default {
       ],
       treningDays: [],
       isFiltered: false,
-      url: "https://kokartka.stronazen.pl/zapisy/api/workouts",
+      url: "https://kokartka.info/zapisy/api/workouts",
     };
   },
   computed: {
@@ -270,7 +277,7 @@ export default {
 
 select {
   font-family: brandon-grotesque-black, sans-serif;
-  width: 145px;
+  width: 140px;
   height: 37px;
   background: #2e3a59 !important;
   border-radius: 5px;
@@ -310,7 +317,6 @@ select {
 }
 
 .trenings-section {
-  width: 100vw;
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -321,6 +327,7 @@ select {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 1rem;
 }
 
 .no-results-card-container {
@@ -394,6 +401,40 @@ select {
 
   100% {
     transform: rotate(360deg);
+  }
+}
+
+.expansion-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-content__container {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+  flex-direction: row;
+  padding: 1.5rem 0.2rem;
+
+  @media (max-width: 786px) {
+    flex-direction: column;
+  }
+}
+
+.v-expansion-panel {
+  background-color: #2C303D;
+}
+
+.panel-title {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+
+  @media (max-width: 786px) {
+    font-size: 0.8rem !important;
   }
 }
 </style>

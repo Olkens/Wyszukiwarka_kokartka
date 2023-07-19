@@ -21,10 +21,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faUserSecret, faX, faCheck, faAngleLeft, faPhone, faEnvelope, faArrowDown  } from '@fortawesome/free-solid-svg-icons'
+import { faUserSecret, faX, faCheck, faAngleLeft, faPhone, faEnvelope, faArrowDown, faFilter  } from '@fortawesome/free-solid-svg-icons'
 
 /* add icons to the library */
-library.add(faUserSecret, faX, faCheck, faAngleLeft, faPhone, faEnvelope, faArrowDown)
+library.add(faUserSecret, faX, faCheck, faAngleLeft, faPhone, faEnvelope, faArrowDown, faFilter)
 
 
 const app = createApp(App).use(vuetify).component('font-awesome-icon', FontAwesomeIcon).use(router)

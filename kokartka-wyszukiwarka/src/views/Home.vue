@@ -73,7 +73,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .panels-wrapper {
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .expansion-groups {
