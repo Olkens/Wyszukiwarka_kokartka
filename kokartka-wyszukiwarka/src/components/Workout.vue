@@ -11,9 +11,7 @@
           <div>
             <p class="faded-title">POZIOM</p>
             <p v-if="trening.level === 'beginner'">Podstawowy</p>
-            <p v-else-if="trening.level === 'beginner_older'">
-              początkująca starsza
-            </p>
+            <p v-else-if="trening.level === 'beginner_older'">początkująca starsza</p>
             <p v-if="trening.level === 'advanced'">zaawansowany</p>
           </div>
         </div>
@@ -33,56 +31,54 @@
         </div>
       </div>
       <div class="tr-info-3 tr-border-left">
-        <div class="tr-info-3-box ">
+        <div class="tr-info-3-box">
           <div>
             <p class="faded-title">Dzień</p>
-            <div
-              v-if="
-                trening.thirdDay != 'Invalid Date' &&
-                trening.secondDay != 'Invalid Date'
-              ">
-              <p>{{ trening.firstDay }}: {{ trening.firstDate }}</p>
-              <p>{{ trening.secondDay }}: {{ trening.secondDate }}</p>
-              <p>{{ trening.thirdDay }}: {{ trening.thirdDate }}</p>
-            </div>
-            <div v-else-if="trening.secondDay != 'Invalid Date'">
-              <p>{{ trening.firstDay }} {{ trening.firstDate }}</p>
-              <p>{{ trening.secondDay }} {{ trening.secondDate }}</p>
-            </div>
-            <div v-else>
-              <p>{{ trening.firstDay }} {{ trening.firstDate }}</p>
+            <div v-if="trening.firstDay">
+              <div>
+                <p v-if="trening.firstDate">{{ trening.firstDay }}: {{ trening.firstDate }}</p>
+                <p v-if="trening.secondDate">{{ trening.secondDay }}: {{ trening.secondDate }}</p>
+                <p v-if="trening.thirdDate">{{ trening.thirdDay }}: {{ trening.thirdDate }}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="tr-btn-container">
-      <router-link
-        class="tr-btn tr-btn-wi"
-        :to="{ path: '/opis/' + trening.id }"
-      >
+      <router-link class="tr-btn tr-btn-wi" :to="{ path: '/opis/' + trening.id }">
         Więcej informacji
       </router-link>
-      <a class="tr-btn tr-btn-zs" :style="{background: kokartka}" :href="trening.signUp" target="_blank">
-        Zapisz się</a
-      >
+      <div v-if="trening.signUp">
+        <a class="tr-btn tr-btn-zs" :style="{ background: kokartka }" :href="trening.signUp" target="_blank">
+          Zapisz się</a>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import WorkoutHeader from "./WorkoutHeader.vue"
+import WorkoutHeader from "./WorkoutHeader.vue";
 export default {
   props: {
     trening: Object,
     treningsDesc: Object,
   },
-  components:{
+  components: {
     WorkoutHeader,
   },
   data() {
     return {
-      kokartka: this.trening.brand == 'kokartka' ? '#D1519D' : this.trening.brand == 'junior' ? "#F97C16" : this.trening.brand == 'kadra' ? "#C800D6" : this.trening.brand == 'mucha' ? "#2CA9E0" : '#fff',
+      kokartka:
+        this.trening.brand == "kokartka"
+          ? "#D1519D"
+          : this.trening.brand == "junior"
+            ? "#F97C16"
+            : this.trening.brand == "kadra"
+              ? "#C800D6"
+              : this.trening.brand == "mucha"
+                ? "#2CA9E0"
+                : "#fff",
     };
   },
 };
@@ -211,15 +207,15 @@ export default {
 }
 
 .Kokartka-color {
-  color: #D1519D;
+  color: #d1519d;
 }
 
 .Mucha-color {
-  color: #2CA9E0;
+  color: #2ca9e0;
 }
 
 .Junior-color {
-  color: #F97C16;
+  color: #f97c16;
 }
 
 .pro-color {
