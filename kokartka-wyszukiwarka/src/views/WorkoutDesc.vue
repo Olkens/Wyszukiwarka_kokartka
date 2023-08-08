@@ -2,7 +2,8 @@
   <div class="main-cont-workdesc">
     <div>
       <router-link class="btn-back" to="/">
-        <font-awesome-icon icon="fa-solid fa-angle-left" style="padding-right: 5px;" /> <p> Wróc do wyszukiwarki</p>
+        <font-awesome-icon icon="fa-solid fa-angle-left" style="padding-right: 5px;" />
+        <p> Wróc do wyszukiwarki</p>
       </router-link>
       <div class="header" v-bind:style="{ backgroundImage: 'url(' + pathToBgPhoto + ')' }">
         {{ brand }}
@@ -47,8 +48,12 @@
           <img :src="imgSrc">
         </div>
         <div class="signup" v-if="participantsCurrent < participantsMax">
-          <a :href="links.registration" class="zapis-btn-desc" target="_blank"> Zapisz się na zajęcia <font-awesome-icon
-              :icon="['fas', 'check']" class="fa-icon" /></a>
+          <div v-if="links.registration"> <a :href="links.registration" class="zapis-btn-desc" target="_blank"> Zapisz się
+              na zajęcia <font-awesome-icon :icon="['fas', 'check']" class="fa-icon" /></a>
+          </div>
+          <div v-else class="zapis-btn-desc" >
+            Zapisy już wkrótce!
+          </div>
         </div>
         <div v-if="participantsCurrent >= participantsMax">
           <div class="workoutFull">Brak wolnych miejsc</div>
@@ -57,10 +62,12 @@
     </div>
     <div class="btn-container">
       <a href="tel:794294259">
-        <font-awesome-icon icon="fa-solid fa-phone" class="icon-right" /> <p>Zadzwoń już teraz: <b>+48 794 294 259</b></p>
+        <font-awesome-icon icon="fa-solid fa-phone" class="icon-right" />
+        <p>Zadzwoń już teraz: <b>+48 794 294 259</b></p>
       </a>
       <a href="mailto:biuro@kokartka.info">
-        <font-awesome-icon icon="fa-solid fa-envelope" class="icon-right" /><p>Napisz od nas: <b>biuro@kokartka.info</b></p>
+        <font-awesome-icon icon="fa-solid fa-envelope" class="icon-right" />
+        <p>Napisz od nas: <b>biuro@kokartka.info</b></p>
       </a>
     </div>
   </div>
@@ -119,7 +126,7 @@ export default {
         this.links = res.data.links;
         this.date = res.data.dates[0];
         this.daysArr = res.data.dates;
-        this.day = this.days[this.date.day];
+        this.day = this.date ? this.days[this.date.day] : "";
         this.hour = this.date.hour;
         this.duration = this.date.duration / 60 / 60;
         this.participants = res.data.participants;
@@ -235,9 +242,10 @@ export default {
   .workout-payments {
     width: 60% !important;
 
-    @media (max-width:768px){
+    @media (max-width:768px) {
       width: 100% !important;
     }
+
     /* justify-content: center !important; */
   }
 
@@ -248,7 +256,7 @@ export default {
 
   .signup {
     min-width: 100%;
- 
+
   }
 }
 
@@ -440,5 +448,4 @@ h2 {
   font-size: 12px;
   font-weight: bold;
 }
-
 </style>
