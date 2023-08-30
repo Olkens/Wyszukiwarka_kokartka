@@ -1,5 +1,4 @@
-<script setup>
-</script>
+<script setup></script>
 <template>
   <div>
     <router-view></router-view>
@@ -32,7 +31,7 @@ export default {
 #app {
   max-width: 1380px;
   margin: 0 auto;
-padding: 0 20px;
+  padding: 0 20px;
   margin-top: 4rem;
   /* font-weight: normal; */
   font-family: "Lato", sans-serif;
@@ -45,7 +44,6 @@ padding: 0 20px;
 
 #app > div {
   width: 1150px;
-
 }
 
 ::-webkit-scrollbar {
@@ -90,7 +88,7 @@ a,
 }
 
 .main-head {
-    padding-left: 20px;
+  padding-left: 20px;
   padding-right: 20px;
 }
 

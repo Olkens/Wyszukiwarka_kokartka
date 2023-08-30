@@ -4,18 +4,31 @@
     <div>
       <MainHeader></MainHeader>
     </div>
-    <v-expansion-panels class="panels-wrapper" expand-icon="$expand" theme="dark">
+    <v-expansion-panels
+      class="panels-wrapper"
+      expand-icon="$expand"
+      theme="dark"
+    >
       <v-expansion-panel>
         <v-expansion-panel-title class="panel-title">
-          <div><font-awesome-icon icon="fa-solid fa-arrow-down" class="icon-right"/>Informacje o
-            grupach</div>
-          <div>Rozwiń<font-awesome-icon icon="fa-solid fa-arrow-down" class="icon-left" /></div>
+          <div>
+            <font-awesome-icon
+              icon="fa-solid fa-arrow-down"
+              class="icon-right"
+            />Informacje o grupach
+          </div>
+          <div>
+            Rozwiń<font-awesome-icon
+              icon="fa-solid fa-arrow-down"
+              class="icon-left"
+            />
+          </div>
         </v-expansion-panel-title>
         <v-expansion-panel-text>
           <div class="panel-content__container">
             <div class="expansion-groups">
               <div>
-                <img src="../assets/Rectangle69.png" alt="" srcset="">
+                <img src="../assets/Rectangle69.png" alt="" srcset="" />
               </div>
               <div class="expansion-content">
                 <p><b>ZÓŁTA</b> - JUNIOR - 2-3 LAT - 1x TYG</p>
@@ -25,7 +38,7 @@
             </div>
             <div class="expansion-groups">
               <div>
-                <img src="../assets/Rectangle71.png" alt="" srcset="">
+                <img src="../assets/Rectangle71.png" alt="" srcset="" />
               </div>
               <div class="expansion-content">
                 <p><b>LAWENDOWA</b> - KOKARTKA - 7-10 LAT - 1x TYG</p>
@@ -35,7 +48,7 @@
             </div>
             <div class="expansion-groups">
               <div>
-                <img src="../assets/Rectangle70.png" alt="" srcset="">
+                <img src="../assets/Rectangle70.png" alt="" srcset="" />
               </div>
               <div class="expansion-content">
                 <p><b>NIEBIESKA</b> - MUCHA - 7-14 LAT - 1x TYG</p>
@@ -44,11 +57,13 @@
             </div>
             <div class="expansion-groups">
               <div>
-                <img src="../assets/Rectangle72.png" alt="" srcset="">
+                <img src="../assets/Rectangle72.png" alt="" srcset="" />
               </div>
               <div class="expansion-content">
                 <p><b>ZIELONA</b> - DOROŚLI</p>
-                <p><b>KADRA</b> - KADRA - GRUPY ZAWODNICZE - 5-16 LAT - 3x TYG</p>
+                <p>
+                  <b>KADRA</b> - KADRA - GRUPY ZAWODNICZE - 5-16 LAT - 3x TYG
+                </p>
               </div>
             </div>
           </div>
@@ -60,12 +75,11 @@
 </template>
 <script>
 import Trening2 from "../components/Trening2.vue";
-import MainHeader from "../components/MainHeader.vue"
+import MainHeader from "../components/MainHeader.vue";
 
 export default {
   data() {
-    return {
-    };
+    return {};
   },
 
   components: { Trening2, MainHeader },
@@ -99,24 +113,23 @@ export default {
   gap: 25px;
   flex-direction: row;
   padding: 1.5rem 0.2rem;
-  @media (max-width: 786px){
+  @media (max-width: 786px) {
     flex-direction: column;
   }
 }
 
 .v-expansion-panel {
-  background-color: #2C303D;
+  background-color: #2c303d;
 }
 
-
 .panel-title {
-  display:flex;
+  display: flex;
   justify-content: space-between;
   flex-direction: row;
   font-weight: bold;
   font-size: 1.2rem;
   text-transform: uppercase;
-  @media (max-width: 786px){
+  @media (max-width: 786px) {
     font-size: 0.8rem !important;
   }
 }
@@ -138,11 +151,10 @@ export default {
   margin-bottom: 20px;
 }
 
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 1024px) {
   .btn-back {
     margin-bottom: 1rem;
     width: 100% !important;
-
   }
 }
 </style>

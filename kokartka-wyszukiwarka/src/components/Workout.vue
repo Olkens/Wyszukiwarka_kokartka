@@ -11,7 +11,9 @@
           <div>
             <p class="faded-title">POZIOM</p>
             <p v-if="trening.level === 'beginner'">Podstawowy</p>
-            <p v-else-if="trening.level === 'beginner_older'">początkująca starsza</p>
+            <p v-else-if="trening.level === 'beginner_older'">
+              początkująca starsza
+            </p>
             <p v-if="trening.level === 'advanced'">zaawansowany</p>
           </div>
         </div>
@@ -36,9 +38,15 @@
             <p class="faded-title">Dzień</p>
             <div v-if="trening.firstDay">
               <div>
-                <p v-if="trening.firstDate">{{ trening.firstDay }}: {{ trening.firstDate }}</p>
-                <p v-if="trening.secondDate">{{ trening.secondDay }}: {{ trening.secondDate }}</p>
-                <p v-if="trening.thirdDate">{{ trening.thirdDay }}: {{ trening.thirdDate }}</p>
+                <p v-if="trening.firstDate">
+                  {{ trening.firstDay }}: {{ trening.firstDate }}
+                </p>
+                <p v-if="trening.secondDate">
+                  {{ trening.secondDay }}: {{ trening.secondDate }}
+                </p>
+                <p v-if="trening.thirdDate">
+                  {{ trening.thirdDay }}: {{ trening.thirdDate }}
+                </p>
               </div>
             </div>
           </div>
@@ -53,6 +61,11 @@
         <a class="tr-btn tr-btn-zs" :style="{ background: kokartka }" :href="trening.signUp" target="_blank">
           Zapisz się</a>
       </div>
+      <div v-else>
+          <div class="tr-btn tr-btn-zs" :style="{ background: kokartka }">
+            Zapisy wkrótce!
+          </div>
+        </div>
     </div>
   </div>
 </template>
@@ -86,7 +99,7 @@ export default {
 <style>
 .tr-main-container {
   display: grid;
-  grid-template-columns: 0.6fr 1.4fr;
+  grid-template-columns: 0.6fr 1.6fr;
   grid-template-rows: 1fr 1fr 1fr;
   max-width: 368px;
   min-width: 368px;
@@ -143,7 +156,6 @@ export default {
 .tr-border-left {
   border-left: 1px solid gray;
   padding-left: 15px;
-  padding-right: 5px;
 }
 
 .tr-btn-container {
@@ -160,7 +172,7 @@ export default {
 
 .tr-info-box-2-grid {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: 1.2fr 0.8fr;
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
@@ -180,6 +192,7 @@ export default {
   border-radius: 5px;
   font-weight: bold;
   padding: 2px;
+  display: inline-block;
 }
 
 .tr-btn-wi {

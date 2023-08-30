@@ -2,22 +2,36 @@
   <div>
     <div>
       <div>
-        <v-expansion-panels class="panels-wrapper" expand-icon="$expand" theme="dark">
+        <v-expansion-panels
+          class="panels-wrapper"
+          expand-icon="$expand"
+          theme="dark"
+        >
           <v-expansion-panel>
             <v-expansion-panel-title class="panel-title">
               <div></div>
-              <div>FILTRY<font-awesome-icon icon="fa-solid fa-filter" class="icon-left" /></div>
+              <div>
+                FILTRY<font-awesome-icon
+                  icon="fa-solid fa-filter"
+                  class="icon-left"
+                />
+              </div>
             </v-expansion-panel-title>
             <v-expansion-panel-text>
               <div class="app-tr-container">
                 <div class="box-cont">
-
                   <div>
                     <!-- <label for="group">GRUPA</label> -->
                     <select name="grupa" id="group" v-model="this.fGroup">
                       <option value="">Grupa</option>
-                      <option value="Grupa" disabled selected hidden>Grupa</option>
-                      <option v-for="grupa in avalibleGroups" :value="grupa" :key="grupa.id">
+                      <option value="Grupa" disabled selected hidden>
+                        Grupa
+                      </option>
+                      <option
+                        v-for="grupa in avalibleGroups"
+                        :value="grupa"
+                        :key="grupa.id"
+                      >
                         {{ grupa }}
                       </option>
                       <option value="DORO">DOROŚLI</option>
@@ -28,7 +42,9 @@
                     <!-- <label for="level">LEVEL</label> -->
                     <select name="level" id="level" v-model="this.fLevel">
                       <option value="">Poziom</option>
-                      <option value="Poziom" disabled selected hidden>Poziom</option>
+                      <option value="Poziom" disabled selected hidden>
+                        Poziom
+                      </option>
                       <option value="beginner">Podstawowy</option>
                       <option value="advanced">Zaawansowany</option>
                       <option value="beginner_older">Starsza podstawowa</option>
@@ -39,7 +55,9 @@
                     <!-- <label for="age">WIEK</label> -->
                     <select name="age" id="age" v-model="this.fAge">
                       <option value="Wiek">Wiek</option>
-                      <option value="Wiek" disabled selected hidden>Wiek</option>
+                      <option value="Wiek" disabled selected hidden>
+                        Wiek
+                      </option>
                       <option value="2">2</option>
                       <option value="3">3</option>
                       <option value="4">4</option>
@@ -62,8 +80,14 @@
                   <div class="box flex-label">
                     <select name="city" id="city" v-model="this.fCity">
                       <option value="Miasto">Miasto</option>
-                      <option value="Miasto" disabled selected hidden>Miasto</option>
-                      <option v-for="city in uniqueCity" :value="city" :key="city.id">
+                      <option value="Miasto" disabled selected hidden>
+                        Miasto
+                      </option>
+                      <option
+                        v-for="city in uniqueCity"
+                        :value="city"
+                        :key="city.id"
+                      >
                         {{ city }}
                       </option>
                     </select>
@@ -72,8 +96,14 @@
                   <div class="box flex-label">
                     <select name="szkola" id="szkola" v-model="this.fSzkola">
                       <option value="">Szkoła</option>
-                      <option value="Szkoła" disabled selected hidden>Szkoła</option>
-                      <option v-for="szkola in uniqueLocation" :value="szkola" :key="szkola.id">
+                      <option value="Szkoła" disabled selected hidden>
+                        Szkoła
+                      </option>
+                      <option
+                        v-for="szkola in uniqueLocation"
+                        :value="szkola"
+                        :key="szkola.id"
+                      >
                         {{ szkola }}
                       </option>
                     </select>
@@ -83,7 +113,9 @@
                     <!-- <label for="day">DZIEŃ</label> -->
                     <select name="day" id="day" v-model="this.fDay">
                       <option value="">Dzień</option>
-                      <option value="Dzień" disabled selected hidden>Dzień</option>
+                      <option value="Dzień" disabled selected hidden>
+                        Dzień
+                      </option>
                       <option value="poniedziałek">Poniedziałek</option>
                       <option value="wtorek">Wtorek</option>
                       <option value="środa">Środa</option>
@@ -98,7 +130,9 @@
                     <!-- <label for="day">DZIEŃ</label> -->
                     <select name="hour" id="hour" v-model="this.fHour">
                       <option value="Godzina">Godzina</option>
-                      <option value="Godzina" disabled selected hidden>GODZINA</option>
+                      <option value="Godzina" disabled selected hidden>
+                        GODZINA
+                      </option>
                       <!-- <option :value={ trening.date } v-for="trening in this.uniqueDates">{{ trening.date }}</option> -->
                       <option value="9">9:00 - 10:00</option>
                       <option value="10">10:00 - 11:00</option>
@@ -121,9 +155,8 @@
           </v-expansion-panel>
         </v-expansion-panels>
       </div>
-
     </div>
-    <div class="trenings-section">
+    <div class="trenings-section" style="margin-top: 25px">
       <div v-if="!isLoaded">
         <div class="lds-ring">
           <div></div>
@@ -136,8 +169,11 @@
         <div v-if="filterWorkouts.length > 0">
           <div class="trenings-collapse">
             <div v-for="(trening, index) in filterWorkouts" :key="trening.id">
-              <Workout :trening="trening" :treningsDesc="treningsDesc"
-                :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }" />
+              <Workout
+                :trening="trening"
+                :treningsDesc="treningsDesc"
+                :class="{ trMainContainerSecondBgcolor0: index % 2 == 0 }"
+              />
             </div>
           </div>
         </div>
@@ -422,7 +458,7 @@ select {
 }
 
 .v-expansion-panel {
-  background-color: #2C303D;
+  background-color: #2c303d;
 }
 
 .panel-title {

@@ -2,10 +2,16 @@
   <div class="main-cont-workdesc">
     <div>
       <router-link class="btn-back" to="/">
-        <font-awesome-icon icon="fa-solid fa-angle-left" style="padding-right: 5px;" />
-        <p> Wróc do wyszukiwarki</p>
+        <font-awesome-icon
+          icon="fa-solid fa-angle-left"
+          style="padding-right: 5px"
+        />
+        <p>Wróc do wyszukiwarki</p>
       </router-link>
-      <div class="header" v-bind:style="{ backgroundImage: 'url(' + pathToBgPhoto + ')' }">
+      <div
+        class="header"
+        v-bind:style="{ backgroundImage: 'url(' + pathToBgPhoto + ')' }"
+      >
         {{ brand }}
       </div>
     </div>
@@ -33,7 +39,10 @@
         <div class="participants box">
           <h2>Ilość wolnych miejsc:</h2>
           <div class="participants-cont">
-            <div class="progress-bar" :style="{ width: width + '%', height: height }"></div>
+            <div
+              class="progress-bar"
+              :style="{ width: width + '%', height: height }"
+            ></div>
             <p class="participants-cont-bg"></p>
             <div class="participants-ratio">
               <p class="participants-ratio-label">
@@ -45,15 +54,20 @@
       </div>
       <div class="workout-payments">
         <div class="img-box">
-          <img :src="imgSrc">
+          <img :src="imgSrc" />
         </div>
         <div class="signup" v-if="participantsCurrent < participantsMax">
-          <div v-if="links.registration"> <a :href="links.registration" class="zapis-btn-desc" target="_blank"> Zapisz się
-              na zajęcia <font-awesome-icon :icon="['fas', 'check']" class="fa-icon" /></a>
+          <div v-if="links.registration">
+            <a
+              :href="links.registration"
+              class="zapis-btn-desc"
+              target="_blank"
+            >
+              Zapisz się na zajęcia
+              <font-awesome-icon :icon="['fas', 'check']" class="fa-icon"
+            /></a>
           </div>
-          <div v-else class="zapis-btn-desc" >
-            Zapisy już wkrótce!
-          </div>
+          <div v-else class="zapis-btn-desc">Zapisy już wkrótce!</div>
         </div>
         <div v-if="participantsCurrent >= participantsMax">
           <div class="workoutFull">Brak wolnych miejsc</div>
@@ -113,29 +127,27 @@ export default {
       chosenColor: "",
       moneyArr: [],
       moneyAmount: 0,
-      pathToBgPhoto: '',
-      imgSrc: '',
+      pathToBgPhoto: "",
+      imgSrc: "",
     };
   },
   mounted() {
-    axios
-      .get(this.url)
-      .then((res) => {
-        this.desc = res.data;
-        this.payments = res.data.payments;
-        this.links = res.data.links;
-        this.date = res.data.dates[0];
-        this.daysArr = res.data.dates;
-        this.day = this.date ? this.days[this.date.day] : "";
-        this.hour = this.date.hour;
-        this.duration = this.date.duration / 60 / 60;
-        this.participants = res.data.participants;
-        this.participantsMax = this.participants.max;
-        this.participantsCurrent = this.participants.current;
-        this.width = (this.participantsCurrent / this.participantsMax) * 100;
-        this.moneyArr = res.data.payments.amount;
-        this.moneyAmount = res.data.payments.amount.amount;
-      })
+    axios.get(this.url).then((res) => {
+      this.desc = res.data;
+      this.payments = res.data.payments;
+      this.links = res.data.links;
+      this.date = res.data.dates[0];
+      this.daysArr = res.data.dates;
+      this.day = this.date ? this.days[this.date.day] : "";
+      this.hour = this.date.hour;
+      this.duration = this.date.duration / 60 / 60;
+      this.participants = res.data.participants;
+      this.participantsMax = this.participants.max;
+      this.participantsCurrent = this.participants.current;
+      this.width = (this.participantsCurrent / this.participantsMax) * 100;
+      this.moneyArr = res.data.payments.amount;
+      this.moneyAmount = res.data.payments.amount.amount;
+    });
     axios.get("https://kokartka.stronazen.pl/zapisy/api/workouts").then((res) => {
       const data = res.data;
       for (let i = 0; i < data.length; i++) {
@@ -144,8 +156,8 @@ export default {
           this.brand = data[i].brand;
           this.address = data[i].location_address.street;
           this.city = data[i].location_address.city;
-          this.pathToBgPhoto = `/wyszukiwarka/assets/${data[i].brand}.png`
-          this.imgSrc = `/wyszukiwarka/assets/${data[i].brand}-img.png`
+          this.pathToBgPhoto = `./assets/${data[i].brand}.png`;
+          this.imgSrc = `./assets/${data[i].brand}-img.png`;
 
           if (data[i].level == "beginner") {
             this.level = "Podstawowy";
@@ -200,7 +212,6 @@ export default {
   .btn-back {
     margin-bottom: 1rem;
     width: 100% !important;
-
   }
 
   .header {
@@ -217,7 +228,7 @@ export default {
     flex-wrap: nowrap;
   }
 
-  .desc-main-container>* {
+  .desc-main-container > * {
     flex: 0 !important;
   }
 
@@ -242,7 +253,7 @@ export default {
   .workout-payments {
     width: 60% !important;
 
-    @media (max-width:768px) {
+    @media (max-width: 768px) {
       width: 100% !important;
     }
 
@@ -256,11 +267,10 @@ export default {
 
   .signup {
     min-width: 100%;
-
   }
 }
 
-.desc-main-container>* {
+.desc-main-container > * {
   flex: 1 1 0;
 }
 
@@ -328,7 +338,7 @@ h2 {
   text-align: center;
 }
 
-.signup>h2 {
+.signup > h2 {
   color: #000;
 }
 
