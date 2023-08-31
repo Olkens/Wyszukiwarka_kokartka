@@ -16,11 +16,10 @@ export default {
     fetchTrenings() {
       const apitab = [];
       axios
-        .get("https://kokartka.stronazen.pl/zapisy/api/workouts")
+        .get("https://kokartka.info/zapisy/api/workouts")
         .then(function (response) {
           const data = response.data;
           for (let i = 0; i < response.data.length; i++) {
-            console.log(i);
             apitab.push({
               id: data[i].id,
               level: data[i].level,

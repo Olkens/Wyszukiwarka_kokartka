@@ -1,21 +1,22 @@
 <template>
-  <div class="main-cont-workdesc">
+  <div v-if="!isLoadedDetails" class="center-loader">
+    <div class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <div class="main-cont-workdesc" v-else>
     <div>
       <router-link class="btn-back" to="/">
-        <font-awesome-icon
-          icon="fa-solid fa-angle-left"
-          style="padding-right: 5px"
-        />
+        <font-awesome-icon icon="fa-solid fa-angle-left" style="padding-right: 5px" />
         <p>Wróc do wyszukiwarki</p>
       </router-link>
-      <div
-        class="header"
-        v-bind:style="{ backgroundImage: 'url(' + pathToBgPhoto + ')' }"
-      >
+      <div class="header" v-bind:style="{ backgroundImage: 'url(' + pathToBgPhoto + ')' }">
         {{ brand }}
       </div>
     </div>
-
     <div class="desc-main-container">
       <div class="workout-desc">
         <div class="box desc-html">
@@ -39,10 +40,7 @@
         <div class="participants box">
           <h2>Ilość wolnych miejsc:</h2>
           <div class="participants-cont">
-            <div
-              class="progress-bar"
-              :style="{ width: width + '%', height: height }"
-            ></div>
+            <div class="progress-bar" :style="{ width: width + '%', height: height }"></div>
             <p class="participants-cont-bg"></p>
             <div class="participants-ratio">
               <p class="participants-ratio-label">
@@ -58,14 +56,9 @@
         </div>
         <div class="signup" v-if="participantsCurrent < participantsMax">
           <div v-if="links.registration">
-            <a
-              :href="links.registration"
-              class="zapis-btn-desc"
-              target="_blank"
-            >
+            <a :href="links.registration" class="zapis-btn-desc" target="_blank">
               Zapisz się na zajęcia
-              <font-awesome-icon :icon="['fas', 'check']" class="fa-icon"
-            /></a>
+              <font-awesome-icon :icon="['fas', 'check']" class="fa-icon" /></a>
           </div>
           <div v-else class="zapis-btn-desc">Zapisy już wkrótce!</div>
         </div>
@@ -74,6 +67,7 @@
         </div>
       </div>
     </div>
+
     <div class="btn-container">
       <a href="tel:794294259">
         <font-awesome-icon icon="fa-solid fa-phone" class="icon-right" />
@@ -93,7 +87,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      url: "https://kokartka.stronazen.pl/zapisy/api/workouts/" + this.$route.params.id,
+      url: "https://kokartka.info/zapisy/api/workouts/" + this.$route.params.id,
       desc: {},
       payments: {},
       links: {},
@@ -101,6 +95,8 @@ export default {
       daysArr: [],
       level: "",
       day: "",
+      isLoadedWorkout: false,
+      isLoadedDetails: false,
       days: [
         "Niedziela",
         "Poniedziałek",
@@ -147,8 +143,13 @@ export default {
       this.width = (this.participantsCurrent / this.participantsMax) * 100;
       this.moneyArr = res.data.payments.amount;
       this.moneyAmount = res.data.payments.amount.amount;
+    }).catch(function (error) {
+      console.log(error);
+    }).finally(() => {
+      this.isLoadedDetails = true;
     });
-    axios.get("https://kokartka.stronazen.pl/zapisy/api/workouts").then((res) => {
+
+    axios.get("https://kokartka.info/zapisy/api/workouts").then((res) => {
       const data = res.data;
       for (let i = 0; i < data.length; i++) {
         if (data[i].id == this.$route.params.id) {
@@ -179,6 +180,10 @@ export default {
           }
         }
       }
+    }).catch(function (error) {
+      console.log(error);
+    }).finally(() => {
+      this.isLoadedWorkout = true;
     });
   },
 };
@@ -228,7 +233,7 @@ export default {
     flex-wrap: nowrap;
   }
 
-  .desc-main-container > * {
+  .desc-main-container>* {
     flex: 0 !important;
   }
 
@@ -270,7 +275,7 @@ export default {
   }
 }
 
-.desc-main-container > * {
+.desc-main-container>* {
   flex: 1 1 0;
 }
 
@@ -338,7 +343,7 @@ h2 {
   text-align: center;
 }
 
-.signup > h2 {
+.signup>h2 {
   color: #000;
 }
 
@@ -457,5 +462,11 @@ h2 {
 .participants-ratio-label {
   font-size: 12px;
   font-weight: bold;
+}
+
+.center-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
