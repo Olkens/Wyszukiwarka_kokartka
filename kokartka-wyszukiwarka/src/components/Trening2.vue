@@ -2,7 +2,7 @@
   <div>
     <div>
       <div>
-        <v-expansion-panels
+        <!-- <v-expansion-panels
           class="panels-wrapper"
           expand-icon="$expand"
           theme="dark"
@@ -17,7 +17,7 @@
                 />
               </div>
             </v-expansion-panel-title>
-            <v-expansion-panel-text>
+            <v-expansion-panel-text> -->
               <div class="app-tr-container">
                 <div class="box-cont">
                   <div>
@@ -151,9 +151,9 @@
                   <button class="reset-btn" @click="reset()">Wyczyść</button>
                 </div>
               </div>
-            </v-expansion-panel-text>
+            <!-- </v-expansion-panel-text>
           </v-expansion-panel>
-        </v-expansion-panels>
+        </v-expansion-panels> -->
       </div>
     </div>
     <div class="trenings-section" style="margin-top: 25px">
@@ -219,7 +219,11 @@ export default {
       treningDays: [],
       isFiltered: false,
       url: "https://kokartka.info/zapisy/api/workouts",
+      screenWidth: screen.width,
     };
+  },
+  mounted() {
+    console.log(this.screenWidth);
   },
   computed: {
     filterWorkouts() {

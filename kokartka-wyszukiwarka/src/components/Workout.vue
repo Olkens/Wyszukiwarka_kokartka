@@ -87,8 +87,8 @@ export default {
           ? "#D1519D"
           : this.trening.brand == "junior"
             ? "#F97C16"
-            : this.trening.brand == "kadra"
-              ? "#C800D6"
+            : this.trening.brand == "pro"
+              ? "#5A2287"
               : this.trening.brand == "mucha"
                 ? "#2CA9E0"
                 : "#fff",
@@ -232,6 +232,6 @@ export default {
 }
 
 .pro-color {
-  color: #c800d6;
+  color: #5A2287;
 }
 </style>

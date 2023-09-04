@@ -20,7 +20,10 @@
     <div class="desc-main-container">
       <div class="workout-desc">
         <div class="box desc-html">
-          <h2 class="title">Opis Zajęć:</h2>
+          <div class="desc-title">
+            <h2 class="title">Opis Zajęć:</h2>
+            <h3>{{ group }}</h3>
+          </div>
           <div v-html="desc.description"></div>
         </div>
       </div>
@@ -33,9 +36,16 @@
           </div>
           <div class="duration">Czas trwania: {{ duration }} Godzina</div>
         </div>
-        <div class="box">
-          <h2>Poziom</h2>
-          <p>{{ level }}</p>
+        <div class="box level-money-row">
+          <div>
+            <h2>Poziom</h2>
+            <p>{{ level }}</p>
+          </div>
+          <div>
+            <h2>Cena</h2>
+            <p>{{ formatMoney }} zł</p>
+          </div>
+
         </div>
         <div class="participants box">
           <h2>Ilość wolnych miejsc:</h2>
@@ -120,6 +130,7 @@ export default {
       muchaKolor: "#2CA9E0",
       kadraKolor: "#C800D6",
       juniorKolor: "#F97C16",
+      proKolor: "#5A2287",
       chosenColor: "",
       moneyArr: [],
       moneyAmount: 0,
@@ -174,7 +185,7 @@ export default {
           } else if (data[i].brand.includes("mucha")) {
             this.chosenColor = this.muchaKolor;
           } else if (data[i].brand.includes("pro")) {
-            this.chosenColor = this.kadraKolor;
+            this.chosenColor = this.proKolor;
           } else if (data[i].brand.includes("junior")) {
             this.chosenColor = this.juniorKolor;
           }
@@ -185,6 +196,12 @@ export default {
     }).finally(() => {
       this.isLoadedWorkout = true;
     });
+  },
+  computed: {
+    formatMoney() {
+      const toDecimal = parseInt(this.moneyAmount) / 100
+      return toDecimal.toFixed(2)
+    }
   },
 };
 </script>
@@ -309,6 +326,14 @@ h2 {
   font-family: brandon-grotesque-black, sans-serif;
 }
 
+.desc-html>div>h2, .level-money-row>div>h2 {
+  background-size: 40% 3px
+}
+
+.level-money-row>div>h2{
+  max-width: 150px;
+}
+
 .desc-html:deep(p) {
   color: #e9e9e9;
   font-size: 12px;
@@ -357,9 +382,12 @@ h2 {
 
 .img-box {
   padding: 0px;
+  padding-bottom: 15px;
   margin-top: 10px;
   height: 100%;
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .workout-payments .box {
@@ -469,4 +497,14 @@ h2 {
   justify-content: center;
   align-items: center;
 }
-</style>
+
+.desc-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.level-money-row {
+  display: flex;
+  gap: 3rem
+}</style>
