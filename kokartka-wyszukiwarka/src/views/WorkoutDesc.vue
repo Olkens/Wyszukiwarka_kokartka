@@ -34,18 +34,17 @@
           <div v-for="date in daysArr" :key="date.hour">
             <div>{{ days[date.day] }}: {{ date.hour }}</div>
           </div>
-          <div class="duration">Czas trwania: {{ duration }} Godzina</div>
+          <div class="duration">Czas trwania: {{ duration }}</div>
         </div>
         <div class="box level-money-row">
-          <div>
-            <h2>Poziom</h2>
-            <p>{{ level }}</p>
-          </div>
           <div>
             <h2>Cena</h2>
             <p>{{ formatMoney }} zł</p>
           </div>
-
+          <div>
+            <h2>Poziom</h2>
+            <p>{{ level }}</p>
+          </div>
         </div>
         <div class="participants box">
           <h2>Ilość wolnych miejsc:</h2>
@@ -147,7 +146,7 @@ export default {
       this.daysArr = res.data.dates;
       this.day = this.date ? this.days[this.date.day] : "";
       this.hour = this.date.hour;
-      this.duration = this.date.duration / 60 / 60;
+      this.duration = (this.date.duration / 60 / 60) >= 1 ? `${this.date.duration / 60 / 60} godzina` : `${this.date.duration / 60} minut` ;
       this.participants = res.data.participants;
       this.participantsMax = this.participants.max;
       this.participantsCurrent = this.participants.current;

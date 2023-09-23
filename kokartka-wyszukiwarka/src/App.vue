@@ -29,7 +29,7 @@ export default {
 }
 
 #app {
-  max-width: 1380px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 20px;
   margin-top: 4rem;

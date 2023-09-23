@@ -41,7 +41,7 @@ export default {
                     "0"
                   )
                 : "",
-              thirdDate: data[i].dates[3]
+              thirdDate: data[i].dates[2]
                 ? new Date(data[i].dates[2]).getHours() +
                   ":" +
                   String(new Date(data[i].dates[2]).getMinutes()).padStart(

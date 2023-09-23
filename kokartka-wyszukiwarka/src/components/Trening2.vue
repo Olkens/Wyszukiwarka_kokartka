@@ -205,7 +205,7 @@ export default {
       fHour: "Godzina",
       fCity: "Miasto",
       avalibleGroups: [
-        "ZÓŁTA",
+        "ŻÓŁTA",
         "POMARAŃCZOWA",
         "CZERWONA",
         "LAWENDOWA",

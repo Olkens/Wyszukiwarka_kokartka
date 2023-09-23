@@ -62,7 +62,7 @@
               <div class="expansion-content">
                 <p><b>ZIELONA</b> - DOROŚLI</p>
                 <p>
-                  <b>KADRA</b> - KADRA - GRUPY ZAWODNICZE - 5-16 LAT - 3x TYG
+                  <b>KADRA</b> - GRUPY ZAWODNICZE - 5-16 LAT - 3x TYG
                 </p>
               </div>
             </div>

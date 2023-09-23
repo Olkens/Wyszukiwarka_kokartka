@@ -101,8 +101,8 @@ export default {
   display: grid;
   grid-template-columns: 0.6fr 1.6fr;
   grid-template-rows: 1fr 1fr 1fr;
-  max-width: 368px;
-  min-width: 368px;
+  max-width: 375px;
+  min-width: 375px;
   padding: 15px;
   border: 1px solid gray;
   border-radius: 5px;
@@ -172,7 +172,7 @@ export default {
 
 .tr-info-box-2-grid {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1.1fr 0.9fr;
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
